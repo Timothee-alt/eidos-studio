@@ -1,0 +1,610 @@
+EIDOS STUDIO
+SEO & Metadata Specification
+eidos-studio.com · Bretagne · v1.0
+Pour Cursor — intégration Next.js 14 App Router
+
+1. Stratégie SEO
+Contexte & opportunités
+Eidos Studio opère depuis la Bretagne avec une cible nationale et internationale. Cette position géographique crée deux leviers SEO complémentaires qui doivent coexister sans se cannib aliser.
+
+Levier
+Opportunité
+Priorité
+SEO Local Bretagne
+Concurrence faible, clients PME à fort potentiel de conversion
+Immédiate — quick wins en 2-3 mois
+SEO National FR
+Mots-clés tech (Next.js, SaaS) peu contestés hors Paris
+Moyen terme — 6-12 mois
+SEO Sectoriel
+Niche musée virtuel / patrimoine numérique (Eidos Historia)
+Long terme — autorité de niche
+
+Mots-clés cibles — Priorité 1 (quick wins)
+LOCAL BRETAGNE — FAIBLE CONCURRENCE, FORT INTENT COMMERCIAL
+Mot-clé
+Volume/mois
+Difficulté
+Page cible
+agence web Bretagne
+480/mois
+Faible
+Homepage
+création site web Bretagne
+320/mois
+Faible
+Homepage
+agence Next.js Bretagne
+40/mois
+Faible
+Homepage
+développeur web Bretagne
+260/mois
+Faible
+Homepage
+création site e-commerce Bretagne
+210/mois
+Faible
+Page service e-commerce
+agence SaaS Bretagne
+30/mois
+Faible
+Page service SaaS
+
+NATIONAL — MOYEN TERME
+Mot-clé
+Volume/mois
+Difficulté
+Page cible
+agence web Next.js
+390/mois
+Moyenne
+Homepage
+création site vitrine React
+520/mois
+Moyenne
+Page service vitrine
+développement application SaaS
+880/mois
+Moyenne
+Page service SaaS
+agence e-commerce Shopify Next.js
+170/mois
+Moyenne
+Page service e-commerce
+refonte site web entreprise
+720/mois
+Moyenne
+Page service refonte
+studio développement web France
+140/mois
+Faible
+Homepage
+
+LONGUE TRAÎNE — INTENT FORT, VOLUME FAIBLE MAIS TRÈS QUALIFIÉ
+Mot-clé
+Volume/mois
+Difficulté
+Page cible
+agence web vitrine entreprise Bretagne
+90/mois
+Faible
+Homepage
+développer application web sur mesure
+390/mois
+Moyenne
+Page service SaaS
+combien coûte site e-commerce Next.js
+110/mois
+Faible
+Page FAQ / Blog
+musée virtuel patrimoine numérique
+70/mois
+Faible
+Eidos Historia
+refonte site web React TypeScript
+130/mois
+Faible
+Page service refonte
+
+2. Métadonnées — À copier dans Cursor
+layout.tsx — Metadata globale
+Colle ce bloc dans le fichier app/layout.tsx de Next.js 14 App Router.
+
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  metadataBase: new URL('https://www.eidos-studio.com'),
+
+  title: {
+    default: 'Eidos Studio — Agence Web Next.js · Bretagne',
+    template: '%s | Eidos Studio',
+  },
+
+  description:
+    'Eidos Studio, agence de développement web en Bretagne.' +
+    ' Sites vitrines, applications SaaS, e-commerce.' +
+    ' Code Next.js · React · TypeScript, livré et maintenu.',
+
+  keywords: [
+    'agence web Bretagne',
+    'création site web Bretagne',
+    'développement Next.js',
+    'agence SaaS France',
+    'site e-commerce React',
+    'studio développement web',
+    'Eidos Studio',
+  ],
+
+  authors: [{ name: 'Eidos Studio', url: 'https://www.eidos-studio.com' }],
+  creator: 'Eidos Studio',
+  publisher: 'Eidos Studio',
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
+  },
+
+  openGraph: {
+    type: 'website',
+    locale: 'fr_FR',
+    url: 'https://www.eidos-studio.com',
+    siteName: 'Eidos Studio',
+    title: 'Eidos Studio — Agence Web Next.js · Bretagne',
+    description:
+      'Sites vitrines, SaaS et e-commerce en Bretagne.' +
+      ' Stack Next.js · React · TypeScript.',
+    images: [{
+      url: '/og-image.png',
+      width: 1200,
+      height: 630,
+      alt: 'Eidos Studio — Agence Web Bretagne',
+    }],
+  },
+
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Eidos Studio — Agence Web Next.js · Bretagne',
+    description: 'Sites vitrines, SaaS et e-commerce. Stack Next.js.',
+    images: ['/og-image.png'],
+    creator: '@eidos_studio',
+  },
+
+  alternates: {
+    canonical: 'https://www.eidos-studio.com',
+  },
+
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon-16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/icon-32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
+  },
+
+  manifest: '/site.webmanifest',
+  category: 'technology',
+}
+
+Structured Data — JSON-LD
+Crée le fichier components/structured-data.tsx et importe-le dans layout.tsx.
+
+export function StructuredData() {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+
+      // Organisation
+      {
+        '@type': 'Organization',
+        '@id': 'https://www.eidos-studio.com/#organization',
+        name: 'Eidos Studio',
+        url: 'https://www.eidos-studio.com',
+        logo: 'https://www.eidos-studio.com/logo.svg',
+        description: 'Agence de développement web en Bretagne.' +
+          ' Sites vitrines, applications SaaS, e-commerce.',
+        address: {
+          '@type': 'PostalAddress',
+          addressRegion: 'Bretagne',
+          addressCountry: 'FR',
+        },
+        areaServed: ['Bretagne', 'France', 'Europe'],
+        foundingDate: '2016',
+        knowsAbout: ['Next.js','React','TypeScript','SaaS','E-commerce'],
+        sameAs: [
+          'https://github.com/eidos-studio',
+          'https://www.linkedin.com/company/eidos-studio',
+        ],
+      },
+
+      // Website
+      {
+        '@type': 'WebSite',
+        '@id': 'https://www.eidos-studio.com/#website',
+        url: 'https://www.eidos-studio.com',
+        name: 'Eidos Studio',
+        publisher: { '@id': 'https://www.eidos-studio.com/#organization' },
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: 'https://www.eidos-studio.com/?s={search_term_string}',
+          'query-input': 'required name=search_term_string',
+        },
+      },
+
+      // LocalBusiness (levier SEO local Bretagne)
+      {
+        '@type': 'LocalBusiness',
+        '@id': 'https://www.eidos-studio.com/#localbusiness',
+        name: 'Eidos Studio',
+        image: 'https://www.eidos-studio.com/og-image.png',
+        url: 'https://www.eidos-studio.com',
+        telephone: '+33-X-XX-XX-XX-XX',  // REMPLACER
+        email: 'hello@eidos-studio.com',   // REMPLACER
+        address: {
+          '@type': 'PostalAddress',
+          addressRegion: 'Bretagne',
+          addressCountry: 'FR',
+        },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: 48.2,   // REMPLACER par ta vraie ville
+          longitude: -2.9,  // REMPLACER par ta vraie ville
+        },
+        openingHoursSpecification: {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday'],
+          opens: '09:00',
+          closes: '18:00',
+        },
+        priceRange: '€€',
+        currenciesAccepted: 'EUR',
+        paymentAccepted: 'Virement bancaire',
+        areaServed: 'Bretagne, France',
+      },
+
+      // Services
+      {
+        '@type': 'Service',
+        name: 'Création de sites vitrines',
+        provider: { '@id': 'https://www.eidos-studio.com/#organization' },
+        areaServed: 'France',
+        description: 'Sites vitrines professionnels en Next.js et React.',
+        serviceType: 'Développement web',
+      },
+      {
+        '@type': 'Service',
+        name: 'Développement application SaaS',
+        provider: { '@id': 'https://www.eidos-studio.com/#organization' },
+        areaServed: 'France',
+        description: 'Applications SaaS sur mesure, de la conception au déploiement.',
+        serviceType: 'Développement logiciel',
+      },
+      {
+        '@type': 'Service',
+        name: 'Création de boutiques e-commerce',
+        provider: { '@id': 'https://www.eidos-studio.com/#organization' },
+        areaServed: 'France',
+        description: 'E-commerce performant sur stack React / Next.js.',
+        serviceType: 'E-commerce',
+      },
+    ],
+  }
+
+  return (
+    <script
+      type='application/ld+json'
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  )
+}
+
+3. Metadata par Page
+Homepage — page.tsx
+export const metadata: Metadata = {
+  title: 'Eidos Studio — Agence Web Next.js · Bretagne',
+  description:
+    'Agence de développement web en Bretagne. Sites vitrines, ' +
+    'applications SaaS et e-commerce en Next.js · React · TypeScript. ' +
+    'Code livré, maintenu, évolutif.',
+  alternates: { canonical: 'https://www.eidos-studio.com' },
+  openGraph: {
+    title: 'Eidos Studio — Agence Web Next.js · Bretagne',
+    description: 'Sites vitrines, SaaS, e-commerce. Stack moderne. Bretagne & France.',
+    url: 'https://www.eidos-studio.com',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
+}
+
+Page Service — Sites vitrines
+export const metadata: Metadata = {
+  title: 'Création de sites vitrines · Next.js · Bretagne',
+  description:
+    'Création de sites vitrines professionnels en Next.js et React.' +
+    ' Performance maximale, design sur mesure, Bretagne et France.',
+  alternates: { canonical: 'https://www.eidos-studio.com/services/vitrine' },
+  openGraph: {
+    title: 'Sites vitrines Next.js — Eidos Studio · Bretagne',
+    url: 'https://www.eidos-studio.com/services/vitrine',
+  },
+}
+
+Page Service — Applications SaaS
+export const metadata: Metadata = {
+  title: 'Développement Application SaaS · React · France',
+  description:
+    'Développement d\'applications SaaS sur mesure.' +
+    ' De la conception au déploiement : API, auth, billing, dashboard.' +
+    ' Stack Next.js · TypeScript · Prisma.',
+  alternates: { canonical: 'https://www.eidos-studio.com/services/saas' },
+  openGraph: {
+    title: 'Applications SaaS sur mesure — Eidos Studio',
+    url: 'https://www.eidos-studio.com/services/saas',
+  },
+}
+
+Page Service — E-commerce
+export const metadata: Metadata = {
+  title: 'Création Site E-commerce · Next.js · Bretagne',
+  description:
+    'Boutiques e-commerce performantes en Next.js.' +
+    ' Paiement Stripe, gestion stock, SEO optimisé dès le départ.' +
+    ' Bretagne et toute la France.',
+  alternates: { canonical: 'https://www.eidos-studio.com/services/ecommerce' },
+  openGraph: {
+    title: 'E-commerce Next.js — Eidos Studio · Bretagne',
+    url: 'https://www.eidos-studio.com/services/ecommerce',
+  },
+}
+
+Page Case Study — Template
+// app/work/[slug]/page.tsx
+export function generateMetadata({ params }): Metadata {
+  return {
+    title: `${project.name} — Case Study · Eidos Studio`,
+    description:
+      `${project.desc} Réalisé par Eidos Studio avec ${project.stack.join(', ')}.`,
+    alternates: {
+      canonical: `https://www.eidos-studio.com/work/${params.slug}`,
+    },
+    openGraph: {
+      title: `${project.name} · Eidos Studio`,
+      images: [{ url: project.ogImage, width: 1200, height: 630 }],
+    },
+  }
+}
+
+4. Fichiers à créer
+robots.txt — /public/robots.txt
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
+Sitemap: https://www.eidos-studio.com/sitemap.xml
+
+sitemap.ts — /app/sitemap.ts
+import { MetadataRoute } from 'next'
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [
+    {
+      url: 'https://www.eidos-studio.com',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 1,
+    },
+    {
+      url: 'https://www.eidos-studio.com/services/vitrine',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://www.eidos-studio.com/services/saas',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://www.eidos-studio.com/services/ecommerce',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    // Ajouter les case studies dynamiquement
+  ]
+}
+
+site.webmanifest — /public/site.webmanifest
+{
+  "name": "Eidos Studio",
+  "short_name": "Eidos",
+  "description": "Agence de développement web — Bretagne",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05050A",
+  "theme_color": "#05050A",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
+
+5. OG Image — Génération automatique
+app/opengraph-image.tsx
+Next.js 14 supporte la génération d'OG images via le Edge Runtime. Crée ce fichier pour une OG image dynamique cohérente avec le style Eidos.
+
+import { ImageResponse } from 'next/og'
+
+export const runtime = 'edge'
+export const alt = 'Eidos Studio — Agence Web Next.js Bretagne'
+export const size = { width: 1200, height: 630 }
+export const contentType = 'image/png'
+
+export default async function Image() {
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          width: '100%', height: '100%',
+          background: '#05050A',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          justifyContent: 'flex-end',
+          padding: '72px 80px',
+          fontFamily: 'sans-serif',
+          position: 'relative',
+        }}
+      >
+        {/* Grid background */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          backgroundImage:
+            'radial-gradient(circle 1px at center, rgba(255,255,255,0.08) 1px, transparent 0)',
+          backgroundSize: '32px 32px',
+        }} />
+        {/* Glow */}
+        <div style={{
+          position: 'absolute', top: '10%', left: '60%',
+          width: 500, height: 400,
+          background: 'radial-gradient(ellipse, rgba(59,123,255,0.18) 0%, transparent 70%)',
+        }} />
+        {/* Label */}
+        <div style={{
+          fontSize: 14, letterSpacing: '0.2em',
+          color: 'rgba(255,255,255,0.3)', marginBottom: 24,
+          textTransform: 'uppercase',
+        }}>
+          Agence de développement web · Bretagne
+        </div>
+        {/* Wordmark */}
+        <div style={{
+          fontSize: 96, fontWeight: 800,
+          letterSpacing: '-0.04em', lineHeight: 1,
+          color: 'white', marginBottom: 24,
+        }}>
+          EIDOS
+        </div>
+        {/* Tagline */}
+        <div style={{
+          fontSize: 22, color: 'rgba(255,255,255,0.5)',
+          fontWeight: 300, letterSpacing: '0.01em',
+        }}>
+          Sites vitrines · Applications SaaS · E-commerce
+        </div>
+        {/* Domain */}
+        <div style={{
+          position: 'absolute', bottom: 48, right: 80,
+          fontSize: 14, color: 'rgba(255,255,255,0.2)',
+          letterSpacing: '0.1em',
+        }}>
+          eidos-studio.com
+        </div>
+      </div>
+    ),
+    { ...size }
+  )
+}
+
+6. Performance & Core Web Vitals
+next.config.ts
+import type { NextConfig } from 'next'
+
+const nextConfig: NextConfig = {
+  // Compression
+  compress: true,
+
+  // Images
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    minimumCacheTTL: 31536000, // 1 an
+  },
+
+  // Headers de sécurité et cache
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=()' },
+        ],
+      },
+      {
+        source: '/fonts/(.*)',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+      {
+        source: '/_next/static/(.*)',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+    ]
+  },
+}
+
+export default nextConfig
+
+Checklist Core Web Vitals
+
+
+LCP (Largest Contentful Paint) < 2.5s
+? Fonts avec display: swap · Images hero avec priority={true} · Pas de JS bloquant
+
+
+CLS (Cumulative Layout Shift) = 0
+? Dimensions explicites sur toutes les images · Pas de font swap visible · Skeleton loaders
+
+
+INP (Interaction to Next Paint) < 200ms
+? Animations CSS only (scan-line, pulse) · Framer Motion lazy · Pas d'event listeners lourds
+
+
+Fonts — éviter le FOUT
+? Utiliser next/font/google · preload automatique · display: swap dans tous les cas
+
+7. Bloc à ajouter dans .cursorrules
+Ajoute cette section à la fin du fichier .cursorrules existant.
+
+## SEO — Règles strictes
+
+### Metadata
+- Chaque page doit exporter une const metadata: Metadata
+- title toujours au format : 'Page · Eidos Studio'
+- description entre 140 et 160 caractères exactement
+- alternates.canonical obligatoire sur chaque page
+- openGraph.images toujours défini (fallback /og-image.png)
+
+### Structured Data
+- Le composant <StructuredData /> doit être dans le <head> du layout.tsx
+- Ne jamais dupliquer les @id dans les schemas
+- Remplacer les PLACEHOLDER avant le déploiement (tel, email, geo)
+
+### Performance
+- Toutes les images : utiliser next/image avec width, height et alt explicites
+- Images hero : ajouter priority={true}
+- Fonts : uniquement via next/font/google, jamais de <link> manuel
+- Pas d'import CSS externe (tout dans globals.css ou Tailwind)
+
+### Contenu
+- H1 unique par page, contient le mot-clé principal
+- H2 contiennent des variantes de mots-clés secondaires
+- Alt text sur toutes les images : descriptif + contexte
+- Liens internes entre les pages de services
+
+### Fichiers obligatoires avant déploiement
+- /public/robots.txt
+- /app/sitemap.ts
+- /public/site.webmanifest
+- /public/favicon.ico + icon-16.png + icon-32.png + apple-touch-icon.png
+- /app/opengraph-image.tsx (OG image dynamique)
+
+
+EIDOS STUDIO — SEO Specification v1.0
+eidos-studio.com · Bretagne · Next.js 14
