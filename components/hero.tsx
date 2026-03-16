@@ -2,10 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useCallback } from "react";
+import dynamic from "next/dynamic";
 import { HERO_TAGLINE } from "@/lib/data";
 import { usePreloader } from "@/lib/preloader-context";
 import { Magnetic } from "@/components/ui/magnetic";
 import { EidosSymbol } from "@/components/ui/eidos-symbol";
+
+const ParticleEye = dynamic(() => import("@/components/particle-eye"), { ssr: false });
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -88,25 +91,20 @@ export function Hero() {
     <section
       ref={sectionRef}
       aria-label="Accueil"
-      className="relative w-full h-[100svh] min-h-[600px] bg-[#050507] overflow-hidden text-[#f6f6f7]"
-      // Valeurs par défaut au centre avant le premier mouvement de souris
-      style={{ "--sx": "50%", "--sy": "50%" } as React.CSSProperties}
+      className="relative w-full h-svh min-h-[600px] bg-[#050507] overflow-hidden text-[#f6f6f7]"
+      // Lampe torche hors écran au chargement : l'œil reste caché jusqu'au premier mouvement
+      style={{ "--sx": "-999px", "--sy": "-999px" } as React.CSSProperties}
     >
       {/* ── 1. LE RÉVÉLATEUR (La Lampe Torche) ── */}
       {/* Le mask-image rend cette div transparente partout SAUF autour de la souris */}
       <div
         className="absolute inset-0 z-0 pointer-events-none transition-opacity duration-1000"
         style={{
-        WebkitMaskImage: "radial-gradient(circle 120px at var(--sx) var(--sy), black 10%, transparent 100%)",
-        maskImage: "radial-gradient(circle 120px at var(--sx) var(--sy), black 10%, transparent 100%)",
+        WebkitMaskImage: "radial-gradient(circle 220px at var(--sx) var(--sy), black 10%, transparent 100%)",
+        maskImage: "radial-gradient(circle 220px at var(--sx) var(--sy), black 10%, transparent 100%)",
         }}
       >
-        <img
-          // Placeholder magnifique (rendu fluide/WebGL) : à remplacer plus tard par <Canvas> ou <video>
-          src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2560&auto=format&fit=crop"
-          alt="Eidos Vision"
-          className="w-full h-full object-cover opacity-90 scale-105"
-        />
+        <ParticleEye />
       </div>
 
       {/* ── 2. LE SYMBOLE EIDOS (Architectural en fond) ── */}
@@ -156,7 +154,7 @@ export function Hero() {
               EIDOS
             </span>
             <div className="flex items-center gap-4 md:gap-6 mt-4 md:mt-6 ml-1 md:ml-2">
-              <span className="w-12 md:w-20 h-[1px] bg-[#f6f6f7]/40" />
+              <span className="w-12 md:w-20 h-px bg-[#f6f6f7]/40" />
               <span 
                 className="font-mono uppercase tracking-[0.5em] text-[#f6f6f7]/70"
                 style={{ fontSize: "clamp(12px, 1.5vw, 18px)" }}
