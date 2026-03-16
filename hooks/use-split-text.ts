@@ -1,13 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import SplitType from "split-type";
 
-type SplitOptions = {
-  types?: string;
-  tagName?: string;
-  absolute?: boolean;
-};
+type SplitOptions = ConstructorParameters<typeof SplitType>[1];
 
-export function useSplitText(options: SplitOptions = { types: "lines, words, chars" }) {
+export function useSplitText(options: SplitOptions = { types: "lines,words,chars" }) {
   const ref = useRef<HTMLElement | null>(null);
   const [splitInstance, setSplitInstance] = useState<SplitType | null>(null);
   const [isSplit, setIsSplit] = useState(false);
