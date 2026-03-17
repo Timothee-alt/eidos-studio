@@ -1,5 +1,5 @@
 import { Hero } from "@/components/hero";
-import { Reel } from "@/components/reel";
+import { Manifesto } from "@/components/manifesto";
 import { Services } from "@/components/services";
 import { Projects } from "@/components/projets";
 import { About } from "@/components/about";
@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <main id="main">
       <Hero />
-      <Reel />
+      <Manifesto />
       <Services />
       <Projects />
       <About />

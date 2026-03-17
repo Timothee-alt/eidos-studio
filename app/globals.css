@@ -38,6 +38,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-snap-type: y proximity;
+}
+
 html,
 body {
   min-height: 100%;
@@ -60,6 +64,7 @@ body {
 main > section {
   content-visibility: auto;
   contain-intrinsic-size: 920px;
+  scroll-snap-align: start;
 }
 
 a {
@@ -266,17 +271,6 @@ body[data-preloader] main {
   animation: scroll-line-anim 1.6s ease-in-out infinite;
 }
 
-.reel-marquee {
-  display: inline-block;
-  min-width: 220%;
-  white-space: nowrap;
-  font-family: var(--font-m);
-  font-size: 10px;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: rgba(246, 246, 247, 0.24);
-  animation: reel-marquee 28s linear infinite;
-}
 
 .reveal {
   opacity: 0;
@@ -394,7 +388,6 @@ body[data-preloader] main {
     animation: none;
   }
 
-  .reel-marquee,
   .dot-pulse,
   .scroll-line-indicator,
   .eidos-symbol--animated .eidos-symbol-diamond,
@@ -465,15 +458,6 @@ body[data-preloader] main {
   }
   to {
     opacity: 1;
-  }
-}
-
-@keyframes reel-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
   }
 }
 

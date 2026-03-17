@@ -196,9 +196,6 @@ export function Hero() {
           <span className="font-mono text-[10px] tracking-[0.2em] text-white/40 uppercase">
             Fondé en 2024 · Lannion, BZH
           </span>
-          <div className="flex flex-col items-end gap-2">
-            <div className="scroll-line-indicator" />
-          </div>
         </div>
         
       </div>

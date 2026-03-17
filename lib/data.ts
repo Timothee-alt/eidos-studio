@@ -371,14 +371,11 @@ export const STATS: Stat[] = [
   { value: 97, label: "score Lighthouse médian", suffix: "+" },
 ];
 
-export const HOME_MANIFESTO_LINES = [
-  "Un beau site ne suffit plus.",
-  "Il faut une présence claire.",
-  "Forte. Mémorable. Crédible.",
-];
-
-/** Phrase hero — centrée sur la vision / l'œil */
-export const HERO_TAGLINE = "On voit ce que les autres ne voient pas.";
+// ── HERO TAGLINE ──────────────────────────────────────────────────────────────
+// Différencié du manifeste (acte 3) pour éviter la répétition.
+// Le manifeste développe "beaux ET performants" sur 3 actes ;
+// le hero pose l'entrée — plus courte, plus directe.
+export const HERO_TAGLINE = "Beaux. Performants. Sans compromis.";
 
 export const HOME_CHAPTERS: HomeChapter[] = [
   {
@@ -403,10 +400,6 @@ export const HOME_CHAPTERS: HomeChapter[] = [
       "Direction visuelle ambitieuse, base technique propre, vitesse mesurable.",
   },
 ];
-
-// ────────────────────────────────────────────────────────────
-// ABOUT_TABLE (5 rows: Fondée / Localisation / Équipe / Stack / Statut)
-// ────────────────────────────────────────────────────────────
 
 // ────────────────────────────────────────────────────────────
 // REEL (showreel video)
