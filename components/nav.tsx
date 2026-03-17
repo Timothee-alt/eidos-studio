@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useLayoutEffect, useState, useRef } from "react";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { EidosLockup } from "@/components/ui/eidos-symbol";
@@ -23,6 +23,13 @@ export function Nav() {
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
+
+  // Hide overlay on initial mount/refresh (before paint) so menu never flashes open
+  useLayoutEffect(() => {
+    if (!overlayRef.current || !pathRef.current) return;
+    gsap.set(overlayRef.current, { pointerEvents: "none", display: "none" });
+    gsap.set(pathRef.current, { attr: { d: "M 0 0 L 100 0 L 100 0 Q 50 0 0 0 Z" } });
+  }, []);
 
   useEffect(() => {
     if (!pathRef.current || !overlayRef.current) return;

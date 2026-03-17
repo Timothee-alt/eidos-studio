@@ -124,10 +124,22 @@ function EyeParticles() {
 
 export default function ParticleEye() {
   return (
-    <div className="absolute inset-0 z-0 scale-100 md:scale-[1.35] origin-center">
-      <Canvas camera={{ position: [0, 0, 6], fov: 60 }} gl={{ antialias: false, alpha: true }}>
-        <EyeParticles />
-      </Canvas>
+    <div className="absolute inset-0 z-0 flex items-center justify-center origin-center scale-100 md:scale-[1.35]">
+      <style>{`.particle-eye-canvas-container canvas { width: 100% !important; height: 100% !important; display: block !important; }`}</style>
+      <div className="particle-eye-canvas-container absolute inset-0 w-full h-full">
+        <Canvas
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+          }}
+          camera={{ position: [0, 0, 6], fov: 60 }}
+          gl={{ antialias: false, alpha: true }}
+        >
+          <EyeParticles />
+        </Canvas>
+      </div>
     </div>
   );
 }
