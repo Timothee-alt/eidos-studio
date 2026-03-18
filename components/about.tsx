@@ -232,11 +232,14 @@ export function About() {
     };
   }, []);
 
-  const marqueeRow = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS];
-  const marqueeRow2 = [
-    ...MARQUEE_ITEMS.slice().reverse(),
-    ...MARQUEE_ITEMS.slice().reverse(),
+  // Triplé pour une boucle plus fluide (reset à -33.33% au lieu de -50%)
+  const marqueeRow = [
+    ...MARQUEE_ITEMS,
+    ...MARQUEE_ITEMS,
+    ...MARQUEE_ITEMS,
   ];
+  const reversed = MARQUEE_ITEMS.slice().reverse();
+  const marqueeRow2 = [...reversed, ...reversed, ...reversed];
 
   return (
     <section
@@ -378,7 +381,7 @@ export function About() {
       >
         {/* Row 1 → right */}
         <div
-          className="flex whitespace-nowrap"
+          className="flex whitespace-nowrap will-change-transform"
           style={{ animation: "ab-marquee-l 45s linear infinite" }}
         >
           {marqueeRow.map((word, i) => (
@@ -388,8 +391,7 @@ export function About() {
                 style={{
                   fontFamily: "var(--font-d)",
                   fontSize: "clamp(44px, 6.5vw, 92px)",
-                  color: "transparent",
-                  WebkitTextStroke: "1px rgba(246,246,247,0.07)",
+                  color: i % 2 === 0 ? "#f6f6f7" : ACCENT,
                   padding: "0 clamp(14px, 2.5vw, 36px)",
                 }}
               >
@@ -411,7 +413,7 @@ export function About() {
 
         {/* Row 2 ← left */}
         <div
-          className="flex whitespace-nowrap mt-3"
+          className="flex whitespace-nowrap mt-3 will-change-transform"
           style={{ animation: "ab-marquee-r 38s linear infinite" }}
         >
           {marqueeRow2.map((word, i) => (
@@ -421,8 +423,7 @@ export function About() {
                 style={{
                   fontFamily: "var(--font-d)",
                   fontSize: "clamp(44px, 6.5vw, 92px)",
-                  color: "transparent",
-                  WebkitTextStroke: "1px rgba(246,246,247,0.04)",
+                  color: i % 2 === 0 ? "#f6f6f7" : ACCENT,
                   padding: "0 clamp(14px, 2.5vw, 36px)",
                 }}
               >
@@ -614,15 +615,15 @@ export function About() {
         }}
       />
 
-      {/* Marquee keyframes */}
+      {/* Marquee keyframes — 3 copies = reset à 33.33% pour une boucle plus fluide */}
       <style>{`
         @keyframes ab-marquee-l {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
+          from { transform: translate3d(0, 0, 0); }
+          to { transform: translate3d(-33.333%, 0, 0); }
         }
         @keyframes ab-marquee-r {
-          from { transform: translateX(-50%); }
-          to { transform: translateX(0); }
+          from { transform: translate3d(-33.333%, 0, 0); }
+          to { transform: translate3d(0, 0, 0); }
         }
       `}</style>
     </section>

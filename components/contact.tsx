@@ -293,7 +293,7 @@ export function Contact() {
           <div
             style={{
               fontFamily: "var(--font-d)",
-              fontSize: "clamp(48px, 8vw, 148px)",
+              fontSize: "clamp(42px, 7vw, 128px)",
               fontWeight: 800,
               lineHeight: 1.02,
               letterSpacing: "-0.04em",
@@ -303,14 +303,10 @@ export function Contact() {
             <div data-ct="hl-1" className="block text-[#f6f6f7]">
               PARLONS
             </div>
-            {/* Line 2: outlined */}
+            {/* Line 2: filled blue */}
             <div
               data-ct="hl-2"
-              className="block"
-              style={{
-                color: "transparent",
-                WebkitTextStroke: "1.5px rgba(246,246,247,0.85)",
-              }}
+              className="block text-[#3b7bff]"
             >
               ENSEMBLE.
             </div>
