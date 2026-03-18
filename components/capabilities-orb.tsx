@@ -50,9 +50,11 @@ function OrbScene() {
   );
 }
 
-export function CapabilitiesOrb() {
+export function CapabilitiesOrb({ fill = false }: { fill?: boolean }) {
   return (
-    <div className="relative h-[220px] overflow-hidden border border-white/10">
+    <div
+      className={`relative overflow-hidden ${fill ? "absolute inset-0" : "h-[220px] border border-white/10"}`}
+    >
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"

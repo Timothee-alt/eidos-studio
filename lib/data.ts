@@ -16,9 +16,52 @@ export type Service = {
   id: string;
   slug?: string;
   title: string;
+  /** Titre fragmenté ligne 1 (affichage sticky panel) */
+  titleLine1?: string;
+  /** Titre fragmenté ligne 2, style muted */
+  titleLine2?: string;
   description: string;
   tags: string[];
   href?: string;
+  /** URL image ou "webgl" pour rendu Three.js */
+  image?: string;
+};
+
+/** Per-service title reveal personality */
+export type TitleRevealConfig = {
+  initial: (wordIndex: number) => { transform: string; opacity: string };
+  ease: string;
+  duration: number[];
+  delay: number[];
+};
+
+/** Données enrichies pour la section services (layout shell + WebGL) */
+export type ServiceSlide = {
+  id: string;
+  code: string;
+  scope: string;
+  scopeLabel: string; // "Expérience" + "interactive"
+  scopeQualifier: string;
+  title: string;
+  titleLines: { text: string; muted?: boolean }[];
+  lead: string;
+  description: string;
+  tags: string[];
+  primaryTagCount: number; // premiers N tags avec .p
+  ctaLabel: string;
+  href?: string;
+  vbadge?: string; // badge vertical (SVC-01)
+  quote: string; // animation char dans le panel
+  /** Couleur hex */
+  hex: string;
+  /** RGB pour CSS rgba */
+  rgb: string;
+  /** Vec3 pour shader [0-1] */
+  color: [number, number, number];
+  glowDur: string;
+  shaderIntensity: number;
+  /** Per-service title reveal animation config */
+  titleReveal?: TitleRevealConfig;
 };
 
 export type Project = {
@@ -151,36 +194,185 @@ export const SERVICES: Service[] = [
   {
     id: "SVC-01",
     title: "Expériences WebGL & 3D",
+    titleLine1: "Expériences",
+    titleLine2: "WebGL & 3D",
     description:
       "Interfaces immersives qui marquent les esprits. Three.js, shaders, scènes 3D interactives et optimisées.",
     tags: ["Three.js", "WebGL", "GLSL"],
+    image: "webgl",
   },
   {
     id: "SVC-02",
     slug: "vitrine",
     title: "Sites vitrines premium",
+    titleLine1: "Sites vitrines",
+    titleLine2: "premium.",
     description:
       "Design haut de gamme, performances maximales, SEO intégré. Aucun template — tout est construit sur mesure.",
     tags: ["Next.js", "React", "TypeScript"],
     href: "/services/vitrine",
+    image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf0d?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: "SVC-03",
     slug: "saas",
     title: "Applications SaaS",
+    titleLine1: "Applications",
+    titleLine2: "SaaS.",
     description:
       "Du MVP au produit en production. Auth, billing, dashboards, API — architecture scalable dès le départ.",
     tags: ["SaaS", "Node.js", "PostgreSQL"],
     href: "/services/saas",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: "SVC-04",
     slug: "ecommerce",
     title: "E-commerce",
+    titleLine1: "E-commerce.",
+    titleLine2: "Convertissant.",
     description:
       "Boutiques performantes, paiement Stripe, gestion stock. Conversion optimisée, zéro commission sur vos ventes.",
     tags: ["Stripe", "Next.js", "Commerce"],
     href: "/services/ecommerce",
+    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1200&auto=format&fit=crop",
+  },
+];
+
+// ────────────────────────────────────────────────────────────
+// SERVICES_SLIDES (données enrichies pour layout shell + WebGL)
+// ────────────────────────────────────────────────────────────
+
+export const SERVICES_SLIDES: ServiceSlide[] = [
+  {
+    id: "SVC-01",
+    code: "SVC-01",
+    scope: "WebGL",
+    scopeLabel: "Expérience",
+    scopeQualifier: "interactive",
+    title: "Expériences WebGL & 3D",
+    titleLines: [
+      { text: "Expériences" },
+      { text: "WebGL" },
+      { text: "& 3D.", muted: true },
+    ],
+    lead: "Des interfaces qui se vivent, pas seulement qui se voient.",
+    description:
+      "Three.js, shaders GLSL, scènes 3D interactives et optimisées pour la production. Chaque pixel, intentionnel.",
+    tags: ["Three.js", "WebGL", "GLSL", "Shaders", "R3F"],
+    primaryTagCount: 2,
+    ctaLabel: "Voir les démos",
+    quote: "Three.js · WebGL · 3D",
+    hex: "#3b7bff",
+    rgb: "59,123,255",
+    color: [0.231, 0.482, 1.0],
+    glowDur: "3.2s",
+    shaderIntensity: 1.0,
+    titleReveal: {
+      initial: (i) =>
+        i === 0
+          ? { transform: "translateX(-40px) skewX(-4deg)", opacity: "0" }
+          : { transform: "translateX(-28px)", opacity: "0" },
+      ease: "cubic-bezier(0.12,0.8,0.32,1)",
+      duration: [0.65, 0.65, 0.65],
+      delay: [0, 0.06, 0.11],
+    },
+  },
+  {
+    id: "SVC-02",
+    code: "SVC-02",
+    scope: "Design",
+    scopeLabel: "Design",
+    scopeQualifier: "premium",
+    title: "Sites vitrines premium",
+    titleLines: [
+      { text: "Sites vitrines" },
+      { text: "sur mesure.", muted: true },
+    ],
+    lead: "Votre marque mérite mieux qu'un template.",
+    description:
+      "Design haut de gamme, performances maximales, SEO intégré. Rien n'est dupliqué — tout est fabriqué pour durer.",
+    tags: ["Next.js", "React", "TypeScript", "Motion"],
+    primaryTagCount: 2,
+    ctaLabel: "Voir l'approche",
+    quote: "Design · performance · durabilité",
+    href: "/services/vitrine",
+    hex: "#a78bfa",
+    rgb: "167,139,250",
+    color: [0.655, 0.545, 0.98],
+    glowDur: "5s",
+    shaderIntensity: 0.5,
+    titleReveal: {
+      initial: () => ({ transform: "translateY(106%)", opacity: "1" }),
+      ease: "cubic-bezier(0.22,1,0.36,1)",
+      duration: [0.85, 0.85, 0.85],
+      delay: [0, 0.07, 0.13],
+    },
+  },
+  {
+    id: "SVC-03",
+    code: "SVC-03",
+    scope: "SaaS",
+    scopeLabel: "Produit",
+    scopeQualifier: "scalable",
+    title: "Applications SaaS",
+    titleLines: [
+      { text: "Applications" },
+      { text: "SaaS.", muted: true },
+    ],
+    lead: "Du MVP au produit en production — sans dette technique.",
+    description:
+      "Auth, billing, dashboards, API. Architecture pensée pour croître sans tout refactoriser à six mois.",
+    tags: ["Node.js", "PostgreSQL", "Auth", "Billing", "CI/CD"],
+    primaryTagCount: 2,
+    ctaLabel: "Voir le processus",
+    quote: "Scalable · auth · billing",
+    href: "/services/saas",
+    hex: "#34d399",
+    rgb: "52,211,153",
+    color: [0.204, 0.831, 0.6],
+    glowDur: "6.5s",
+    shaderIntensity: 0.62,
+    titleReveal: {
+      initial: () => ({ transform: "translateY(100%)", opacity: "1" }),
+      ease: "cubic-bezier(0.4,0,0.2,1)",
+      duration: [0.6, 0.55, 0.5],
+      delay: [0, 0.1, 0.18],
+    },
+  },
+  {
+    id: "SVC-04",
+    code: "SVC-04",
+    scope: "Commerce",
+    scopeLabel: "Commerce",
+    scopeQualifier: "performant",
+    title: "E-commerce",
+    titleLines: [
+      { text: "E-commerce." },
+      { text: "Convertissant.", muted: true },
+    ],
+    lead: "Chaque visiteur est un client potentiel. Ne le perdez pas.",
+    description:
+      "Boutiques performantes, paiement Stripe natif, gestion stock optimisée. Zéro commission, conversion maximale.",
+    tags: ["Stripe", "Next.js", "Commerce"],
+    primaryTagCount: 2,
+    ctaLabel: "Voir la boutique",
+    quote: "Stripe · stock · conversion",
+    href: "/services/ecommerce",
+    hex: "#f59e0b",
+    rgb: "245,158,11",
+    color: [0.961, 0.62, 0.043],
+    glowDur: "5.8s",
+    shaderIntensity: 0.52,
+    titleReveal: {
+      initial: () => ({
+        transform: "translateY(80%) scaleY(0.92)",
+        opacity: "1",
+      }),
+      ease: "cubic-bezier(0.16,1,0.3,1)",
+      duration: [0.5, 0.5, 0.5],
+      delay: [0, 0.05, 0.09],
+    },
   },
 ];
 
