@@ -14,13 +14,14 @@ export function Footer() {
       />
       <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
         <p
-          className="font-mono text-[10px] uppercase tracking-[0.18em] text-(--muted)"
+          className="font-mono text-[10px] tracking-[0.18em] text-(--muted)"
           style={{ fontFamily: "var(--font-m)" }}
+          suppressHydrationWarning
         >
-          © 2026 EIDOS STUDIO · STUDIO DIGITAL IMMERSIF
+          © {new Date().getFullYear()} Eidos Studio · Studio digital immersif
         </p>
         <p
-          className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-(--green)"
+          className="flex items-center gap-2 font-mono text-[10px] tracking-[0.18em] text-(--green)"
           style={{ fontFamily: "var(--font-m)" }}
         >
           <span
@@ -28,7 +29,7 @@ export function Footer() {
             style={{ boxShadow: "0 0 6px var(--green)" }}
             aria-hidden
           />
-          ouvert à de nouveaux projets
+          Ouvert à de nouveaux projets
         </p>
       </div>
     </footer>

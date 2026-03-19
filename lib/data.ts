@@ -211,7 +211,7 @@ export const SERVICES: Service[] = [
       "Design haut de gamme, performances maximales, SEO intégré. Aucun template — tout est construit sur mesure.",
     tags: ["Next.js", "React", "TypeScript"],
     href: "/services/vitrine",
-    image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf0d?q=80&w=1200&auto=format&fit=crop",
+    image: "",
   },
   {
     id: "SVC-03",
@@ -223,7 +223,7 @@ export const SERVICES: Service[] = [
       "Du MVP au produit en production. Auth, billing, dashboards, API — architecture scalable dès le départ.",
     tags: ["SaaS", "Node.js", "PostgreSQL"],
     href: "/services/saas",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+    image: "",
   },
   {
     id: "SVC-04",
@@ -235,7 +235,7 @@ export const SERVICES: Service[] = [
       "Boutiques performantes, paiement Stripe, gestion stock. Conversion optimisée, zéro commission sur vos ventes.",
     tags: ["Stripe", "Next.js", "Commerce"],
     href: "/services/ecommerce",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1200&auto=format&fit=crop",
+    image: "",
   },
 ];
 
@@ -377,6 +377,108 @@ export const SERVICES_SLIDES: ServiceSlide[] = [
 ];
 
 // ────────────────────────────────────────────────────────────
+// PROJECT_SLIDES (données enrichies pour section projets horizontal scroll)
+// ────────────────────────────────────────────────────────────
+
+export type ProjectSlide = Project & {
+  /** Titre avec saut de ligne (ex: ["Lannion", "Twirling Club"]) */
+  titleLines?: [string, string];
+  /** Couleur hex pour accent (--pc) */
+  hex: string;
+  /** Ken Burns: transform initial */
+  kbFrom: string;
+  /** Ken Burns: transform final */
+  kbTo: string;
+  /** Ken Burns: durée en secondes */
+  kbDur: number;
+  /** Gradient overlay CSS */
+  grad: string;
+  /** Countup: valeur numérique */
+  resRaw: number;
+  /** Countup: préfixe (ex: "~", "+") */
+  resPrefix: string;
+  /** Countup: suffixe (ex: "h", "%", "+") */
+  resSuffix: string;
+  /** Countup: label */
+  resLabel: string;
+  /** Countup: step pour animation */
+  resStep: number;
+  /** CSS gradient fallback when no image */
+  gradientBg?: string;
+};
+
+export const PROJECT_SLIDES: ProjectSlide[] = [
+  {
+    id: "PRJ-01",
+    slug: "eidos-ia",
+    title: "Eidos IA",
+    client: "Automatisation métier · IA appliquée",
+    description:
+      "Plateforme IA orientée productivité : agents métiers, base de connaissances vectorielle et interface de pilotage en temps réel.",
+    tags: ["Next.js", "IA", "Automatisation"],
+    href: "/projets/eidos-ia",
+    image: "",
+    hex: "#3b7bff",
+    kbFrom: "scale(1.10) translate(0px,0px)",
+    kbTo: "scale(1.01) translate(-8px,-4px)",
+    kbDur: 16,
+    grad: "linear-gradient(to top, rgba(5,5,7,0.94) 0%, rgba(5,5,7,0.5) 40%, rgba(5,5,7,0.08) 70%, transparent 100%)",
+    resRaw: 12,
+    resPrefix: "~",
+    resSuffix: "h",
+    resLabel: "gagnées / semaine",
+    resStep: 0.5,
+    gradientBg: "radial-gradient(ellipse at 30% 40%, rgba(59,123,255,0.18) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(59,123,255,0.10) 0%, transparent 50%), linear-gradient(160deg, #0a0a12 0%, #050507 100%)",
+  },
+  {
+    id: "PRJ-02",
+    slug: "lannion-twirling-club",
+    title: "Club Sportif · Lannion",
+    titleLines: ["Club Sportif", "Lannion"],
+    client: "Association sportive · Lannion",
+    description:
+      "Site vitrine moderne pour une association locale, pensé pour les inscriptions, la visibilité SEO locale et la gestion d'actualités.",
+    tags: ["Site vitrine", "SEO local", "Performance"],
+    href: "/projets/lannion-twirling-club",
+    image: "",
+    hex: "#a78bfa",
+    kbFrom: "scale(1.08) translate(6px,0px)",
+    kbTo: "scale(1.01) translate(-4px,-6px)",
+    kbDur: 20,
+    grad: "linear-gradient(160deg, rgba(5,5,7,0.88) 0%, rgba(5,5,7,0.45) 45%, rgba(5,5,7,0.08) 75%, transparent 100%)",
+    resRaw: 95,
+    resPrefix: "",
+    resSuffix: "+",
+    resLabel: "Performance mobile",
+    resStep: 2,
+    gradientBg: "radial-gradient(ellipse at 60% 30%, rgba(167,139,250,0.15) 0%, transparent 55%), radial-gradient(ellipse at 20% 70%, rgba(167,139,250,0.08) 0%, transparent 50%), linear-gradient(200deg, #0c0a14 0%, #050507 100%)",
+  },
+  {
+    id: "PRJ-03",
+    slug: "les-sens-de-lharmonie",
+    title: "Les Sens de l'Harmonie",
+    titleLines: ["Les Sens", "de l'Harmonie"],
+    client: "Bien-être · Accompagnement",
+    description:
+      "Refonte digitale premium avec direction artistique sur mesure, parcours de conversion simplifie et storytelling visuel immersif.",
+    tags: ["Branding digital", "Conversion", "Motion"],
+    href: "/projets/les-sens-de-lharmonie",
+    image: "",
+    hex: "#34d399",
+    kbFrom: "scale(1.12) translate(-6px,4px)",
+    kbTo: "scale(1.02) translate(4px,-4px)",
+    kbDur: 18,
+    grad: "linear-gradient(to top, rgba(5,5,7,0.96) 0%, rgba(5,5,7,0.6) 30%, rgba(5,5,7,0.15) 60%, rgba(5,5,7,0.05) 100%)",
+    resRaw: 60,
+    resPrefix: "+",
+    resSuffix: "%",
+    resLabel: "Demandes de contact",
+    resStep: 3,
+    gradientBg: "radial-gradient(ellipse at 40% 60%, rgba(52,211,153,0.14) 0%, transparent 55%), radial-gradient(ellipse at 80% 20%, rgba(52,211,153,0.07) 0%, transparent 50%), linear-gradient(170deg, #060b0a 0%, #050507 100%)",
+  },
+];
+
+// ────────────────────────────────────────────────────────────
 // PROJECTS (3 items)
 // ────────────────────────────────────────────────────────────
 
@@ -390,7 +492,7 @@ export const PROJECTS: Project[] = [
       "Plateforme IA orientée productivité : agents métiers, base de connaissances vectorielle et interface de pilotage en temps réel.",
     tags: ["Next.js", "IA", "Automatisation", "Dashboard"],
     href: "/projets/eidos-ia",
-    image: "https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=1200&auto=format&fit=crop",
+    image: "",
   },
   {
     id: "PRJ-02",
@@ -401,7 +503,7 @@ export const PROJECTS: Project[] = [
       "Site vitrine moderne pour une association locale, pensé pour les inscriptions, la visibilité SEO locale et la gestion d'actualites.",
     tags: ["Site vitrine", "SEO local", "UI/UX", "Performance"],
     href: "/projets/lannion-twirling-club",
-    image: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1200&auto=format&fit=crop",
+    image: "",
   },
   {
     id: "PRJ-03",
@@ -412,7 +514,7 @@ export const PROJECTS: Project[] = [
       "Refonte digitale premium avec direction artistique sur mesure, parcours de conversion simplifie et storytelling visuel immersif.",
     tags: ["Branding digital", "Conversion", "Next.js", "Motion"],
     href: "/projets/les-sens-de-lharmonie",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop",
+    image: "",
   },
 ];
 
@@ -558,16 +660,16 @@ export function getCaseStudyBySlug(slug: string): CaseStudy | undefined {
 // ────────────────────────────────────────────────────────────
 
 export const STATS: Stat[] = [
-  { value: 32, label: "projets livrés", suffix: "+" },
-  { value: 67, label: "hausse moyenne des leads", suffix: "%" },
+  { value: 15, label: "projets livrés", suffix: "+" },
   { value: 97, label: "score Lighthouse médian", suffix: "+" },
+  { value: 60, label: "hausse moyenne des conversions", suffix: "%" },
 ];
 
-// ── HERO TAGLINE ──────────────────────────────────────────────────────────────
-// Différencié du manifeste (acte 3) pour éviter la répétition.
-// Le manifeste développe "beaux ET performants" sur 3 actes ;
-// le hero pose l'entrée — plus courte, plus directe.
-export const HERO_TAGLINE = "Beaux. Performants. Sans compromis.";
+// ── TICKER TAGS (hero marquee strip) ─────────────────────────────────────────
+export const TICKER_TAGS = [
+  "WebGL", "React", "Three.js", "Motion", "Next.js", "TypeScript",
+  "GLSL", "GSAP", "Design", "Performance",
+];
 
 export const HOME_CHAPTERS: HomeChapter[] = [
   {
@@ -615,7 +717,6 @@ export type SocialLink = {
 export const SOCIAL_LINKS: SocialLink[] = [
   { label: "GitHub", href: "https://github.com/eidos-studio", ariaLabel: "GitHub" },
   { label: "LinkedIn", href: "https://linkedin.com/company/eidos-studio", ariaLabel: "LinkedIn" },
-  { label: "Twitter", href: "https://twitter.com/eidos_studio", ariaLabel: "Twitter / X" },
 ];
 
 // ────────────────────────────────────────────────────────────
@@ -627,5 +728,58 @@ export const ABOUT_TABLE: AboutTableRow[] = [
   { label: "Localisation", value: "Lannion · Bretagne, France" },
   { label: "Équipe", value: "Studio indépendant" },
   { label: "Stack", value: "Next.js · Three.js · TypeScript" },
-  { label: "Statut", value: "OUVERT AUX DEVIS", isStatus: true },
+  { label: "Statut", value: "Ouvert aux devis", isStatus: true },
+];
+
+// ────────────────────────────────────────────────────────────
+// ABOUT_DNA_TABLE (tableau brutaliste manifeste)
+// ────────────────────────────────────────────────────────────
+
+export type AboutDnaRow = {
+  index: string;
+  key: string;
+  value: string;
+  isLive?: boolean;
+};
+
+export const ABOUT_DNA_TABLE: AboutDnaRow[] = [
+  { index: "00", key: "Fondée", value: "2024" },
+  { index: "01", key: "Localisation", value: "Lannion · Bretagne, France" },
+  { index: "02", key: "Format", value: "Studio indépendant" },
+  { index: "03", key: "Stack", value: "Next.js · Three.js · TypeScript" },
+  { index: "04", key: "Spécialité", value: "Web · UI/UX · WebGL" },
+  { index: "05", key: "Statut", value: "Ouvert aux devis", isLive: true },
+];
+
+// ────────────────────────────────────────────────────────────
+// ABOUT_GRID_CELLS (grille 2x2 des vérités)
+// ────────────────────────────────────────────────────────────
+
+export type AboutGridCell = {
+  id: string;
+  title: string;
+  body: string;
+};
+
+export const ABOUT_GRID_CELLS: AboutGridCell[] = [
+  {
+    id: "03.1",
+    title: "Design\nd'auteur",
+    body: "Aucun template. Chaque projet est conçu de zéro, pour vous, pour toujours.",
+  },
+  {
+    id: "03.2",
+    title: "Code de\nproduction",
+    body: "Next.js · TypeScript · architecture scalable dès le départ. Pas de dette technique.",
+  },
+  {
+    id: "03.3",
+    title: "WebGL\n& 3D",
+    body: "Three.js, shaders GLSL. Quand le projet justifie l'immersion, on crée l'immersion.",
+  },
+  {
+    id: "03.4",
+    title: "Obsession\ndu détail",
+    body: "Les micro-interactions, les transitions, les 8px qui font la différence entre bon et exceptionnel.",
+  },
 ];

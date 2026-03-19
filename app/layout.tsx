@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Syne, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Nav } from "@/components/nav";
 import { StructuredData } from "@/components/structured-data";
@@ -8,17 +8,24 @@ import { Cursor } from "@/components/ui/cursor";
 import { Preloader } from "@/components/preloader";
 import { PreloaderProvider } from "@/lib/preloader-context";
 import { PageTransition } from "@/components/ui/page-transition";
+import { RevealObserver } from "@/components/ui/reveal-observer";
 
-// Syne 400, 600, 700, 800 — titres, body, wordmark (eidos-logo-system.jsx)
-const syne = Syne({
+const spaceGrotesk = Space_Grotesk({
   variable: "--font-d",
   subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   preload: true,
 });
 
-// JetBrains Mono 300, 400, 500 — labels, tags, code (eidos-logo-system.jsx)
+const dmSans = DM_Sans({
+  variable: "--font-b2",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
+  preload: true,
+});
+
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-m",
   subsets: ["latin"],
@@ -102,7 +109,6 @@ export const metadata: Metadata = {
       { url: "/icon-16.png", sizes: "16x16", type: "image/png" },
       { url: "/icon-32.png", sizes: "32x32", type: "image/png" },
     ],
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
 
   manifest: "/site.webmanifest",
@@ -117,7 +123,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${syne.variable} ${jetbrainsMono.variable}`}
+      className={`${spaceGrotesk.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}
     >
       <body className="antialiased pt-14">
         <a
@@ -133,6 +139,7 @@ export default function RootLayout({
           <Cursor />
           <Nav />
           <StructuredData />
+          <RevealObserver />
           {children}
         </PreloaderProvider>
       </body>

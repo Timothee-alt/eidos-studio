@@ -1,22 +1,182 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { usePreloader } from "@/lib/preloader-context";
 
-// ─── MANIFESTE — 3 actes, scroll-scrubbed ────────────────────────────────────
+// ─── MANIFESTE — 3 mots, transition venetian blind, inversion finale ─────────
 //
-// Acte 1 — Sites premium.
-// Acte 2 — Identité unique.
-// Acte 3 — Performances réelles.
+// Mot 1 — EXISTER. (blanc pur)
+// Mot 2 — FONCTIONNER. (accent bleu)
+// Mot 3 — DURER. (inversion fond blanc, texte sombre)
 //
 // ─────────────────────────────────────────────────────────────────────────────
 
-const ACCENT = "#60a5fa";
+const WORDS = [
+  {
+    text: "EXISTER.",
+    counter: "01 / 03",
+    accented: false,
+    inverted: false,
+    rule: 0,
+  },
+  {
+    text: "FONCTIONNER.",
+    counter: "02 / 03",
+    accented: true,
+    inverted: false,
+    rule: 0.7,
+  },
+  {
+    text: "DURER.",
+    counter: "03 / 03",
+    accented: false,
+    inverted: true,
+    rule: 0.4,
+  },
+] as const;
 
+const ZONES = [
+  { start: 0.0, end: 0.3 },
+  { start: 0.3, end: 0.65 },
+  { start: 0.65, end: 1.0 },
+];
+
+const N_SLICES = 12;
+const TRANS_FRAC = 0.22;
+
+const cl01 = (x: number) => Math.max(0, Math.min(1, x));
+const sm = (e0: number, e1: number, x: number) => {
+  const t = cl01((x - e0) / (e1 - e0));
+  return t * t * (3 - 2 * t);
+};
 export function Manifesto() {
   const sectionRef = useRef<HTMLElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const wordRef = useRef<HTMLSpanElement>(null);
+  const slicesWrapRef = useRef<HTMLDivElement>(null);
+  const ruleRef = useRef<HTMLDivElement>(null);
+  const counterRef = useRef<HTMLDivElement>(null);
+  const cueRef = useRef<HTMLDivElement>(null);
+  const sliceRefs = useRef<(HTMLDivElement | null)[]>([]);
   const { isReady } = usePreloader();
+
+  const [slicesBuilt, setSlicesBuilt] = useState(false);
+  const lastWordRef = useRef(-1);
+  const isTransitioningRef = useRef(false);
+
+  const getCurBg = useCallback((wordIdx: number) => {
+    return WORDS[wordIdx].inverted ? "var(--text)" : "var(--bg)";
+  }, []);
+
+  const switchWord = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (toIdx: number, gsapInstance: any) => {
+      if (
+        isTransitioningRef.current ||
+        toIdx === lastWordRef.current ||
+        toIdx < 0 ||
+        toIdx >= WORDS.length
+      )
+        return;
+
+      const fromIdx = lastWordRef.current >= 0 ? lastWordRef.current : 0;
+      const toWord = WORDS[toIdx];
+      isTransitioningRef.current = true;
+
+      if (!wordRef.current || !stageRef.current || !counterRef.current)
+        return;
+      if (!slicesWrapRef.current || !ruleRef.current) return;
+
+      // Mise à jour immédiate du mot (caché derrière les slices)
+      wordRef.current.textContent = toWord.text;
+      wordRef.current.classList.toggle("mf-accented", toWord.accented);
+      counterRef.current.textContent = toWord.counter;
+
+      // Inversion du stage
+      if (toWord.inverted) {
+        stageRef.current.classList.add("mf-inverted");
+      } else {
+        stageRef.current.classList.remove("mf-inverted");
+      }
+
+      // Couleur des slices = fond FROM
+      const fromBg = getCurBg(fromIdx);
+      sliceRefs.current.forEach((ref) => {
+        if (ref) ref.style.background = fromBg;
+      });
+
+      // Afficher les slices
+      slicesWrapRef.current.style.opacity = "1";
+      ruleRef.current.style.width = "0";
+
+      // Animation venetian blind avec GSAP
+      const vw = typeof window !== "undefined" ? window.innerWidth : 1200;
+      const DURATION = 0.75;
+      const MAX_STAGGER = 0.12;
+
+      const tl = gsapInstance.timeline({
+        onComplete: () => {
+          if (slicesWrapRef.current && ruleRef.current) {
+            slicesWrapRef.current.style.opacity = "0";
+            sliceRefs.current.forEach((ref) => {
+              if (ref) gsapInstance.set(ref, { x: 0 });
+            });
+            isTransitioningRef.current = false;
+            lastWordRef.current = toIdx;
+            // Règle finale
+            if (wordRef.current && toWord.rule > 0) {
+              const ww = wordRef.current.offsetWidth;
+              ruleRef.current.style.width = `${ww * toWord.rule}px`;
+            }
+          }
+        },
+      });
+
+      sliceRefs.current.forEach((ref, i) => {
+        if (!ref) return;
+        const dir = i % 2 === 0 ? 1 : -1;
+        const stagger = (i / N_SLICES) * MAX_STAGGER;
+        tl.to(
+          ref,
+          {
+            x: dir * (vw + 20),
+            duration: DURATION - stagger,
+            ease: "power4.out",
+            overwrite: true,
+          },
+          stagger
+        );
+      });
+      lastWordRef.current = toIdx;
+    },
+    [getCurBg]
+  );
+
+  const updateRule = useCallback(
+    (wordIdx: number, progress: number) => {
+      const target = WORDS[wordIdx].rule;
+      if (!ruleRef.current || !wordRef.current) return;
+      if (target === 0) {
+        ruleRef.current.style.width = "0";
+        return;
+      }
+      const ww = wordRef.current.offsetWidth;
+      const ruleW = ww * target * cl01(progress);
+      ruleRef.current.style.width = `${ruleW}px`;
+
+      const vh = typeof window !== "undefined" ? window.innerHeight : 800;
+      const fs =
+        parseFloat(
+          typeof window !== "undefined"
+            ? getComputedStyle(wordRef.current).fontSize
+            : "120"
+        ) || 120;
+      const lineH = fs * 1.0;
+      ruleRef.current.style.top = `${vh * 0.5 + lineH * 0.5 + 14}px`;
+      ruleRef.current.style.bottom = "auto";
+    },
+    []
+  );
 
   useEffect(() => {
     if (!isReady) return;
@@ -30,192 +190,140 @@ export function Manifesto() {
       gsap.registerPlugin(ScrollTrigger);
       if (!sectionRef.current) return;
 
-      ctx = gsap.context(() => {
-        const reducedMotion = window.matchMedia(
-          "(prefers-reduced-motion: reduce)"
-        ).matches;
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
 
-        if (reducedMotion) {
-          gsap.set(
-            [".mf-phrase1", ".mf-phrase2", ".mf-phrase3"],
-            { opacity: 1, y: 0, x: 0, clipPath: "none", scale: 1 }
-          );
-          return;
+      if (reducedMotion) {
+        if (wordRef.current && stageRef.current && counterRef.current) {
+          wordRef.current.textContent = WORDS[0].text;
+          counterRef.current.textContent = WORDS[0].counter;
+          stageRef.current.classList.remove("mf-inverted");
         }
+        if (slicesWrapRef.current) slicesWrapRef.current.style.display = "none";
+        return;
+      }
 
-        // ── États initiaux ──────────────────────────────────────────────────
-        gsap.set(".mf-phrase1", { clipPath: "circle(0% at 50% 50%)", scale: 0.95 });
-        gsap.set(".mf-phrase2", { opacity: 0, y: 32 });
-        gsap.set(".mf-phrase3", { opacity: 0, clipPath: "inset(0 100% 0 0)" });
+      ctx = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom bottom",
+          onUpdate: (self) => {
+            const p = self.progress;
 
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "+=320%",
-            scrub: 1.2,
-            onUpdate: (self) => {
-              if (progressRef.current) {
-                progressRef.current.style.transform = `scaleX(${self.progress})`;
+            if (cueRef.current && p > 0.04) {
+              cueRef.current.classList.add("mf-cue-gone");
+            }
+
+            let newWord = 0;
+            for (let i = ZONES.length - 1; i >= 0; i--) {
+              if (p >= ZONES[i].start) {
+                newWord = i;
+                break;
               }
-            },
+            }
+
+            if (newWord !== lastWordRef.current) {
+              if (lastWordRef.current === -1 && newWord === 0) {
+                if (wordRef.current && counterRef.current && stageRef.current) {
+                  wordRef.current.textContent = WORDS[0].text;
+                  counterRef.current.textContent = WORDS[0].counter;
+                  stageRef.current.classList.remove("mf-inverted");
+                }
+                lastWordRef.current = 0;
+              } else {
+                switchWord(newWord, gsap);
+              }
+            }
+
+            const zone = ZONES[newWord];
+            const zoneLen = zone.end - zone.start;
+            const inZone = (p - zone.start) / zoneLen;
+            const ruleP = sm(TRANS_FRAC, TRANS_FRAC + 0.3, inZone);
+            if (!isTransitioningRef.current) {
+              updateRule(newWord, ruleP);
+            }
           },
         });
 
-        // ── ACTE 1 : Sites premium. (0 → 0.35) ─────────────────────────────
-        tl.to(".mf-phrase1", {
-          clipPath: "circle(150% at 50% 50%)",
-          scale: 1,
-          duration: 0.22,
-          ease: "expo.out",
-        }, 0.02);
-        tl.to(".mf-phrase1", {
-          scale: 0.4,
-          opacity: 0,
-          duration: 0.18,
-          ease: "power2.in",
-        }, 0.28);
-        tl.to(".mf-act1", { opacity: 0, y: -40, duration: 0.12, ease: "power2.in" }, 0.32);
-
-        // ── ACTE 2 : Identité unique. (0.38 → 0.68) ────────────────────────
-        tl.to(".mf-phrase2", { opacity: 1, y: 0, duration: 0.28, ease: "expo.out" }, 0.40);
-        tl.to(".mf-act2", { opacity: 0, y: -32, duration: 0.14, ease: "power2.in" }, 0.78);
-
-        // ── ACTE 3 : Performances réelles. (0.82 → 1.00) ───────────────────
-        tl.to(".mf-phrase3", {
-          opacity: 1,
-          clipPath: "inset(0 0% 0 0)",
-          duration: 0.32,
-          ease: "expo.out",
-        }, 0.84);
-
+        // Initial state
+        if (wordRef.current && counterRef.current && stageRef.current) {
+          wordRef.current.textContent = WORDS[0].text;
+          counterRef.current.textContent = WORDS[0].counter;
+          stageRef.current.classList.remove("mf-inverted");
+        }
+        lastWordRef.current = 0;
       }, sectionRef);
     });
 
     return () => ctx?.revert();
-  }, [isReady]);
+  }, [isReady, switchWord, updateRule]);
+
+  // Build slices on mount
+  useEffect(() => {
+    if (!slicesWrapRef.current) return;
+    slicesWrapRef.current.innerHTML = "";
+    sliceRefs.current = [];
+    const vh = typeof window !== "undefined" ? window.innerHeight : 800;
+    const sliceH = vh / N_SLICES;
+
+    for (let i = 0; i < N_SLICES; i++) {
+      const slice = document.createElement("div");
+      slice.className = "mf-slice";
+      slice.style.top = `${i * sliceH}px`;
+      slice.style.height = `${sliceH}px`;
+
+      const inner = document.createElement("div");
+      inner.className = "mf-slice-inner";
+      inner.style.background = getCurBg(0);
+      slice.appendChild(inner);
+      slicesWrapRef.current.appendChild(slice);
+      (sliceRefs.current as (HTMLDivElement | null)[])[i] = inner as HTMLDivElement;
+    }
+    setSlicesBuilt(true);
+  }, [getCurBg]);
 
   return (
     <section
       ref={sectionRef}
       id="manifeste"
-      aria-label="Manifeste"
-      style={{
-        height: "420vh",
-        contentVisibility: "visible",
-        containIntrinsicSize: "unset",
-      }}
+      aria-label="Manifeste Eidos Studio"
+      className="mf-section"
     >
-      <div
-        className="sticky top-0 w-full h-screen overflow-hidden"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 50% at 50% 20%, rgba(96, 165, 250, 0.05) 0%, transparent 50%), #050507",
-        }}
-      >
-        {/* Grain overlay — profondeur */}
+      <p className="sr-only">
+        Manifeste Eidos Studio : Exister. Fonctionner. Durer.
+      </p>
+
+      <div ref={stageRef} id="mf-stage" className="mf-stage">
+        {/* Slices overlay — venetian blind */}
         <div
+          ref={slicesWrapRef}
+          id="mf-slices"
+          className="mf-slices"
           aria-hidden
-          className="absolute inset-0 z-0 opacity-[0.02] pointer-events-none"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-          }}
         />
 
-        {/* Barre de progression — plus visible */}
-        <div
-          ref={progressRef}
-          aria-hidden
-          className="absolute top-0 left-0 z-20"
-          style={{
-            height: "2px",
-            width: "100%",
-            background: `linear-gradient(90deg, ${ACCENT} 0%, rgba(96, 165, 250, 0.3) 100%)`,
-            transformOrigin: "left center",
-            transform: "scaleX(0)",
-            boxShadow: `0 0 12px ${ACCENT}40`,
-          }}
-        />
-
-        {/* Label section */}
-        <span
-          aria-hidden
-          className="absolute bottom-7 left-6 md:left-14 font-mono uppercase z-10"
-          style={{
-            fontSize: "9px",
-            letterSpacing: "0.34em",
-            color: "rgba(255,255,255,0.2)",
-          }}
-        >
-          manifeste
-        </span>
-
-        {/* ═══ ACTE 1 — Sites premium. ═══ */}
-        <div
-          className="mf-act1 absolute inset-0 flex flex-col items-center justify-center"
-          aria-label="Sites premium"
-        >
-          <span
-            className="mf-phrase1 font-extrabold text-white tracking-tighter"
-            style={{
-              fontFamily: "var(--font-d)",
-              fontSize: "clamp(72px, 16vw, 220px)",
-              lineHeight: "0.9",
-              willChange: "clip-path, transform",
-            }}
-          >
-            Sites <span style={{ color: ACCENT }}>premium</span>.
+        {/* Le mot */}
+        <div id="mf-word" className="mf-word" aria-hidden>
+          <span ref={wordRef} id="mf-word-inner" className="mf-word-inner">
+            EXISTER.
           </span>
         </div>
 
-        {/* ═══ ACTE 2 — Identité unique. ═══ */}
-        <div
-          className="mf-act2 absolute inset-0 flex flex-col justify-center"
-          style={{
-            paddingLeft: "clamp(24px, 5.6vw, 56px)",
-            paddingRight: "clamp(24px, 5.6vw, 56px)",
-          }}
-        >
-          <p
-            className="mf-phrase2 font-extrabold text-white tracking-tight leading-[0.88]"
-            style={{
-              fontFamily: "var(--font-d)",
-              fontSize: "clamp(48px, 10vw, 140px)",
-            }}
-          >
-            Identité <span style={{ color: ACCENT }}>unique</span>.
-          </p>
+        {/* Règle sous le mot */}
+        <div ref={ruleRef} id="mf-rule" className="mf-rule" aria-hidden />
+
+        {/* Compteur */}
+        <div ref={counterRef} id="mf-counter" className="mf-counter" aria-hidden>
+          01 / 03
         </div>
 
-        {/* ═══ ACTE 3 — Performances réelles. ═══ */}
-        <div
-          className="mf-act3 absolute inset-0 flex flex-col justify-center"
-          style={{
-            paddingLeft: "clamp(24px, 5.6vw, 56px)",
-            paddingRight: "clamp(24px, 5.6vw, 56px)",
-          }}
-        >
-          <p
-            className="mf-phrase3 font-extrabold text-white tracking-tight leading-[0.88]"
-            style={{
-              fontFamily: "var(--font-d)",
-              fontSize: "clamp(48px, 10vw, 140px)",
-              willChange: "clip-path",
-            }}
-          >
-            Performances <span style={{ color: ACCENT }}>réelles</span>.
-          </p>
+        {/* Scroll cue */}
+        <div ref={cueRef} id="mf-cue" className="mf-cue" aria-hidden>
+          <div className="mf-cue-bar" />
+          <span className="mf-cue-txt">Défiler</span>
         </div>
-
-        {/* Règle de sortie */}
-        <div
-          aria-hidden
-          className="absolute bottom-0 left-0 right-0 z-0"
-          style={{
-            height: "1px",
-            background: "linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.15), transparent)",
-          }}
-        />
       </div>
     </section>
   );

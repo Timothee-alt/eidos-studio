@@ -2,9 +2,14 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { SERVICES_SLIDES } from "@/lib/data";
 import type { ServiceSlide } from "@/lib/data";
-import { ServicesWebGL } from "@/components/services-webgl";
+
+const ServicesWebGL = dynamic(
+  () => import("@/components/services-webgl").then((m) => m.ServicesWebGL),
+  { ssr: false }
+);
 
 const CtaArrow = () => (
   <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden>
@@ -31,6 +36,7 @@ function easeInOutQuart(t: number): number {
 
 export function Services() {
   const [cur, setCur] = useState(0);
+  const curRef = useRef(0);
   const [hintGone, setHintGone] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -46,6 +52,7 @@ export function Services() {
   const panelGlowRef = useRef<HTMLDivElement>(null);
   const flashRef = useRef<HTMLDivElement>(null);
   const scrollHintRef = useRef<HTMLDivElement>(null);
+  const goToRef = useRef<(next: number, instant?: boolean) => void>(() => {});
 
   const slides = SERVICES_SLIDES;
   const N = slides.length;
@@ -70,6 +77,7 @@ export function Services() {
 
       const prev = cur;
       setCur(nextIdx);
+      curRef.current = nextIdx;
       setIsAnimating(true);
 
       const from = -prev * slideH();
@@ -105,6 +113,8 @@ export function Services() {
     },
     [cur, isAnimating, N, slideH]
   );
+
+  goToRef.current = goTo;
 
   const exitSlide = useCallback((slide: HTMLElement, idx: number) => {
     slide.classList.add("exiting");
@@ -368,7 +378,6 @@ export function Services() {
 
   useEffect(() => {
     if (!stripRef.current) return;
-    stripRef.current.style.height = `${N * 100}vh`;
     stripRef.current.style.transition = "none";
     stripRef.current.style.transform = "translateY(0)";
   }, [N]);
@@ -397,91 +406,62 @@ export function Services() {
   }, [cur, slideH]);
 
   useEffect(() => {
-    let wheelAccum = 0;
-    let wheelCooldown = false;
-    let exitAccum = 0; // scroll-up accumulé pour sortir du 01
-    const EXIT_THRESHOLD = 140; // seuil plus élevé = moins sensible à la sortie
-
-    const handleWheel = (e: WheelEvent) => {
-      if (isAnimating || wheelCooldown) return;
-
-      const scrollDown = e.deltaY > 0;
-      const scrollUp = e.deltaY < 0;
-
-      if (scrollDown && cur === N - 1) return;
-
-      // Sur le slide 01 : exiger un scroll up délibéré avant de laisser sortir
-      if (scrollUp && cur === 0) {
-        exitAccum += Math.abs(e.deltaY);
-        if (exitAccum < EXIT_THRESHOLD) {
-          e.preventDefault();
-          return;
-        }
-        exitAccum = 0;
-        return; // laisser l'événement propager pour sortir
-      }
-      exitAccum = 0; // reset quand on change de direction ou de slide
-
-      e.preventDefault();
-      wheelAccum += e.deltaY;
-      if (Math.abs(wheelAccum) >= 50) {
-        const dir = wheelAccum > 0 ? 1 : -1;
-        wheelAccum = 0;
-        wheelCooldown = true;
-        goTo(cur + dir);
-        setTimeout(() => {
-          wheelCooldown = false;
-        }, 900);
-      }
-    };
-
     const section = sectionRef.current;
     if (!section) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            window.addEventListener("wheel", handleWheel, { passive: false });
-          } else {
-            window.removeEventListener("wheel", handleWheel);
-          }
+    let ctx: { revert(): void } | undefined;
+
+    Promise.all([
+      import("gsap").then((m) => m.default),
+      import("gsap/ScrollTrigger").then((m) => m.ScrollTrigger),
+    ]).then(([gsap, ScrollTrigger]) => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      section.style.height = `${N * 100}vh`;
+
+      const pinWrap = section.querySelector(".services-pin-wrap") as HTMLElement;
+      if (!pinWrap) return;
+
+      ctx = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top top",
+          end: "bottom bottom",
+          pin: pinWrap,
+          pinSpacing: false,
+          onUpdate: (self) => {
+            const p = self.progress;
+            const floatIdx = p * (N - 1);
+            const snapIdx = Math.max(0, Math.min(N - 1, Math.round(floatIdx)));
+
+            if (snapIdx !== curRef.current) {
+              goToRef.current(snapIdx);
+            }
+          },
         });
-      },
-      { threshold: 0.5 }
-    );
-    observer.observe(section);
+      }, section);
+    });
 
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-      observer.disconnect();
-    };
-  }, [cur, isAnimating, goTo, N]);
+    return () => ctx?.revert();
+  }, [N]);
 
   useEffect(() => {
-    let touchStartY = 0;
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0].clientY;
-    };
-    const handleTouchEnd = (e: TouchEvent) => {
-      if (isAnimating) return;
-      const dy = touchStartY - e.changedTouches[0].clientY;
-      if (Math.abs(dy) > 40) {
-        goTo(cur + (dy > 0 ? 1 : -1));
-      }
-    };
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchend", handleTouchEnd, { passive: true });
-    return () => {
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchend", handleTouchEnd);
-    };
-  }, [cur, isAnimating, goTo]);
+    const section = sectionRef.current;
+    if (!section) return;
 
-  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowDown" || e.key === "PageDown") goTo(cur + 1);
-      if (e.key === "ArrowUp" || e.key === "PageUp") goTo(cur - 1);
+      const rect = section.getBoundingClientRect();
+      const inView = rect.top <= window.innerHeight && rect.bottom >= 0;
+      if (!inView) return;
+
+      if (e.key === "ArrowDown" || e.key === "PageDown") {
+        e.preventDefault();
+        goTo(cur + 1);
+      }
+      if (e.key === "ArrowUp" || e.key === "PageUp") {
+        e.preventDefault();
+        goTo(cur - 1);
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -532,18 +512,19 @@ export function Services() {
       className="services-section"
       aria-label="Expertises"
     >
-      <div className="services-glcanvas-wrap" aria-hidden>
-        <ServicesWebGL
-          slides={slides}
-          activeIdx={cur}
-          rightContainerRef={rightRef}
-          mouseTargetRef={mouseTargetRef}
-          sectionRef={sectionRef}
-        />
-      </div>
-      <div ref={flashRef} className="services-flash" aria-hidden />
+      <div className="services-pin-wrap">
+        <div className="services-glcanvas-wrap" aria-hidden>
+          <ServicesWebGL
+            slides={slides}
+            activeIdx={cur}
+            rightContainerRef={rightRef}
+            mouseTargetRef={mouseTargetRef}
+            sectionRef={sectionRef}
+          />
+        </div>
+        <div ref={flashRef} className="services-flash" aria-hidden />
 
-      <div className="services-shell">
+        <div className="services-shell">
         <aside className="services-panel">
           <div
             ref={panelGlowRef}
@@ -720,6 +701,7 @@ export function Services() {
               </div>
             ))}
           </div>
+        </div>
         </div>
       </div>
     </section>

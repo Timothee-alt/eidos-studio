@@ -70,8 +70,8 @@ export function Cursor() {
         squashTo(squash);
       } else {
         // Return to normal shape
-        stretchTo(isViewHover ? 2.5 : isHovering ? 1.5 : 1);
-        squashTo(isViewHover ? 2.5 : isHovering ? 1.5 : 1);
+        stretchTo(isViewHover ? 2.2 : isHovering ? 1.5 : 1);
+        squashTo(isViewHover ? 2.2 : isHovering ? 1.5 : 1);
         rotationTo(0);
       }
 
@@ -197,7 +197,7 @@ export function Cursor() {
       >
         <span
           ref={textRef}
-          className="font-mono text-[10px] font-bold uppercase tracking-widest text-white opacity-0"
+          className="font-mono text-[11px] font-bold uppercase tracking-widest text-white opacity-0"
           style={{ fontFamily: "var(--font-m)" }}
         >
           {cursorText}

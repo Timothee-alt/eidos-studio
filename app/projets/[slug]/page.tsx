@@ -45,7 +45,7 @@ export default async function CaseStudyPage({ params }: Props) {
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "radial-gradient(ellipse 90% 70% at 70% 0%, rgba(59, 123, 255, 0.12) 0%, transparent 65%)",
+                "radial-gradient(ellipse 80% 60% at 65% 10%, rgba(59,123,255,0.10) 0%, transparent 55%), radial-gradient(ellipse 50% 40% at 20% 80%, rgba(167,139,250,0.06) 0%, transparent 50%), linear-gradient(160deg, #0a0a12 0%, #050507 100%)",
             }}
           />
           <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 lg:grid-cols-[1fr_280px] lg:gap-10">

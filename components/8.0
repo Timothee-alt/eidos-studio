@@ -1,0 +1,111 @@
+The Full Roadmap to Awwwards 8+
+🔴 PRIORITY 1 — Ship-Blockers (Do These First)
+1. Fix the React hydration error. The "N 1 Issue" badge showing on every page is a disqualifier. Hunt down every Date.now(), Math.random(), or typeof window in server components. The footer.tsx uses new Date().getFullYear() directly in JSX — wrap it in a useEffect or suppressHydrationWarning. Find it all.
+
+2. Fix site.webmanifest 404. Create /public/site.webmanifest with correct metadata. Takes 5 minutes.
+
+3. Remove the FPS counter from the About Hero (Gray-Scott). The "69 FPS" debug text is visible in the top right of the About section in production. Kill it.
+
+4. Fix the visible is not defined in services-webgl.tsx:252. The site was crashing with 500 errors earlier. It seems patched but the root cause must be verified — likely a variable scoping issue from a ref not being properly initialized before the canvas render.
+
+🔴 PRIORITY 2 — Architecture (The Site's Spine)
+5. Uncomment the Manifesto section. It's your best animation. {/* <Manifesto /> */} — uncomment this immediately. The venetian blind word reveals (EXISTER → FONCTIONNER → DURER) are your most distinctive piece of craft and it's literally commented out. Place it between Hero and Services.
+
+6. Remove the second manifesto. Once the Manifesto section is live, strip the "Le web mérite mieux." closing sequence from the About section — you cannot have two cinematic manifestos. The closing section in About becomes redundant. Replace it with a simpler CTA block: one line, one button, no theatrics.
+
+7. Add a "Processus" section between Services and Projects. This is the missing narrative bridge — every jury scores narrative flow. Four numbered phases: Cadrage → Conception → Production → Livraison. Use a connecting vertical line with GSAP drawSVG that traces as you scroll. Keep it tight: full viewport height, 2-column layout, numbered steps on the left, short description on the right. This resolves the jarring jump from "what we do" to "what we made."
+
+8. Convert Services section from scroll-hijack to ScrollTrigger pin. Two consecutive scroll-hijacked sections (Services then Projects) is a UX anti-pattern. Replace the custom wheel event listener logic in services.tsx with a GSAP ScrollTrigger pinned section. Same visual result. User keeps scroll control.
+
+🔴 PRIORITY 3 — Typography (Your Biggest Vulnerability)
+9. Replace Syne with a more differentiated display face. Syne is good but it's become the default "French creative studio" font — you'll find it on 40% of French agency sites. For an Awwwards submission you need a more ownable type identity. Look at: Clash Display, Neue Haas Grotesk Display, or a properly licensed condensed grotesque. The key is finding something where the letterforms contribute to the visual identity, not just carry the copy.
+
+10. Create a real typographic hierarchy — 4 levels, not 2. Currently you have: giant display (EIDOS, PARLONS) and mono labels. You're missing medium-scale editorial text — the kind of type that Awwwards judges actually read. Something around 20-32px with generous line-height for the project descriptions and About body text. The about-m-body paragraphs are currently rendered in a very small typeface that nobody reads.
+
+11. Fix the hero tagline. "Beaux. Performants. Sans compromis." — this is a baseline promise, not an identity statement. It sounds like every other premium agency. Remove it from the hero entirely. Let the wordmark + particle eye stand alone. The tagline can live in the About manifesto where it has context.
+
+12. Stop using uppercase on everything. Count the uppercase instances: "MENU", "EIDOS", "STUDIO", "PARLONS ENSEMBLE.", "ADN DU STUDIO", "OUVERT AUX DEVIS", all tag labels, all form labels, all mono captions. The effect of uppercase is power — but you've applied it so uniformly that it's become ambient. Reserve caps for 3-4 key moments: the wordmark, the manifesto words, and one CTA.
+
+🔴 PRIORITY 4 — Visual Design
+13. Audit and reduce blue accent usage by 40%. Blue #3b7bff currently appears in: the CTA button, "ENSEMBLE." heading fill, link underlines, form field focus, text scramble characters, service 01 color, the accent line in contact, social link hovers, cursor hover state. Choose its 4 most impactful appearances and make it white or muted everywhere else. An accent color that's everywhere is just a second base color.
+
+14. Replace all Unsplash stock photos in the Projects section. This is non-negotiable. An abstract purple fractal, generic macro bubbles, and a gradient blob have zero relationship to your actual work. Options in order of preference:
+
+(a) Actual screenshots/mockups of the real sites you built — even if they're small local clients, real work > beautiful lies
+(b) 3D-rendered mockup frames showing your sites on devices
+(c) Bespoke art-directed illustrations — but they must relate to the project's domain Never stock photos. Awwwards juries know every Unsplash image.
+15. Fix the project card text overflow. "Lannion Twirling Cl" and "de l'Harmo" — project titles are being clipped. Either reduce font-size or widen the container. This looks like a broken layout to any juror.
+
+16. The hero particle eye must be visible by default. The particle eye (the point-cloud orb) only reveals on mouse movement via the radial mask. In the screenshot it looks like a vague dark blob in the center right. Either: (a) make it visible at a low opacity by default, then the hover reveals full brightness, or (b) position the particle eye as a clearly visible element without the mask gimmick. Discovery mechanics only work when users know something is discoverable.
+
+17. Give each section a distinct visual rhythm. Currently every section is dark, full-width, edge-to-edge. Awwwards-winning sites use section rhythm to signal transitions: a section with more whitespace, a section with a contained max-width, a section that's intentionally tighter. Right now scrolling through the page feels like one continuous dark surface.
+
+18. Add a horizontal rule / section separator system. The site lacks micro-architecture between sections. One subtle 1px rule at the top of each section (already done for Services with border-top: 1px solid rgba(255,255,255,0.07)) — do this consistently for every section transition. The About → Contact jump currently has nothing.
+
+🟡 PRIORITY 5 — Animation Coherence
+19. Establish one entrance animation and use it consistently. You currently have: clip-path inset reveal (hero title), translateY + opacity (hero UI elements), venetian blind slices (manifesto), strip translateY (services), lerp translateX (projects), IntersectionObserver class toggle (about stats), GSAP from/to (contact). Pick one primary pattern for text and one for blocks. Everything else is decoration.
+
+The winning pattern for text is clip-path: inset(0 0 110% 0) → inset(0 0 0% 0). Use it for all headline reveals. For body text use opacity + translateY(14px) at 0.65s. Delete the rest.
+
+20. Fix the hero animation duration. The EIDOS clip-path reveal takes 1.55 seconds. That's too slow — by the time it completes, users have already started scrolling or have mentally disengaged. Cut it to 0.9-1.0s.
+
+21. The project image bleed on horizontal scroll transition must be fixed. When transitioning between project slides, the previous project's image bleeds in from the left. This is because the parallax layer (pp-para) is a separate element with the same background image and no proper masking. Either add overflow: hidden to the strip container or clip the parallax layer per-panel.
+
+22. Reduce the manifesto section height from 420vh. mf-section is height: 420vh — that's 420% of the viewport just for 3 words. You're burning almost 4 full viewport heights on a section with 3 words in it. Cut to 280vh. The section should feel like a dramatic pause, not a marathon.
+
+23. The preloader counter needs to respond to actual load state. Currently counts 0→100 over a fixed 1.6s regardless of whether assets have loaded. On slow connections this is misleading. Either remove the counter entirely (just show the Eidos symbol, then split-reveal) or drive the counter from actual resource loading. The split-panel exit animation is clean — keep that.
+
+🟡 PRIORITY 6 — Navigation & Micro-UX
+24. Shrink the MENU button. The h-12 px-6 pill button with "MENU" text is 48px tall and dominates the top right. For a studio claiming precision, this feels like an afterthought. Either: (a) Make it a compact pill h-9 px-4 with text-[9px] tracking-[0.3em], or (b) Use a refined hamburger icon — two 20px lines, 1px weight, with a morphing animation.
+
+25. Add 1-2 persistent nav links to the header. The header currently shows only the logo and the menu button. On desktop, expose at least "Projets" and "Contact" as ghost text links in the header. This helps orientation and reduces the friction of having to open an overlay for every navigation action.
+
+26. Add keyboard navigation for Services section. Currently keyboard users can only use Arrow keys to navigate services (handled). But the scroll-hijack means keyboard users using Tab will be trapped. Ensure Tab order works correctly when the section is in view.
+
+27. The cursor "VIEW" text is too small in the expanded state. When the cursor expands to scaleX: 2.5 with "VOIR" text, the text is at text-[10px] — it becomes unreadably tiny. The text should scale up with the cursor OR the cursor should not squish — use width/height expansion via GSAP instead of scaleX/scaleY.
+
+🟡 PRIORITY 7 — Content & Copy
+28. Replace the portfolio statistics or source them.
+
+"32+ projets livrés" — you show 3. Either add 29 more or say "15+ projets" and show 5.
+"67% hausse moyenne des leads" — add a parenthetical source or remove. This is a commercial claim.
+"97+ score Lighthouse médian" — this is actually defensible if you have the reports. Keep it.
+29. The social links are placeholders. GitHub, LinkedIn, Twitter all link to stub URLs. Either: link to real active profiles, or remove the ones that are empty. Three dead social links is worse than one real one.
+
+30. Rename "Lannion Twirling Club" in the portfolio. This is a real project and respecting the client is important — but in the context of an Awwwards submission this project name actively hurts your premium positioning. Consider listing it as "Club Sportif · Lannion" with the actual project described by its results rather than its name.
+
+31. The REEL_VIDEO_URL is empty. The reel CTA exists in the hero section (commented out) or as a button that scrolls to contact. For Awwwards you need a showreel or you need to remove all references to it. A 60-second screen-recorded video of the site's own interactions — the particle eye, the manifesto transitions, the horizontal project scroll — edited to music is sufficient. Make it. Host it on Vimeo. Link it.
+
+32. "Construisons ensemble quelque chose d'extraordinaire." — cut it. This is the most generic contact copy possible. Replace with something specific: "Un projet ambitieux mérite une conversation directe." or just the email address standing alone, large, without preamble.
+
+🟡 PRIORITY 8 — New/Enhanced Sections
+33. Add real screenshots to case study pages. Navigate to /projets/lannion-twirling-club — there are presumably case study pages. These pages need actual visual documentation of the work: screenshots, video captures, before/after comparisons. Text-only case studies with a stock hero image score a 4 on Design.
+
+34. Add an "Approche" mini-section to each case study. The case study data (CASE_STUDIES) already has approach.decisions[] and approach.process — this content is in the data but may not be surfaced visually with sufficient design craft.
+
+35. Consider a thin horizontal ticker or marquee at the bottom of the hero. Between the hero and the manifesto, a single-line ticker running tech tags or project categories ("WebGL · React · Three.js · Motion · Next.js · TypeScript") at 0.6x opacity creates a rhythm and a sense of depth without taking up space. Many winning sites use this pattern as a section bridge.
+
+🟡 PRIORITY 9 — Technical & Performance
+36. Add proper Open Graph images. The ogImage fields in CASE_STUDIES are all empty. Generate a proper OG image for the homepage and each case study. Use next/og (ImageResponse) — it takes 2 hours to implement.
+
+37. Ensure lazy loading of all WebGL canvases. The Gray-Scott simulation and the services WebGL canvas should not block LCP. Verify all are loaded with ssr: false dynamic imports and loading="lazy" where applicable.
+
+38. Add robots.txt and proper sitemap. If these don't exist, add them. Use next-sitemap package.
+
+39. Fix the scroll snap behavior. html { scroll-snap-type: y proximity; } combined with scroll-hijacked sections causes conflicts — the snap will fight with the custom wheel handlers. Either disable scroll snap entirely (you have enough custom scroll behavior) or scope it to non-hijacked sections only.
+
+40. The btn-primary-filled is 100% width on mobile. The hero CTA button becomes full-width on mobile (@media (max-width: 640px)). On a dark hero with a large wordmark, a full-width white button looks like a footer element. Change to width: fit-content on mobile.
+
+🟢 PRIORITY 10 — Polish & Distinction
+41. Add variable font weight animation to the manifesto words. If the display font supports variable weight axes, animate from font-weight: 100 → 800 as each word reveals. This is the kind of micro-detail that makes Awwwards judges pause and screenshot.
+
+42. Give the "ADN du studio" table rows a staggered scroll entrance. Each row currently appears without animation. Add a GSAP ScrollTrigger stagger that reveals each row left-to-right with a 0.07s offset. The table is excellent structural content — it deserves to be presented with the same craft as the rest.
+
+43. The about-closing-glow section needs more presence. The radial glow behind "Le web / mérite / mieux." (once you've stripped the duplicate manifesto) is too faint. This should be the emotional climax of the About section — push the glow to opacity: 0.15, add a slow animation: breathe 6s ease-in-out infinite scale pulse.
+
+44. Make the email scramble trigger on page load, not just hover. In the contact section, the TextScramble only fires on mouseEnter. For first-time visitors who don't hover the email: they just see the static address. Run one scramble pass automatically 0.8s after the contact section enters the viewport. This makes the section feel alive even without interaction.
+
+45. Animate the manifesto rule line as a drawing effect. The mf-rule (horizontal line under each manifesto word) currently uses a CSS width transition. Replace with an SVG line + GSAP drawSVG or a scaleX transform from transform-origin: left. The draw should happen after the venetian blind exits, not during it.
+
+46. Add a "scroll progress" line to the About section. The about-tick (ref={tickRef}) scroll progress bar already exists in the code! But it's 0 opacity. Make it visible — a 1px line that fills as you scroll through the About section is a signature detail that ties the section together.
+

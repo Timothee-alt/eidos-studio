@@ -24,6 +24,21 @@ export function SmoothScroll() {
         prevent: (element) => element.nodeName === "VERCEL-LIVE-FEEDBACK",
       });
 
+      ScrollTrigger.scrollerProxy(document.documentElement, {
+        scrollTop: (v) => {
+          if (arguments.length) lenis!.scrollTo(v as number, { immediate: true });
+          return lenis!.scroll;
+        },
+        getBoundingClientRect: () => ({
+          top: 0,
+          left: 0,
+          width: window.innerWidth,
+          height: window.innerHeight,
+        }),
+        fixedMarkers: true,
+        pinType: "transform",
+      });
+
       lenis.on("scroll", ScrollTrigger.update);
       rafCallback = (time: number) => {
         lenis?.raf(time * 1000);

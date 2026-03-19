@@ -1,0 +1,21 @@
+{
+  "name": "Eidos Studio",
+  "short_name": "Eidos",
+  "description": "Studio digital immersif — WebGL, sites premium et applications sur mesure.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050507",
+  "theme_color": "#050507",
+  "icons": [
+    {
+      "src": "/icon-16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ]
+}

@@ -172,29 +172,35 @@ export function Nav() {
           </Link>
 
           <div className="flex shrink-0 items-center gap-6">
+            <div className="hidden md:flex items-center gap-6">
+              <Link href="/#projets" className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/45 hover:text-white transition-colors duration-300">
+                Projets
+              </Link>
+              <Link href="/#contact" className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/45 hover:text-white transition-colors duration-300">
+                Contact
+              </Link>
+            </div>
             <Magnetic strength={0.2} radius={60}>
               <button
                 type="button"
                 onClick={toggleMenu}
-                className="group/btn relative flex h-12 items-center justify-center overflow-hidden rounded-full bg-white/10 px-6 backdrop-blur-md transition-colors hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                className="group/btn relative flex h-9 items-center justify-center overflow-hidden rounded-full bg-white/10 px-4 backdrop-blur-md transition-colors hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                 aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
                 aria-expanded={menuOpen}
               >
                 <div className="absolute inset-0 bg-white/5 opacity-0 transition-opacity group-hover/btn:opacity-100" />
-                <div className="relative h-[14px] overflow-hidden font-mono text-sm uppercase leading-none tracking-widest text-white">
+                <div className="relative h-[12px] overflow-hidden font-mono text-[9px] uppercase leading-none tracking-[0.3em] text-white">
                   <div 
                     className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]"
-                    style={{ transform: menuOpen ? 'translateY(-28px)' : 'translateY(0px)' }}
+                    style={{ transform: menuOpen ? 'translateY(-24px)' : 'translateY(0px)' }}
                   >
-                    {/* State Closed (Menu) */}
-                    <div className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover/btn:-translate-y-[14px]">
-                      <span className="flex h-[14px] items-center justify-center">Menu</span>
-                      <span className="flex h-[14px] items-center justify-center">Menu</span>
+                    <div className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover/btn:-translate-y-[12px]">
+                      <span className="flex h-[12px] items-center justify-center">Menu</span>
+                      <span className="flex h-[12px] items-center justify-center">Menu</span>
                     </div>
-                    {/* State Open (Fermer) */}
-                    <div className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover/btn:-translate-y-[14px]">
-                      <span className="flex h-[14px] items-center justify-center">Fermer</span>
-                      <span className="flex h-[14px] items-center justify-center">Fermer</span>
+                    <div className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover/btn:-translate-y-[12px]">
+                      <span className="flex h-[12px] items-center justify-center">Fermer</span>
+                      <span className="flex h-[12px] items-center justify-center">Fermer</span>
                     </div>
                   </div>
                 </div>

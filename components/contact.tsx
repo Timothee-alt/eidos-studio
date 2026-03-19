@@ -80,11 +80,36 @@ export function Contact() {
   const [copied, setCopied] = useState(false);
   const [fields, setFields] = useState<Fields>({ name: "", type: "", message: "" });
 
-  // ── Init scrambler ──────────────────────────────────────────────────────────
+  // ── Init scrambler + auto-scramble on section enter ─────────────────────────
   useEffect(() => {
     if (emailRef.current) {
       scramblerRef.current = new TextScramble(emailRef.current);
     }
+
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting && scramblerRef.current && !scrambleBusyRef.current) {
+            setTimeout(() => {
+              if (scramblerRef.current && !scrambleBusyRef.current) {
+                scrambleBusyRef.current = true;
+                scramblerRef.current.setText(CONTACT_EMAIL).then(() => {
+                  scrambleBusyRef.current = false;
+                });
+              }
+            }, 800);
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    io.observe(section);
+
+    return () => io.disconnect();
   }, []);
 
   // ── Click-to-copy ───────────────────────────────────────────────────────────
@@ -235,7 +260,7 @@ export function Contact() {
         aria-hidden
         className="absolute top-0 left-0 right-0 h-px"
         style={{
-          background: "linear-gradient(90deg, transparent 0%, rgba(59,123,255,0.5) 40%, rgba(59,123,255,0.5) 60%, transparent 100%)",
+          background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 40%, rgba(255,255,255,0.08) 60%, transparent 100%)",
         }}
       />
 
@@ -317,7 +342,7 @@ export function Contact() {
             className="mt-8 md:mt-10 max-w-[48ch] text-[15px] md:text-[17px] leading-[1.75] text-white/50"
             style={{ fontFamily: "var(--font-d)" }}
           >
-            Un projet, une idée, une collaboration. Construisons ensemble quelque chose d&apos;extraordinaire.
+            Un projet ambitieux mérite une conversation directe.
           </p>
         </div>
 
@@ -545,7 +570,7 @@ export function Contact() {
             style={{ background: "rgba(255,255,255,0.08)" }}
           />
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <span className="font-mono text-[9px] tracking-[0.22em] text-white/22 uppercase">
+            <span className="font-mono text-[9px] tracking-[0.22em] text-white/22 uppercase" suppressHydrationWarning>
               © {new Date().getFullYear()} Eidos Studio · Lannion, Bretagne
             </span>
             <span className="font-mono text-[9px] tracking-[0.22em] text-white/22 uppercase">

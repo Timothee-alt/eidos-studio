@@ -184,6 +184,7 @@ export function ServicesWebGL({
 
     const BLEND_DUR = 900;
     const startTime = performance.now();
+    let rafId: number | null = null;
 
     const rightEl = rightContainerRef?.current;
 
@@ -208,7 +209,8 @@ export function ServicesWebGL({
     sectionRef?.current && ro.observe(sectionRef.current);
 
     function renderGL(now: number) {
-      requestAnimationFrame(renderGL);
+      rafId = requestAnimationFrame(renderGL);
+      if (gl.isContextLost()) return;
       const s = stateRef.current;
       if (s.blendT < 1.0) {
         s.blendT = Math.min(1.0, (now - s.blendStart) / BLEND_DUR);
@@ -223,6 +225,9 @@ export function ServicesWebGL({
       const prev = slides[s.shaderPrev];
       if (!cur || !prev) return;
 
+      const locs = [uRes, uTime, uCol, uIntensity, uPrevCol, uPrevInten, uBlend, uMouse, uPanelWidth];
+      if (locs.some((l) => l == null)) return;
+
       gl.uniform2f(uRes!, canvas!.width, canvas!.height);
       gl.uniform1f(uTime!, (now - startTime) * 0.001);
       gl.uniform3fv(uCol!, cur.color);
@@ -236,9 +241,10 @@ export function ServicesWebGL({
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
-    requestAnimationFrame(renderGL);
+    rafId = requestAnimationFrame(renderGL);
 
     return () => {
+      if (rafId != null) cancelAnimationFrame(rafId);
       window.removeEventListener("resize", resizeCanvas);
       ro.disconnect();
     };

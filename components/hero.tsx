@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
-import { HERO_TAGLINE } from "@/lib/data";
+import { TICKER_TAGS } from "@/lib/data";
 import { usePreloader } from "@/lib/preloader-context";
 import { Magnetic } from "@/components/ui/magnetic";
 import { EidosSymbol } from "@/components/ui/eidos-symbol";
@@ -61,10 +61,9 @@ export function Hero() {
 
         const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
-        // 1. Reveal du wordmark géant (gauche → droite)
         tl.to(titleRef.current, {
           clipPath: "inset(0 0% 0 0)",
-          duration: 1.55,
+          duration: 0.95,
           delay: 0.05,
           ease: "expo.out",
         });
@@ -88,6 +87,7 @@ export function Hero() {
   }, [isReady]);
 
   return (
+    <>
     <section
       ref={sectionRef}
       aria-label="Accueil"
@@ -95,16 +95,23 @@ export function Hero() {
       // Lampe torche hors écran au chargement : l'œil reste caché jusqu'au premier mouvement
       style={{ "--sx": "-999px", "--sy": "-999px" } as React.CSSProperties}
     >
-      {/* ── 1. LE RÉVÉLATEUR (La Lampe Torche) ── */}
-      {/* Le mask-image rend cette div transparente partout SAUF autour de la souris */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none transition-opacity duration-1000"
-        style={{
-        WebkitMaskImage: "radial-gradient(circle 220px at var(--sx) var(--sy), black 10%, transparent 100%)",
-        maskImage: "radial-gradient(circle 220px at var(--sx) var(--sy), black 10%, transparent 100%)",
-        }}
-      >
-        <ParticleEye />
+      {/* Particle Eye — visible at low opacity by default, full on hover */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div
+          className="absolute inset-0 opacity-25 transition-opacity duration-700"
+          aria-hidden
+        >
+          <ParticleEye />
+        </div>
+        <div
+          className="absolute inset-0 transition-opacity duration-500"
+          style={{
+            WebkitMaskImage: "radial-gradient(circle 220px at var(--sx) var(--sy), black 10%, transparent 100%)",
+            maskImage: "radial-gradient(circle 220px at var(--sx) var(--sy), black 10%, transparent 100%)",
+          }}
+        >
+          <ParticleEye />
+        </div>
       </div>
 
       {/* ── 2. LE SYMBOLE EIDOS (Architectural en fond) ── */}
@@ -124,12 +131,12 @@ export function Hero() {
           className="flex items-start justify-between border-b border-white/10 pb-4 mix-blend-difference"
           data-hf
         >
-          <span className="font-mono text-[10px] tracking-[0.22em] text-white/50 uppercase">
-            [ Studio Digital Immersif ]
+          <span className="font-mono text-[10px] tracking-[0.22em] text-white/50">
+            Studio Digital Immersif
           </span>
           <div className="flex items-center gap-3">
             <span className="dot-pulse w-1.5 h-1.5 bg-[#68e2a0] rounded-full" />
-            <span className="font-mono text-[10px] tracking-[0.2em] text-[#68e2a0] uppercase">
+            <span className="font-mono text-[10px] tracking-[0.2em] text-[#68e2a0]">
               Ouvert aux devis
             </span>
           </div>
@@ -164,15 +171,8 @@ export function Hero() {
             </div>
           </h1>
 
-          {/* Tagline & CTA (Alignés à gauche) */}
+          {/* CTA */}
           <div className="flex flex-col items-start mix-blend-difference pointer-events-auto ml-1 md:ml-2">
-            <p
-              data-hf
-              className="max-w-[24ch] text-[18px] md:text-[24px] leading-[1.3] text-white/80 mb-8"
-              style={{ fontFamily: "var(--font-d)" }}
-            >
-              {HERO_TAGLINE}
-            </p>
             <div data-hf>
               <Magnetic strength={0.4}>
                 <Link href="#contact" className="btn-primary-filled group">
@@ -193,12 +193,25 @@ export function Hero() {
           className="flex items-end justify-between border-t border-white/10 pt-4 mix-blend-difference"
           data-hf
         >
-          <span className="font-mono text-[10px] tracking-[0.2em] text-white/40 uppercase">
+          <span className="font-mono text-[10px] tracking-[0.2em] text-white/40">
             Fondé en 2024 · Lannion, BZH
           </span>
         </div>
         
       </div>
     </section>
+
+    {/* Ticker strip — tech tags marquee */}
+    <div className="hero-ticker" aria-hidden>
+      <div className="hero-ticker-track">
+        {[...TICKER_TAGS, ...TICKER_TAGS].map((tag, i) => (
+          <span key={i}>
+            <span className="hero-ticker-item">{tag}</span>
+            {i < TICKER_TAGS.length * 2 - 1 && <span className="hero-ticker-sep"> · </span>}
+          </span>
+        ))}
+      </div>
+    </div>
+    </>
   );
 }

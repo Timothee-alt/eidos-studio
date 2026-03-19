@@ -37,17 +37,47 @@ export function Preloader() {
         return;
       }
 
-      // Counter 0 → 100 in 1.6s easeOutCubic
-      const obj = { value: 0 };
-      gsap.to(obj, {
-        value: 100,
-        duration: 1.6,
-        ease: "power3.out",
-        onUpdate: () => setCounter(Math.round(obj.value)),
-      });
+      const resources = performance.getEntriesByType("resource");
+      const totalResources = Math.max(resources.length, 1);
+      let loaded = 0;
 
-      // Wait for counter to finish
-      await new Promise((r) => setTimeout(r, 1600));
+      const obj = { value: 0 };
+      const updateCounter = () => setCounter(Math.round(obj.value));
+
+      const checkReady = () => {
+        const current = performance.getEntriesByType("resource").length;
+        loaded = Math.min(current, totalResources);
+        const progress = Math.min(100, Math.round((loaded / totalResources) * 100));
+        gsap.to(obj, {
+          value: progress,
+          duration: 0.4,
+          ease: "power2.out",
+          onUpdate: updateCounter,
+        });
+      };
+
+      const interval = setInterval(checkReady, 200);
+      checkReady();
+
+      await new Promise<void>((resolve) => {
+        const finish = () => {
+          clearInterval(interval);
+          gsap.to(obj, {
+            value: 100,
+            duration: 0.5,
+            ease: "power2.out",
+            onUpdate: updateCounter,
+            onComplete: resolve,
+          });
+        };
+
+        if (document.readyState === "complete") {
+          setTimeout(finish, 400);
+        } else {
+          window.addEventListener("load", () => setTimeout(finish, 200), { once: true });
+          setTimeout(finish, 3000);
+        }
+      });
 
       // Phase 1: Counter fade out (handled by hiding the counter in next phase)
       // Phase 2: Logo scale down
