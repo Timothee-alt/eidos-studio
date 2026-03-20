@@ -6,7 +6,11 @@ import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { EidosLockup } from "@/components/ui/eidos-symbol";
 import { Magnetic } from "@/components/ui/magnetic";
-import { NAV_LINKS } from "@/lib/data";
+import { NAV_LINKS, STUDIO_SIGNATURE } from "@/lib/data";
+
+/** Bruit SVG inline (évite requête externe) — même principe que #capabilities dans globals.css */
+const MENU_NOISE_BG =
+  "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
 export function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -232,7 +236,7 @@ export function Nav() {
         <div 
           ref={noiseRef}
           className="pointer-events-none absolute inset-0 opacity-0 -z-10 mix-blend-screen" 
-          style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }}
+          style={{ backgroundImage: MENU_NOISE_BG }}
         />
 
         <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center">
@@ -267,7 +271,7 @@ export function Nav() {
         <div ref={footerRef} className="mx-auto flex w-full max-w-7xl items-end justify-between border-t border-white/10 pt-8 opacity-0">
           <div>
             <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-(--muted)">
-              [ Studio Digital Immersif ]
+              [ {STUDIO_SIGNATURE} ]
             </p>
             <p className="font-mono text-xs tracking-widest text-white">Lannion, Bretagne</p>
           </div>

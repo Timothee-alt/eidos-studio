@@ -1,7 +1,7 @@
 {
   "name": "Eidos Studio",
   "short_name": "Eidos",
-  "description": "Studio digital immersif — WebGL, sites premium et applications sur mesure.",
+  "description": "Rendre visible l'essentiel — WebGL, sites premium, SaaS et applications sur mesure.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#050507",

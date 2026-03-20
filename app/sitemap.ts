@@ -1,9 +1,16 @@
 import type { MetadataRoute } from "next";
-import { CASE_STUDIES } from "@/lib/data";
+import { getProjectCaseSlugs } from "@/lib/data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://www.eidos-studio.com";
   const lastModified = new Date();
+
+  const projectUrls: MetadataRoute.Sitemap = getProjectCaseSlugs().map((slug) => ({
+    url: `${base}/projets/${slug}`,
+    lastModified,
+    changeFrequency: "monthly" as const,
+    priority: 0.85,
+  }));
 
   return [
     {
@@ -30,11 +37,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.9,
     },
-    ...CASE_STUDIES.map((cs) => ({
-      url: `${base}/projets/${cs.slug}`,
-      lastModified,
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
-    })),
+    ...projectUrls,
   ];
 }

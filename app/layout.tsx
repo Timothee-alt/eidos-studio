@@ -44,8 +44,8 @@ export const metadata: Metadata = {
 
   description:
     "Eidos Studio, agence web à Lannion (22300) en Bretagne. " +
-    "Expériences WebGL, sites vitrines premium et applications sur mesure. " +
-    "Design ambitieux, performance élevée, conversion orientée devis.",
+    "Nous rendons visible l'essentiel : WebGL, sites premium, SaaS et e-commerce sur mesure. " +
+    "Clarté, forme durable, performance et conversion.",
 
   keywords: [
     "agence web Bretagne",
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
     siteName: "Eidos Studio",
     title: "Eidos Studio — Agence WebGL & Sites premium · Bretagne",
     description:
-      "Expériences WebGL, sites premium et applications sur mesure en Bretagne.",
+      "Voir ce qui compte vraiment — puis le livrer : WebGL, sites premium, apps sur mesure en Bretagne.",
     images: [
       {
         url: "/og-image.png",
@@ -94,7 +94,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Eidos Studio — Agence WebGL & Sites premium · Bretagne",
-    description: "WebGL, sites premium et apps sur mesure. Basé à Lannion.",
+    description:
+      "Rendre visible l'essentiel : WebGL, sites premium, apps. Studio à Lannion, Bretagne.",
     images: ["/og-image.png"],
     creator: "@eidos_studio",
   },

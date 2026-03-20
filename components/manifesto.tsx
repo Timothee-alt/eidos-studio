@@ -5,22 +5,23 @@ import { usePreloader } from "@/lib/preloader-context";
 
 // ─── MANIFESTE — 3 mots, transition venetian blind, inversion finale ─────────
 //
-// Mot 1 — EXISTER. (blanc pur)
-// Mot 2 — FONCTIONNER. (accent bleu)
-// Mot 3 — DURER. (inversion fond blanc, texte sombre)
+// Arc Eidos : percevoir ce qui échappe aux autres → structurer (forme) → durer.
+// Mot 1 — PERCEVOIR. (blanc)
+// Mot 2 — STRUCTURER. (accent bleu)
+// Mot 3 — DURER. (inversion fond clair, texte sombre)
 //
 // ─────────────────────────────────────────────────────────────────────────────
 
 const WORDS = [
   {
-    text: "EXISTER.",
+    text: "PERCEVOIR.",
     counter: "01 / 03",
     accented: false,
     inverted: false,
     rule: 0,
   },
   {
-    text: "FONCTIONNER.",
+    text: "STRUCTURER.",
     counter: "02 / 03",
     accented: true,
     inverted: false,

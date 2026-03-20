@@ -3,6 +3,13 @@
 // Remplacer les placeholders par les vraies données
 // ============================================================
 
+/** Signature courte (hero, menu plein écran, OG) */
+export const STUDIO_SIGNATURE = "Rendre visible l'essentiel";
+
+/** Accroche sous le bloc titre hero — promesse Eidos (voir / forme) */
+export const STUDIO_CLAIM =
+  "On voit ce que les autres ne voient pas — nous en faisons une forme claire et durable.";
+
 // ────────────────────────────────────────────────────────────
 // TYPES
 // ────────────────────────────────────────────────────────────
@@ -73,33 +80,6 @@ export type Project = {
   tags: string[];
   href: string;
   image?: string;
-};
-
-export type CaseStudy = {
-  slug: string;
-  id: string;
-  title: string;
-  client: string;
-  tagline: string;
-  description: string;
-  context: {
-    mission: string;
-    client: string;
-    objectives: string[];
-  };
-  approach: {
-    stack: string[];
-    process: string;
-    decisions: string[];
-  };
-  results: {
-    metrics: { label: string; value: string }[];
-    kpis?: string[];
-    testimonial?: string;
-  };
-  tags: string[];
-  href: string;
-  ogImage?: string;
 };
 
 export type Stat = {
@@ -197,7 +177,7 @@ export const SERVICES: Service[] = [
     titleLine1: "Expériences",
     titleLine2: "WebGL & 3D",
     description:
-      "Interfaces immersives qui marquent les esprits. Three.js, shaders, scènes 3D interactives et optimisées.",
+      "Révéler ce qu'une marque peut montrer au-delà du plat : Three.js, shaders, scènes 3D interactives et optimisées.",
     tags: ["Three.js", "WebGL", "GLSL"],
     image: "webgl",
   },
@@ -208,7 +188,7 @@ export const SERVICES: Service[] = [
     titleLine1: "Sites vitrines",
     titleLine2: "premium.",
     description:
-      "Design haut de gamme, performances maximales, SEO intégré. Aucun template — tout est construit sur mesure.",
+      "Clarifier votre message, puis le habiller sans template : design haut de gamme, perfs fortes, SEO intégré.",
     tags: ["Next.js", "React", "TypeScript"],
     href: "/services/vitrine",
     image: "",
@@ -220,7 +200,7 @@ export const SERVICES: Service[] = [
     titleLine1: "Applications",
     titleLine2: "SaaS.",
     description:
-      "Du MVP au produit en production. Auth, billing, dashboards, API — architecture scalable dès le départ.",
+      "Donner une forme stable au produit : du MVP à la prod, auth, billing, dashboards, API — architecture scalable.",
     tags: ["SaaS", "Node.js", "PostgreSQL"],
     href: "/services/saas",
     image: "",
@@ -232,7 +212,7 @@ export const SERVICES: Service[] = [
     titleLine1: "E-commerce.",
     titleLine2: "Convertissant.",
     description:
-      "Boutiques performantes, paiement Stripe, gestion stock. Conversion optimisée, zéro commission sur vos ventes.",
+      "Rendre évident le chemin d’achat : boutique performante, Stripe, stock, conversion — sans commission sur vos ventes.",
     tags: ["Stripe", "Next.js", "Commerce"],
     href: "/services/ecommerce",
     image: "",
@@ -256,9 +236,9 @@ export const SERVICES_SLIDES: ServiceSlide[] = [
       { text: "WebGL" },
       { text: "& 3D.", muted: true },
     ],
-    lead: "Des interfaces qui se vivent, pas seulement qui se voient.",
+    lead: "Ce que le marché ne voit pas encore de vous — nous le rendons tangible à l’écran.",
     description:
-      "Three.js, shaders GLSL, scènes 3D interactives et optimisées pour la production. Chaque pixel, intentionnel.",
+      "Three.js, shaders GLSL, scènes 3D interactives et optimisées pour la production. Chaque détail sert la perception.",
     tags: ["Three.js", "WebGL", "GLSL", "Shaders", "R3F"],
     primaryTagCount: 2,
     ctaLabel: "Voir les démos",
@@ -289,9 +269,9 @@ export const SERVICES_SLIDES: ServiceSlide[] = [
       { text: "Sites vitrines" },
       { text: "sur mesure.", muted: true },
     ],
-    lead: "Votre marque mérite mieux qu'un template.",
+    lead: "Sortir du flou des offres identiques : une forme web qui dit clairement qui vous êtes.",
     description:
-      "Design haut de gamme, performances maximales, SEO intégré. Rien n'est dupliqué — tout est fabriqué pour durer.",
+      "Design haut de gamme, performances maximales, SEO intégré. Rien n’est dupliqué — tout est pensé pour être lu et retenu.",
     tags: ["Next.js", "React", "TypeScript", "Motion"],
     primaryTagCount: 2,
     ctaLabel: "Voir l'approche",
@@ -320,9 +300,9 @@ export const SERVICES_SLIDES: ServiceSlide[] = [
       { text: "Applications" },
       { text: "SaaS.", muted: true },
     ],
-    lead: "Du MVP au produit en production — sans dette technique.",
+    lead: "Structurer le produit avant qu’il ne devienne ingérable.",
     description:
-      "Auth, billing, dashboards, API. Architecture pensée pour croître sans tout refactoriser à six mois.",
+      "Auth, billing, dashboards, API. Nous rendons visibles les bons arbitrages techniques pour scaler sans dette cachée.",
     tags: ["Node.js", "PostgreSQL", "Auth", "Billing", "CI/CD"],
     primaryTagCount: 2,
     ctaLabel: "Voir le processus",
@@ -351,9 +331,9 @@ export const SERVICES_SLIDES: ServiceSlide[] = [
       { text: "E-commerce." },
       { text: "Convertissant.", muted: true },
     ],
-    lead: "Chaque visiteur est un client potentiel. Ne le perdez pas.",
+    lead: "Voir où les visiteurs abandonnent — puis supprimer la friction.",
     description:
-      "Boutiques performantes, paiement Stripe natif, gestion stock optimisée. Zéro commission, conversion maximale.",
+      "Boutiques performantes, Stripe natif, stock clair. Parcours lisibles, zéro commission plateforme, conversion au centre.",
     tags: ["Stripe", "Next.js", "Commerce"],
     primaryTagCount: 2,
     ctaLabel: "Voir la boutique",
@@ -414,7 +394,7 @@ export const PROJECT_SLIDES: ProjectSlide[] = [
     title: "Eidos IA",
     client: "Automatisation métier · IA appliquée",
     description:
-      "Plateforme IA orientée productivité : agents métiers, base de connaissances vectorielle et interface de pilotage en temps réel.",
+      "Après avoir rendu visibles les tâches informelles et la base de connaissance, la plateforme centralise, automatise et offre un pilotage lisible en temps réel.",
     tags: ["Next.js", "IA", "Automatisation"],
     href: "/projets/eidos-ia",
     image: "",
@@ -437,7 +417,7 @@ export const PROJECT_SLIDES: ProjectSlide[] = [
     titleLines: ["Club Sportif", "Lannion"],
     client: "Association sportive · Lannion",
     description:
-      "Site vitrine moderne pour une association locale, pensé pour les inscriptions, la visibilité SEO locale et la gestion d'actualités.",
+      "Nous avons clarifié ce que les familles cherchent en premier : inscriptions simples, actus lisibles et visibilité locale sur Google — le tout en mobile fluide.",
     tags: ["Site vitrine", "SEO local", "Performance"],
     href: "/projets/lannion-twirling-club",
     image: "",
@@ -460,7 +440,7 @@ export const PROJECT_SLIDES: ProjectSlide[] = [
     titleLines: ["Les Sens", "de l'Harmonie"],
     client: "Bien-être · Accompagnement",
     description:
-      "Refonte digitale premium avec direction artistique sur mesure, parcours de conversion simplifie et storytelling visuel immersif.",
+      "L'offre premium était diluée dans une présence floue : refonte pour révéler l'essentiel, simplifier le parcours et porter une DA immersive cohérente.",
     tags: ["Branding digital", "Conversion", "Motion"],
     href: "/projets/les-sens-de-lharmonie",
     image: "",
@@ -489,7 +469,7 @@ export const PROJECTS: Project[] = [
     title: "Eidos IA",
     client: "Automatisation métier · IA appliquée",
     description:
-      "Plateforme IA orientée productivité : agents métiers, base de connaissances vectorielle et interface de pilotage en temps réel.",
+      "Cartographier où le temps se perd, puis centraliser les savoirs, automatiser l'évident et piloter en temps réel.",
     tags: ["Next.js", "IA", "Automatisation", "Dashboard"],
     href: "/projets/eidos-ia",
     image: "",
@@ -500,7 +480,7 @@ export const PROJECTS: Project[] = [
     title: "Lannion Twirling Club",
     client: "Association sportive · Lannion",
     description:
-      "Site vitrine moderne pour une association locale, pensé pour les inscriptions, la visibilité SEO locale et la gestion d'actualites.",
+      "Parcours parents clarifiés : inscriptions, infos club, actus — SEO local et expérience mobile fluide.",
     tags: ["Site vitrine", "SEO local", "UI/UX", "Performance"],
     href: "/projets/lannion-twirling-club",
     image: "",
@@ -509,9 +489,9 @@ export const PROJECTS: Project[] = [
     id: "PRJ-03",
     slug: "les-sens-de-lharmonie",
     title: "Les Sens de l'Harmonie",
-    client: "Bien-etre · Accompagnement",
+    client: "Bien-être · Accompagnement",
     description:
-      "Refonte digitale premium avec direction artistique sur mesure, parcours de conversion simplifie et storytelling visuel immersif.",
+      "Image premium rendue lisible : offre clarifiée, parcours simplifié, storytelling visuel cohérent.",
     tags: ["Branding digital", "Conversion", "Next.js", "Motion"],
     href: "/projets/les-sens-de-lharmonie",
     image: "",
@@ -519,140 +499,199 @@ export const PROJECTS: Project[] = [
 ];
 
 // ────────────────────────────────────────────────────────────
-// CASE STUDIES (détails complets)
+// PROJECT CASE PAGES (/projets/[slug])
 // ────────────────────────────────────────────────────────────
 
-export const CASE_STUDIES: CaseStudy[] = [
-  {
-    slug: "eidos-ia",
-    id: "PRJ-01",
-    title: "Eidos IA",
-    client: "Automatisation métier · IA appliquée",
-    tagline: "Transformer le temps perdu en avantage opérationnel.",
-    description:
-      "Eidos IA est une plateforme orientée productivité qui centralise les connaissances internes, automatise les tâches répétitives et déploie des agents IA opérationnels pour les équipes.",
-    context: {
-      mission:
-        "Concevoir un outil concret pour réduire les tâches chronophages et accélérer l'exécution quotidienne des équipes.",
-      client: "PME et structures en croissance",
-      objectives: [
-        "Automatiser les workflows répétitifs",
-        "Structurer une base de connaissance exploitable",
-        "Offrir une interface claire pour les non-tech",
-        "Garantir rapidité et fiabilité en production",
-      ],
-    },
-    approach: {
-      stack: ["Next.js", "TypeScript", "PostgreSQL", "LLM APIs", "Tailwind CSS"],
-      process:
-        "Ateliers terrain avec l'équipe, prototypage rapide des flux critiques, puis livraison itérative en cycles courts.",
-      decisions: [
-        "Architecture modulaire pour intégrer de nouveaux agents",
-        "Système de permissions simple pour favoriser l'adoption",
-        "Instrumentation des parcours pour mesurer les gains réels",
-      ],
-    },
-    results: {
-      metrics: [
-        { label: "Taches automatisees", value: "25+" },
-        { label: "Temps gagne / semaine", value: "~ 12h" },
-        { label: "Score Lighthouse", value: "94+" },
-      ],
-      kpis: ["Adoption equipe", "Temps de traitement", "Qualite des reponses"],
-      testimonial:
-        "Nous sommes passés d'un pilotage artisanal à un système IA clair, concret et mesurable.",
-    },
-    tags: ["Next.js", "IA", "Automatisation", "Productivite"],
-    href: "/projets/eidos-ia",
-  },
-  {
-    slug: "lannion-twirling-club",
-    id: "PRJ-02",
-    title: "Lannion Twirling Club",
-    client: "Association sportive · Lannion",
-    tagline: "Un site local qui donne envie d'adhérer.",
-    description:
-      "Refonte complète du site de l'association avec un parcours clair pour les nouvelles inscriptions, une navigation mobile-first et une meilleure visibilité locale.",
-    context: {
-      mission:
-        "Moderniser l'image en ligne du club et simplifier l'accès aux informations essentielles pour les familles.",
-      client: "Association sportive locale",
-      objectives: [
-        "Faciliter les inscriptions et prises de contact",
-        "Mettre en avant les sections et actualites",
-        "Ameliorer la visibilite locale sur Google",
-        "Assurer une experience mobile fluide",
-      ],
-    },
-    approach: {
-      stack: ["Next.js", "TypeScript", "SEO local", "Tailwind CSS"],
-      process:
-        "Audit de l'existant, priorisation des besoins terrain, design de parcours simples puis livraison incrementalement.",
-      decisions: [
-        "Structure d'information simplifiée en 3 niveaux maximum",
-        "CTA de contact visibles à chaque section clé",
-        "Pages optimisées pour les requêtes locales",
-      ],
-    },
-    results: {
-      metrics: [
-        { label: "Performance mobile", value: "95+" },
-        { label: "Temps moyen page", value: "< 2s" },
-        { label: "Parcours inscription", value: "-40%" },
-      ],
-      kpis: ["Demandes entrantes", "Visibilite locale", "Taux de rebond"],
-      testimonial:
-        "Le nouveau site est plus clair pour les parents et valorise vraiment notre club.",
-    },
-    tags: ["Site vitrine", "SEO local", "Performance", "UX"],
-    href: "/projets/lannion-twirling-club",
-  },
-  {
-    slug: "les-sens-de-lharmonie",
-    id: "PRJ-03",
-    title: "Les Sens de l'Harmonie",
-    client: "Bien-etre · Accompagnement",
-    tagline: "Une présence digitale plus premium et plus lisible.",
-    description:
-      "Refonte identitaire et web pour repositionner l'activité sur une image premium, clarifier l'offre et augmenter les demandes qualifiées.",
-    context: {
-      mission:
-        "Construire un univers digital cohérent avec la qualité des services proposés.",
-      client: "Activite independante du secteur bien-etre",
-      objectives: [
-        "Monter en gamme sur la perception de marque",
-        "Simplifier la compréhension des offres",
-        "Optimiser les passages à l'action",
-        "Conserver une atmosphère sensible et élégante",
-      ],
-    },
-    approach: {
-      stack: ["Next.js", "TypeScript", "Motion design", "UX writing"],
-      process:
-        "Direction artistique, prototypage des sections de conversion, puis intégration front avec animations sobres et performantes.",
-      decisions: [
-        "Hiérarchie éditoriale plus nette pour faciliter la lecture",
-        "Animations courtes orientées feedback, sans surcharge",
-        "Bloc de preuve sociale renforcé sur les sections chaudes",
-      ],
-    },
-    results: {
-      metrics: [
-        { label: "Demandes de contact", value: "+60%" },
-        { label: "Temps de chargement", value: "< 2.3s" },
-        { label: "Taux de conversion", value: "+28%" },
-      ],
-      kpis: ["Leads qualifiés", "Temps sur page", "Conversion formulaire"],
-      testimonial:
-        "Le site renvoie enfin l'image juste de notre accompagnement: claire, haut de gamme et vivante.",
-    },
-    tags: ["Branding digital", "Conversion", "UX", "Next.js"],
-    href: "/projets/les-sens-de-lharmonie",
-  },
-];
+export type ProjectCaseSection = {
+  id: string;
+  eyebrow: string;
+  headline: string;
+  body: string;
+  /** calm = respiration, lecture ; punch = contraste fort */
+  pacing: "calm" | "punch";
+};
 
-export function getCaseStudyBySlug(slug: string): CaseStudy | undefined {
-  return CASE_STUDIES.find((cs) => cs.slug === slug);
+export type ProjectGalleryFrame = {
+  id: string;
+  ratio: "21/9" | "3/4" | "1/1";
+  title: string;
+  detail: string;
+};
+
+export type ProjectCaseMeta = {
+  year: string;
+  tagline: string;
+  /** Mots du hero cinématique (un mot par ligne visuelle) */
+  heroWords: string[];
+  leadIn: string;
+  sections: ProjectCaseSection[];
+  frames: ProjectGalleryFrame[];
+  deliverables: string;
+};
+
+export type ProjectCaseStudy = ProjectSlide & ProjectCaseMeta;
+
+export const PROJECT_CASE_META: Record<string, ProjectCaseMeta> = {
+  "eidos-ia": {
+    year: "2024",
+    tagline: "De l'informel au pilotable",
+    heroWords: ["Temps", "rendu", "visible"],
+    leadIn:
+      "Une plateforme qui transforme les tâches invisibles en flux mesurables — pour décider vite, sans bruit.",
+    sections: [
+      {
+        id: "e1",
+        eyebrow: "01 — Terrain",
+        headline: "Cartographier ce qui n'était jamais écrit",
+        body: "Ateliers et observation : où le temps file, quelles décisions se prennent en marge des outils, quels savoirs vivent dans des fils de messages. On rend l'informel lisible avant de le coder.",
+        pacing: "calm",
+      },
+      {
+        id: "e2",
+        eyebrow: "02 — Structure",
+        headline: "Un socle unique, des règles claires",
+        body: "Base de connaissance vivante, droits, historique, traçabilité. Chaque automatisation repose sur une intention nommée — pas de boîte noire : on peut expliquer le « pourquoi » à un humain.",
+        pacing: "punch",
+      },
+      {
+        id: "e3",
+        eyebrow: "03 — Mouvement",
+        headline: "Automatiser l'évident, garder la main sur le sensible",
+        body: "Les flux répétitifs partent en tâche de fond ; les cas limites remontent avec du contexte. Le pilotage temps réel donne des leviers, pas des tableaux anonymes.",
+        pacing: "calm",
+      },
+      {
+        id: "e4",
+        eyebrow: "04 — Forme",
+        headline: "Interface calme, densité maîtrisée",
+        body: "Dashboards hiérarchisés, hiérarchie visuelle forte, micro-interactions qui guident sans distraire. Le premium ici, c'est la clarté sous pression.",
+        pacing: "punch",
+      },
+    ],
+    frames: [
+      { id: "ef1", ratio: "21/9", title: "Cartographie", detail: "Flux & friction points" },
+      { id: "ef2", ratio: "3/4", title: "Knowledge", detail: "Sources & versionnement" },
+      { id: "ef3", ratio: "1/1", title: "Automations", detail: "Déclencheurs & garde-fous" },
+      { id: "ef4", ratio: "21/9", title: "Live ops", detail: "Pilotage & alertes" },
+      { id: "ef5", ratio: "3/4", title: "Mobile", detail: "Décision en déplacement" },
+    ],
+    deliverables: "Produit web · Design system · Dashboards · Intégrations · Documentation vivante",
+  },
+  "lannion-twirling-club": {
+    year: "2024",
+    tagline: "Parents rassurés, club visible",
+    heroWords: ["Portes", "ouvertes", "numériques"],
+    leadIn:
+      "Priorité absolue : l'inscription et l'information accessibles en deux gestes — le reste du site s'organise autour de ce chemin.",
+    sections: [
+      {
+        id: "l1",
+        eyebrow: "01 — Besoin",
+        headline: "Familles pressées, message dispersé",
+        body: "Calendrier, tarifs, actualités : tout était vrai, mais éclaté. On a isolé les trois questions récurrentes — « comment s'inscrire », « combien », « quoi de neuf » — et bâti l'architecture autour.",
+        pacing: "calm",
+      },
+      {
+        id: "l2",
+        eyebrow: "02 — Parcours",
+        headline: "Un fil conducteur mobile-first",
+        body: "Hiérarchie typographique marquée, CTA persistants discrets, sections courtes. Sur mobile, le club se lit comme une app : direct, sans zoom mental.",
+        pacing: "punch",
+      },
+      {
+        id: "l3",
+        eyebrow: "03 — Visibilité",
+        headline: "SEO local qui sert le territoire",
+        body: "Titres, données structurées, pages stables et rapides. L'objectif : être trouvé quand on cherche une activité à Lannion — sans artifice, avec du contenu utile.",
+        pacing: "calm",
+      },
+      {
+        id: "l4",
+        eyebrow: "04 — Performance",
+        headline: "Vitesse = confiance pour les parents",
+        body: "Assets optimisés, rendu Next.js, scores élevés sur mobile. Un site lent paraît négligé ; un site vif paraît sérieux — surtout pour une association.",
+        pacing: "punch",
+      },
+    ],
+    frames: [
+      { id: "lf1", ratio: "21/9", title: "Accueil", detail: "Message club, entrée claire" },
+      { id: "lf2", ratio: "3/4", title: "Inscriptions", detail: "Étapes & documents" },
+      { id: "lf3", ratio: "1/1", title: "Actus", detail: "Lecture rapide" },
+      { id: "lf4", ratio: "21/9", title: "Agenda", detail: "Dates & lieux" },
+      { id: "lf5", ratio: "3/4", title: "Contact", detail: "Accès direct encadrants" },
+    ],
+    deliverables: "Site vitrine · UI/UX · SEO local · Performance · Mise en ligne",
+  },
+  "les-sens-de-lharmonie": {
+    year: "2024",
+    tagline: "Premium rendu respirable",
+    heroWords: ["Offre", "claire", "calme"],
+    leadIn:
+      "Transformer une expertise sensible en présence digitale affirmée — sans froideur, avec une DA qui respire et un parcours qui rassure.",
+    sections: [
+      {
+        id: "h1",
+        eyebrow: "01 — Image",
+        headline: "Une offre diluée dans le flou",
+        body: "Le positionnement haut de gamme ne supporte pas l'approximation. Nous avons resserré le récit : qui, pour qui, pourquoi maintenant — avant toute esthétique.",
+        pacing: "calm",
+      },
+      {
+        id: "h2",
+        eyebrow: "02 — Direction",
+        headline: "Matière, lumière, silence",
+        body: "Palette organique, typographie aérée, rythme vertical généreux. Chaque section laisse de la place au regard — le luxe ici est le vide bien placé.",
+        pacing: "punch",
+      },
+      {
+        id: "h3",
+        eyebrow: "03 — Conversion",
+        headline: "Contacter doit être une évidence douce",
+        body: "Formulaire contextualisé, preuves sociales sobres, rappel des bénéfices au moment du geste. Pas de pression — une invitation claire.",
+        pacing: "calm",
+      },
+      {
+        id: "h4",
+        eyebrow: "04 — Motion",
+        headline: "Animations au service de la présence",
+        body: "Révélations progressives, transitions courtes et naturelles. Le mouvement révèle la marque ; il ne remplace pas le contenu.",
+        pacing: "punch",
+      },
+    ],
+    frames: [
+      { id: "hf1", ratio: "21/9", title: "Accroche", detail: "Promesse & atmosphère" },
+      { id: "hf2", ratio: "3/4", title: "Offres", detail: "Lecture par paliers" },
+      { id: "hf3", ratio: "1/1", title: "Parcours", detail: "Étapes ressenties" },
+      { id: "hf4", ratio: "21/9", title: "Témoignages", detail: "Voix humaines" },
+      { id: "hf5", ratio: "3/4", title: "Contact", detail: "Invitation finale" },
+    ],
+    deliverables: "Refonte · DA digitale · UI/UX · Motion léger · Next.js",
+  },
+};
+
+export function getProjectCaseStudy(slug: string): ProjectCaseStudy | null {
+  const slide = PROJECT_SLIDES.find((p) => p.slug === slug);
+  const meta = PROJECT_CASE_META[slug];
+  if (!slide || !meta) return null;
+  return { ...slide, ...meta };
+}
+
+export function getProjectCaseSlugs(): string[] {
+  return PROJECT_SLIDES.map((p) => p.slug).filter(Boolean) as string[];
+}
+
+export function getNextProjectSlug(currentSlug: string): string | null {
+  const slugs = getProjectCaseSlugs();
+  const i = slugs.indexOf(currentSlug);
+  if (i < 0) return null;
+  return slugs[(i + 1) % slugs.length];
+}
+
+export function getPrevProjectSlug(currentSlug: string): string | null {
+  const slugs = getProjectCaseSlugs();
+  const i = slugs.indexOf(currentSlug);
+  if (i < 0) return null;
+  return slugs[(i - 1 + slugs.length) % slugs.length];
 }
 
 // ────────────────────────────────────────────────────────────
@@ -667,24 +706,34 @@ export const STATS: Stat[] = [
 
 // ── TICKER TAGS (hero marquee strip) ─────────────────────────────────────────
 export const TICKER_TAGS = [
-  "WebGL", "React", "Three.js", "Motion", "Next.js", "TypeScript",
-  "GLSL", "GSAP", "Design", "Performance",
+  "WebGL",
+  "React",
+  "Three.js",
+  "Motion",
+  "Next.js",
+  "TypeScript",
+  "GLSL",
+  "GSAP",
+  "Clarté",
+  "Structure",
+  "Vision produit",
+  "Performance",
 ];
 
 export const HOME_CHAPTERS: HomeChapter[] = [
   {
     id: "CH-01",
     eyebrow: "Manifeste",
-    title: "Une identité qui raconte juste",
+    title: "Percevoir, structurer, faire durer",
     summary:
-      "Chaque section joue un rôle précis dans le récit et la conversion.",
+      "Un récit aligné sur la promesse : voir l’essentiel, lui donner une forme, la rendre tenable.",
   },
   {
     id: "CH-02",
     eyebrow: "Mouvement",
-    title: "Des interactions nettes et utiles",
+    title: "Révéler plutôt qu’encombrer",
     summary:
-      "Le motion guide l'attention sans voler la vedette au message.",
+      "Le motion sert la lecture : il attire l’œil vers ce qui compte, pas vers la démo.",
   },
   {
     id: "CH-03",

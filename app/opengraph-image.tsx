@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Eidos Studio — Agence WebGL premium à Lannion";
+export const alt = "Eidos Studio — Rendre visible l'essentiel · Lannion";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -39,7 +39,7 @@ export default async function OGImage() {
               color: "rgba(246,246,247,0.4)",
             }}
           >
-            Studio Digital Immersif
+            Rendre visible l&apos;essentiel
           </span>
         </div>
 

@@ -457,7 +457,7 @@ export function Projects() {
           {N} projets · Lannion · Bretagne · France
         </span>
         <Link
-          href="/projets"
+          href="/#projets"
           className="pf-cta"
           aria-label="Voir tous les projets"
         >

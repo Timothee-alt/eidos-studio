@@ -205,14 +205,14 @@ export function ServicesWebGL({
       );
     if (sectionEl && visibilityIo) visibilityIo.observe(sectionEl);
 
-    const rightEl = rightContainerRef?.current;
-
     function resizeCanvas() {
-      const el = sectionRef?.current;
+      // Size to the visible WebGL host (pin wrap / ~100vh), not `#capabilities`
+      // height (N×100vh) — oversized buffers can lose WebGL context → black canvas.
       let w = window.innerWidth;
       let h = window.innerHeight;
-      if (el) {
-        const rect = el.getBoundingClientRect();
+      const host = canvas.parentElement;
+      if (host) {
+        const rect = host.getBoundingClientRect();
         if (rect.width > 0 && rect.height > 0) {
           w = Math.round(rect.width);
           h = Math.round(rect.height);
@@ -225,7 +225,7 @@ export function ServicesWebGL({
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas, { passive: true });
     const ro = new ResizeObserver(resizeCanvas);
-    sectionRef?.current && ro.observe(sectionRef.current);
+    if (canvas.parentElement) ro.observe(canvas.parentElement);
 
     function renderGL(now: number) {
       if (!visibleRef.current) {

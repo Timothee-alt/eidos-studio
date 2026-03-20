@@ -9,7 +9,7 @@ export function StructuredData() {
         url: "https://www.eidos-studio.com",
         logo: "https://www.eidos-studio.com/logo.svg",
         description:
-          "Agence web à Lannion en Bretagne. Expériences WebGL, sites vitrines premium et applications sur mesure.",
+          "Agence web à Lannion en Bretagne. Nous clarifions l'essentiel puis le livrons : WebGL, sites vitrines premium, SaaS et e-commerce sur mesure.",
         address: {
           "@type": "PostalAddress",
           addressLocality: "Lannion",

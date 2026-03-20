@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
-import { TICKER_TAGS } from "@/lib/data";
+import { STUDIO_CLAIM, STUDIO_SIGNATURE, TICKER_TAGS } from "@/lib/data";
 import { usePreloader } from "@/lib/preloader-context";
 import { Magnetic } from "@/components/ui/magnetic";
 import { EidosSymbol } from "@/components/ui/eidos-symbol";
@@ -113,7 +113,7 @@ export function Hero() {
           data-hf
         >
           <span className="font-mono text-[10px] tracking-[0.22em] text-white/50">
-            Studio Digital Immersif
+            {STUDIO_SIGNATURE}
           </span>
           <div className="flex items-center gap-3">
             <span className="dot-pulse w-1.5 h-1.5 bg-[#68e2a0] rounded-full" />
@@ -124,7 +124,7 @@ export function Hero() {
         </div>
 
         {/* CENTRE : Typographie monumentale & Tagline */}
-        <div className="flex-1 flex flex-col justify-center items-start text-left pb-8 pt-12 gap-10">
+        <div className="flex-1 flex flex-col justify-center items-start text-left pb-8 pt-12 gap-6 md:gap-8">
           
           {/* EIDOS (Milieu Gauche) */}
           <h1
@@ -151,6 +151,12 @@ export function Hero() {
               </span>
             </div>
           </h1>
+          <p
+            className="ml-1 md:ml-2 max-w-[min(36rem,92vw)] font-mono text-[10px] leading-relaxed tracking-[0.12em] text-[#f6f6f7]/45 normal-case mix-blend-difference md:text-[11px] md:tracking-[0.14em]"
+            data-hf
+          >
+            {STUDIO_CLAIM}
+          </p>
 
           {/* CTA */}
           <div className="flex flex-col items-start mix-blend-difference pointer-events-auto ml-1 md:ml-2">
