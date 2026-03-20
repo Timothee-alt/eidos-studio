@@ -35,17 +35,22 @@ export function Cursor() {
     let isHovering = false;
     let isViewHover = false;
     let rafId: number;
+    let pointerFlushRaf = 0;
 
-    const onMouseMove = (e: MouseEvent) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      
-      // Update quickTo positions
-      // We subtract half width/height to center the cursor
+    const flushPointerToDom = () => {
+      pointerFlushRaf = 0;
       xTo(mouseX - 20);
       yTo(mouseY - 20);
       dotXTo(mouseX - 4);
       dotYTo(mouseY - 4);
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!pointerFlushRaf) {
+        pointerFlushRaf = requestAnimationFrame(flushPointerToDom);
+      }
     };
 
     const animateVelocity = () => {
@@ -174,6 +179,7 @@ export function Cursor() {
       document.removeEventListener("mouseleave", onLeaveWindow);
       document.removeEventListener("mouseenter", onEnterWindow);
       cancelAnimationFrame(rafId);
+      if (pointerFlushRaf) cancelAnimationFrame(pointerFlushRaf);
     };
   }, []);
 

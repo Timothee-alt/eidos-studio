@@ -30,23 +30,12 @@ export function Magnetic({
     let currentX = 0;
     let currentY = 0;
     let rafId: number;
+    let clientX = 0;
+    let clientY = 0;
 
     const onMouseMove = (e: MouseEvent) => {
-      const rect = el.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      const distX = e.clientX - centerX;
-      const distY = e.clientY - centerY;
-      const distance = Math.sqrt(distX * distX + distY * distY);
-
-      if (distance < radius) {
-        const force = (1 - distance / radius) * strength;
-        targetX = distX * force;
-        targetY = distY * force;
-      } else {
-        targetX = 0;
-        targetY = 0;
-      }
+      clientX = e.clientX;
+      clientY = e.clientY;
     };
 
     let rafRunning = true;
@@ -81,6 +70,20 @@ export function Magnetic({
 
     const animate = () => {
       if (!rafRunning) return;
+      const rect = el.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const distX = clientX - centerX;
+      const distY = clientY - centerY;
+      const distance = Math.sqrt(distX * distX + distY * distY);
+      if (distance < radius) {
+        const force = (1 - distance / radius) * strength;
+        targetX = distX * force;
+        targetY = distY * force;
+      } else {
+        targetX = 0;
+        targetY = 0;
+      }
       currentX = lerp(currentX, targetX, 0.2);
       currentY = lerp(currentY, targetY, 0.2);
       el.style.transform = `translate(${currentX}px, ${currentY}px)`;

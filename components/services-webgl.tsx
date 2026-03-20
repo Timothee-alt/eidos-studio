@@ -186,6 +186,9 @@ export function ServicesWebGL({
     const startTime = performance.now();
     let rafId: number | null = null;
     const visibleRef = { current: true };
+    let lastResW = -1;
+    let lastResH = -1;
+    let lastPanelW = Number.NaN;
 
     const sectionEl = sectionRef?.current;
     const visibilityIo =
@@ -248,7 +251,14 @@ export function ServicesWebGL({
       const locs = [uRes, uTime, uCol, uIntensity, uPrevCol, uPrevInten, uBlend, uMouse, uPanelWidth];
       if (locs.some((l) => l == null)) return;
 
-      gl.uniform2f(uRes!, canvas!.width, canvas!.height);
+      const cw = canvas!.width;
+      const ch = canvas!.height;
+      if (cw !== lastResW || ch !== lastResH) {
+        lastResW = cw;
+        lastResH = ch;
+        gl.uniform2f(uRes!, cw, ch);
+      }
+
       gl.uniform1f(uTime!, (now - startTime) * 0.001);
       gl.uniform3fv(uCol!, cur.color);
       gl.uniform1f(uIntensity!, cur.shaderIntensity);
@@ -256,7 +266,11 @@ export function ServicesWebGL({
       gl.uniform1f(uPrevInten!, prev.shaderIntensity);
       gl.uniform1f(uBlend!, s.blendT);
       gl.uniform2fv(uMouse!, mouseCurRef.current);
-      gl.uniform1f(uPanelWidth!, getPanelWidth());
+      const panelW = getPanelWidth();
+      if (panelW !== lastPanelW) {
+        lastPanelW = panelW;
+        gl.uniform1f(uPanelWidth!, panelW);
+      }
 
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);

@@ -13,18 +13,15 @@ const ParticleEye = dynamic(() => import("@/components/particle-eye"), { ssr: fa
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const eyePointerRef = useRef({ x: -999, y: -999 });
   const { isReady } = usePreloader();
 
-  // Suivi de la souris pour l'effet "Lampe torche" (Scanner)
+  // Coordonnées section → shader particules (lampe torche, une seule scène WebGL)
   const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!sectionRef.current) return;
     const rect = sectionRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    // On met à jour les propriétés CSS qui pilotent le mask-image
-    sectionRef.current.style.setProperty("--sx", `${x}px`);
-    sectionRef.current.style.setProperty("--sy", `${y}px`);
+    eyePointerRef.current.x = e.clientX - rect.left;
+    eyePointerRef.current.y = e.clientY - rect.top;
   }, []);
 
   useEffect(() => {
@@ -92,26 +89,10 @@ export function Hero() {
       ref={sectionRef}
       aria-label="Accueil"
       className="relative w-full h-svh min-h-[600px] bg-[#050507] overflow-hidden text-[#f6f6f7]"
-      // Lampe torche hors écran au chargement : l'œil reste caché jusqu'au premier mouvement
-      style={{ "--sx": "-999px", "--sy": "-999px" } as React.CSSProperties}
     >
-      {/* Particle Eye — visible at low opacity by default, full on hover */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div
-          className="absolute inset-0 opacity-25 transition-opacity duration-700"
-          aria-hidden
-        >
-          <ParticleEye />
-        </div>
-        <div
-          className="absolute inset-0 transition-opacity duration-500"
-          style={{
-            WebkitMaskImage: "radial-gradient(circle 220px at var(--sx) var(--sy), black 10%, transparent 100%)",
-            maskImage: "radial-gradient(circle 220px at var(--sx) var(--sy), black 10%, transparent 100%)",
-          }}
-        >
-          <ParticleEye />
-        </div>
+      {/* Un seul WebGL : spot + atténuation globale dans le fragment shader */}
+      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
+        <ParticleEye pointerRef={eyePointerRef} />
       </div>
 
       {/* ── 2. LE SYMBOLE EIDOS (Architectural en fond) ── */}

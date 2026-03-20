@@ -15,6 +15,7 @@ export function useCanvasInView(options: UseCanvasInViewOptions = {}) {
   const { rootMargin = "120px 0px", threshold = 0 } = options;
   const ref = useRef<HTMLDivElement | null>(null);
   const [inView, setInView] = useState(true);
+  const inViewRef = useRef(true);
 
   useEffect(() => {
     const el = ref.current;
@@ -22,7 +23,10 @@ export function useCanvasInView(options: UseCanvasInViewOptions = {}) {
 
     const io = new IntersectionObserver(
       ([entry]) => {
-        setInView(entry.isIntersecting);
+        const next = entry.isIntersecting;
+        if (next === inViewRef.current) return;
+        inViewRef.current = next;
+        setInView(next);
       },
       { root: null, rootMargin, threshold }
     );
