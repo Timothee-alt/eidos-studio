@@ -7,7 +7,6 @@ import { SmoothScroll } from "@/components/ui/smooth-scroll";
 import { Cursor } from "@/components/ui/cursor";
 import { Preloader } from "@/components/preloader";
 import { PreloaderProvider } from "@/lib/preloader-context";
-import { PageTransition } from "@/components/ui/page-transition";
 import { RevealObserver } from "@/components/ui/reveal-observer";
 
 const spaceGrotesk = Space_Grotesk({
@@ -135,7 +134,6 @@ export default function RootLayout({
         </a>
         <PreloaderProvider>
           <Preloader />
-          <PageTransition />
           <SmoothScroll />
           <Cursor />
           <Nav />

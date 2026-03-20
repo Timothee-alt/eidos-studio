@@ -495,16 +495,6 @@ body[data-preloader] main {
   animation: pulse-dot 2s var(--ease) infinite;
 }
 
-.page-transition-layer {
-  position: fixed;
-  inset: 0;
-  z-index: 8500;
-  pointer-events: none;
-  background: linear-gradient(180deg, #050507 0%, #0e0f17 100%);
-  transform: scaleY(0);
-  transform-origin: bottom;
-}
-
 .project-card {
   will-change: transform;
 }
@@ -659,24 +649,6 @@ body[data-preloader] main {
   100% {
     transform: scaleY(0);
     opacity: 0;
-    transform-origin: top;
-  }
-}
-
-@keyframes page-transition-in {
-  0% {
-    transform: scaleY(0);
-    transform-origin: bottom;
-  }
-  45% {
-    transform: scaleY(1);
-    transform-origin: bottom;
-  }
-  50% {
-    transform-origin: top;
-  }
-  100% {
-    transform: scaleY(0);
     transform-origin: top;
   }
 }
