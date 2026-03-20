@@ -2,6 +2,7 @@
 
 import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
+import { useCanvasInView } from "@/hooks/use-canvas-in-view";
 import { MeshTransmissionMaterial, Environment, Float } from "@react-three/drei";
 import * as THREE from "three";
 
@@ -43,9 +44,12 @@ function GlassOrb() {
 }
 
 export default function HeroGlass() {
+  const { ref: rootRef, inView } = useCanvasInView({ rootMargin: "100px 0px" });
+
   return (
-    <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
+    <div ref={rootRef} className="pointer-events-none absolute inset-0 z-0" aria-hidden>
       <Canvas
+        frameloop={inView ? "always" : "never"}
         camera={{ position: [0, 0, 6.5], fov: 42 }}
         gl={{ alpha: true, antialias: true }}
         dpr={[1, 1.5]}

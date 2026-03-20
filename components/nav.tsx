@@ -10,7 +10,6 @@ import { NAV_LINKS } from "@/lib/data";
 
 export function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hoveredLink, setHoveredLink] = useState<number | null>(null);
   const pathname = usePathname();
   
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -213,11 +212,11 @@ export function Nav() {
       {/* Fullscreen Overlay Menu */}
       <div
         ref={overlayRef}
-        className="fixed inset-0 z-40 pointer-events-none flex flex-col justify-between px-6 pb-12 pt-32 h-[100dvh]"
+        className="fixed inset-0 z-40 pointer-events-none flex flex-col justify-between px-6 pb-12 pt-32 h-dvh"
       >
         {/* SVG Background Curve */}
         <svg 
-          className="absolute inset-0 h-[100dvh] w-full -z-10" 
+          className="absolute inset-0 h-dvh w-full -z-10" 
           viewBox="0 0 100 100" 
           preserveAspectRatio="none" 
           style={{ overflow: 'visible' }}
@@ -237,17 +236,13 @@ export function Nav() {
         />
 
         <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center">
-          <div className="flex flex-col gap-4 md:gap-8">
+          <div className="nav-overlay-link-list flex flex-col gap-4 md:gap-8">
             {NAV_LINKS.map((link, i) => (
               <div key={link.href} ref={(el) => { linksRef.current[i] = el; }}>
                 <Link
                   href={link.href}
                   onClick={closeMenu}
-                  onMouseEnter={() => setHoveredLink(i)}
-                  onMouseLeave={() => setHoveredLink(null)}
-                  className={`group/link inline-flex items-center gap-6 font-extrabold text-white transition-all duration-500 ease-out ${
-                    hoveredLink !== null && hoveredLink !== i ? "opacity-20 blur-[4px]" : "opacity-100 blur-none"
-                  }`}
+                  className="nav-menu-link group/link inline-flex items-center gap-6 font-extrabold text-white opacity-100 blur-none transition-all duration-500 ease-out"
                   style={{ fontFamily: "var(--font-d)", fontSize: "clamp(48px, 8vw, 120px)", lineHeight: 0.9 }}
                 >
                   <span className="text-sm font-mono tracking-widest text-(--muted) opacity-50 transition-opacity group-hover/link:opacity-100">

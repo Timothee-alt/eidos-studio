@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
+import { useCanvasInView } from "@/hooks/use-canvas-in-view";
 import { Float, MeshDistortMaterial, Sparkles } from "@react-three/drei";
 import { useRef } from "react";
 import type { Group } from "three";
@@ -51,8 +52,11 @@ function OrbScene() {
 }
 
 export function CapabilitiesOrb({ fill = false }: { fill?: boolean }) {
+  const { ref: rootRef, inView } = useCanvasInView({ rootMargin: "100px 0px" });
+
   return (
     <div
+      ref={rootRef}
       className={`relative overflow-hidden ${fill ? "absolute inset-0" : "h-[220px] border border-white/10"}`}
     >
       <div
@@ -64,6 +68,7 @@ export function CapabilitiesOrb({ fill = false }: { fill?: boolean }) {
         }}
       />
       <Canvas
+        frameloop={inView ? "always" : "never"}
         camera={{ position: [0, 0, 3.8], fov: 48 }}
         dpr={[1, 1.6]}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}

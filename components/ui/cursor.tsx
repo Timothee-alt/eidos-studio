@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 export function Cursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLSpanElement>(null);
-  const [cursorText, setCursorText] = useState("");
 
   useEffect(() => {
     if (!window.matchMedia("(pointer: fine)").matches) return;
@@ -89,8 +88,8 @@ export function Cursor() {
         isViewHover = true;
         isHovering = false;
         
-        const customText = viewTarget.getAttribute('data-cursor-text') || "VIEW";
-        setCursorText(customText);
+        const customText = viewTarget.getAttribute("data-cursor-text") || "VIEW";
+        if (text.textContent !== customText) text.textContent = customText;
         
         gsap.to(cursor, {
           backgroundColor: "rgba(246,246,247,0.1)",
@@ -109,8 +108,8 @@ export function Cursor() {
       if (hoverTarget) {
         isHovering = true;
         isViewHover = false;
-        setCursorText("");
-        
+        if (text.textContent !== "") text.textContent = "";
+
         gsap.to(cursor, {
           backgroundColor: "rgba(59,123,255,0.1)",
           borderColor: "rgba(59,123,255,0.7)",
@@ -130,7 +129,7 @@ export function Cursor() {
       
       if (!isStillViewHover && isViewHover) {
         isViewHover = false;
-        setCursorText("");
+        if (text.textContent !== "") text.textContent = "";
         gsap.to(cursor, {
           backgroundColor: "rgba(0,0,0,0)",
           backdropFilter: "blur(0px)",
@@ -183,13 +182,13 @@ export function Cursor() {
       <div
         ref={dotRef}
         aria-hidden
-        className="pointer-events-none fixed top-0 left-0 z-[9999] h-2 w-2 rounded-full bg-white opacity-0 mix-blend-difference"
+        className="pointer-events-none fixed top-0 left-0 z-9999 h-2 w-2 rounded-full bg-white opacity-0 mix-blend-difference"
         style={{ willChange: "transform" }}
       />
       <div
         ref={cursorRef}
         aria-hidden
-        className="pointer-events-none fixed top-0 left-0 z-[9998] flex h-10 w-10 items-center justify-center rounded-full border border-white/30 opacity-0"
+        className="pointer-events-none fixed top-0 left-0 z-9998 flex h-10 w-10 items-center justify-center rounded-full border border-white/30 opacity-0"
         style={{
           willChange: "transform, width, height",
           transformOrigin: "center center",
@@ -199,9 +198,7 @@ export function Cursor() {
           ref={textRef}
           className="font-mono text-[11px] font-bold uppercase tracking-widest text-white opacity-0"
           style={{ fontFamily: "var(--font-m)" }}
-        >
-          {cursorText}
-        </span>
+        />
       </div>
     </>
   );

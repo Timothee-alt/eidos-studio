@@ -185,6 +185,22 @@ export function ServicesWebGL({
     const BLEND_DUR = 900;
     const startTime = performance.now();
     let rafId: number | null = null;
+    const visibleRef = { current: true };
+
+    const sectionEl = sectionRef?.current;
+    const visibilityIo =
+      sectionEl &&
+      new IntersectionObserver(
+        ([e]) => {
+          const vis = e?.isIntersecting ?? true;
+          visibleRef.current = vis;
+          if (vis && rafId === null) {
+            rafId = requestAnimationFrame(renderGL);
+          }
+        },
+        { root: null, rootMargin: "140px 0px", threshold: 0 }
+      );
+    if (sectionEl && visibilityIo) visibilityIo.observe(sectionEl);
 
     const rightEl = rightContainerRef?.current;
 
@@ -209,6 +225,10 @@ export function ServicesWebGL({
     sectionRef?.current && ro.observe(sectionRef.current);
 
     function renderGL(now: number) {
+      if (!visibleRef.current) {
+        rafId = null;
+        return;
+      }
       rafId = requestAnimationFrame(renderGL);
       if (gl.isContextLost()) return;
       const s = stateRef.current;
@@ -245,6 +265,7 @@ export function ServicesWebGL({
 
     return () => {
       if (rafId != null) cancelAnimationFrame(rafId);
+      visibilityIo?.disconnect();
       window.removeEventListener("resize", resizeCanvas);
       ro.disconnect();
     };

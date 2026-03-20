@@ -344,9 +344,15 @@ export function AboutHeroGrayScott() {
 
     const STEPS_PER_FRAME = 4;
     let t = 0;
+    const inViewRef = { current: true };
+    let raf: number | null = null;
 
     function loop(now: number) {
       if (!mounted || gl.isContextLost()) return;
+      if (!inViewRef.current) {
+        raf = null;
+        return;
+      }
       t = now * 0.001;
 
       inject();
@@ -364,13 +370,26 @@ export function AboutHeroGrayScott() {
       if (mounted) raf = requestAnimationFrame(loop);
     }
 
-    let raf: number | null = null;
+    const visibilityIo = new IntersectionObserver(
+      ([e]) => {
+        inViewRef.current = e?.isIntersecting ?? false;
+        if (inViewRef.current && mounted && raf === null) {
+          raf = requestAnimationFrame(loop);
+        }
+      },
+      { root: null, rootMargin: "100px 0px", threshold: 0 }
+    );
+    visibilityIo.observe(hero);
+
     seed().then(() => {
-      if (mounted) raf = requestAnimationFrame(loop);
+      if (mounted && inViewRef.current && raf === null) {
+        raf = requestAnimationFrame(loop);
+      }
     });
 
     return () => {
       mounted = false;
+      visibilityIo.disconnect();
       if (raf != null) cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       hero.removeEventListener("mousemove", handleMouseMove);

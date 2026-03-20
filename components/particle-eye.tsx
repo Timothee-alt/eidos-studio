@@ -3,6 +3,7 @@
 import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { useCanvasInView } from "@/hooks/use-canvas-in-view";
 
 // Palette du site Eidos
 const COLORS = {
@@ -123,11 +124,17 @@ function EyeParticles() {
 }
 
 export default function ParticleEye() {
+  const { ref: rootRef, inView } = useCanvasInView({ rootMargin: "80px 0px" });
+
   return (
-    <div className="absolute inset-0 z-0 flex items-center justify-center origin-center scale-100 md:scale-[1.35]">
+    <div
+      ref={rootRef}
+      className="absolute inset-0 z-0 flex origin-center scale-100 items-center justify-center md:scale-[1.35]"
+    >
       <style>{`.particle-eye-canvas-container canvas { width: 100% !important; height: 100% !important; display: block !important; }`}</style>
-      <div className="particle-eye-canvas-container absolute inset-0 w-full h-full">
+      <div className="particle-eye-canvas-container absolute inset-0 h-full w-full">
         <Canvas
+          frameloop={inView ? "always" : "never"}
           style={{
             position: "absolute",
             inset: 0,
@@ -135,6 +142,7 @@ export default function ParticleEye() {
             height: "100%",
           }}
           camera={{ position: [0, 0, 6], fov: 60 }}
+          dpr={[1, 1.5]}
           gl={{ antialias: false, alpha: true }}
         >
           <EyeParticles />

@@ -53,6 +53,12 @@ body {
   scroll-behavior: auto !important;
 }
 
+/* Menu plein écran : atténue les liens non survolés sans state React */
+.nav-overlay-link-list:has(.nav-menu-link:hover) .nav-menu-link:not(:hover) {
+  opacity: 0.2;
+  filter: blur(2px);
+}
+
 body {
   margin: 0;
   background:
