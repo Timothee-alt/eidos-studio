@@ -3,7 +3,11 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { STATS, ABOUT_DNA_TABLE } from "@/lib/data";
+import { STATS, ABOUT_DNA_TABLE, type Stat } from "@/lib/data";
+
+function statToNumber(s: Stat) {
+  return typeof s.value === "string" ? parseInt(s.value, 10) : s.value;
+}
 
 const AboutHeroGrayScott = dynamic(
   () =>
@@ -44,12 +48,20 @@ export function About() {
           }
 
           if (el.id === "about-stats") {
+            const reducedMotion = window.matchMedia(
+              "(prefers-reduced-motion: reduce)"
+            ).matches;
             el.querySelectorAll(".about-stat").forEach((s, i) =>
               setTimeout(() => s.classList.add("on"), i * 200)
             );
+            if (reducedMotion) {
+              io.unobserve(el);
+              return;
+            }
             el.querySelectorAll(".about-cn").forEach((cn) => {
               const raw = (cn as HTMLElement).dataset.to;
               const to = raw ? parseInt(raw, 10) : 0;
+              (cn as HTMLElement).textContent = "0";
               const dur = 2400;
               const t0 = performance.now();
               const tick = (now: number) => {
@@ -156,15 +168,8 @@ export function About() {
         {STATS.map((stat, i) => (
           <div key={i} className="about-stat" id={`about-s${i}`}>
             <div className="about-stat-n">
-              <span
-                className="about-cn"
-                data-to={
-                  typeof stat.value === "string"
-                    ? parseInt(stat.value, 10)
-                    : stat.value
-                }
-              >
-                0
+              <span className="about-cn" data-to={statToNumber(stat)}>
+                {statToNumber(stat)}
               </span>
               <span className="about-stat-sfx">{stat.suffix}</span>
             </div>

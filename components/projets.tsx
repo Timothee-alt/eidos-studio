@@ -2,7 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { PROJECT_SLIDES } from "@/lib/data";
+import { PROJECT_SLIDES, type ProjectSlide } from "@/lib/data";
+
+function formatProjectMetric(p: ProjectSlide) {
+  return `${p.resPrefix}${p.resRaw}${p.resSuffix}`;
+}
 
 export function Projects() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -56,7 +60,6 @@ export function Projects() {
 
     function countup(panel: HTMLElement) {
       if (countupDone.has(panel)) return;
-      countupDone.add(panel);
 
       const raw = parseFloat(panel.dataset.resRaw ?? "0");
       const prefix = panel.dataset.resPrefix ?? "";
@@ -64,6 +67,14 @@ export function Projects() {
       const step = parseFloat(panel.dataset.resStep ?? "1");
       const valEl = panel.querySelector<HTMLSpanElement>(".pp-res-val");
       if (!valEl) return;
+
+      const finalStr = `${prefix}${raw}${suffix}`;
+      if (valEl.textContent === finalStr) {
+        countupDone.add(panel);
+        return;
+      }
+
+      countupDone.add(panel);
 
       const DURATION = 1200;
       const start = performance.now();
@@ -412,7 +423,7 @@ export function Projects() {
                     <div className="pp-foot">
                       <div className="pp-res">
                         <span className="pp-res-val">
-                          {project.resPrefix}0{project.resSuffix}
+                          {formatProjectMetric(project)}
                         </span>
                         <span className="pp-res-lbl">{project.resLabel}</span>
                       </div>

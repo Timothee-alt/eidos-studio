@@ -199,11 +199,15 @@ export function Nav() {
                   >
                     <div className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover/btn:-translate-y-[12px]">
                       <span className="flex h-[12px] items-center justify-center">Menu</span>
-                      <span className="flex h-[12px] items-center justify-center">Menu</span>
+                      <span className="flex h-[12px] items-center justify-center" aria-hidden>
+                        Menu
+                      </span>
                     </div>
                     <div className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover/btn:-translate-y-[12px]">
                       <span className="flex h-[12px] items-center justify-center">Fermer</span>
-                      <span className="flex h-[12px] items-center justify-center">Fermer</span>
+                      <span className="flex h-[12px] items-center justify-center" aria-hidden>
+                        Fermer
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -258,7 +262,10 @@ export function Nav() {
                     <span className="col-start-1 row-start-1 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover/link:-translate-y-[120%]">
                       {link.label}
                     </span>
-                    <span className="col-start-1 row-start-1 translate-y-[120%] text-accent transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover/link:translate-y-0">
+                    <span
+                      className="col-start-1 row-start-1 translate-y-[120%] text-accent transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover/link:translate-y-0"
+                      aria-hidden
+                    >
                       {link.label}
                     </span>
                   </span>
