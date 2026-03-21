@@ -51,7 +51,9 @@ function EyeParticles({ pointerRef }: EyeParticlesProps) {
   } | null>(null);
   const groupScale = useMdScale();
 
-  const particleCount = 15000;
+  const [particleCount] = useState(() =>
+    typeof window !== "undefined" && window.innerWidth < 768 ? 7200 : 15000
+  );
 
   const [positions, colors] = useMemo(() => {
     const pos = new Float32Array(particleCount * 3);
@@ -117,7 +119,7 @@ function EyeParticles({ pointerRef }: EyeParticlesProps) {
     }
 
     return [pos, col];
-  }, []);
+  }, [particleCount]);
 
   const onBeforeCompileSpotlight = useCallback(
     (shader: {
@@ -209,7 +211,7 @@ function EyeParticles({ pointerRef }: EyeParticlesProps) {
           transparent
           opacity={BASE_OPACITY}
           sizeAttenuation
-          blending={THREE.AdditiveBlending}
+          blending={THREE.NormalBlending}
           depthWrite={false}
           {...(pointerRef ? { onBeforeCompile: onBeforeCompileSpotlight } : {})}
         />

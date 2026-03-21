@@ -26,6 +26,8 @@ export function Preloader() {
     }
 
     document.body.setAttribute("data-preloader", "true");
+    // Débloque tout de suite les animations / hydratation below-the-fold — le preloader masque encore l’écran.
+    setReady();
 
     const run = async () => {
       const gsap = (await import("gsap")).default;
@@ -33,7 +35,6 @@ export function Preloader() {
       if (prefersReducedMotion) {
         setVisible(false);
         document.body.removeAttribute("data-preloader");
-        setReady();
         return;
       }
 
@@ -119,7 +120,6 @@ export function Preloader() {
       setVisible(false);
       document.body.removeAttribute("data-preloader");
       sessionStorage.setItem(PRELOADER_VISITED_KEY, "1");
-      setReady();
     };
 
     run();
@@ -143,8 +143,18 @@ export function Preloader() {
         justifyContent: "center",
         overflow: "hidden",
       }}
-      aria-hidden
+      aria-busy="true"
+      aria-live="polite"
+      aria-label="Chargement du site"
     >
+      <div
+        className="pointer-events-none absolute left-6 right-6 top-7 z-3 flex justify-between border-b border-white/10 pb-4 md:left-10 md:right-10"
+        style={{ fontFamily: "var(--font-m)" }}
+      >
+        <span className="text-[10px] tracking-[0.28em] text-white/35">EIDOS STUDIO</span>
+        <span className="text-[10px] tracking-[0.22em] text-[#68e2a0]/90">CHARGEMENT</span>
+      </div>
+
       {/* Split panels — cover the screen, animate out */}
       <div
         ref={topPanelRef}
@@ -173,19 +183,39 @@ export function Preloader() {
         }}
       />
 
+      {/* Barre de progression type showcase */}
+      <div
+        className="pointer-events-none absolute bottom-0 left-0 right-0 z-3 h-px bg-white/6"
+        aria-hidden
+      >
+        <div
+          className="h-full bg-linear-to-r from-[#3b7bff] via-[#8eb1ff] to-[#68e2a0] transition-[width] duration-300 ease-out"
+          style={{ width: `${counter}%` }}
+        />
+      </div>
+
       {/* Center content — logo + counter */}
-      <div className="flex flex-col items-center gap-6" style={{ zIndex: 1 }}>
-        <div ref={logoRef} className="flex flex-col items-center gap-6">
-          <EidosSymbol size={64} irisOpen accent="#3b7bff" />
-          <span
-            className="preloader-counter-wrap font-mono text-2xl tabular-nums text-white"
-            style={{
-              fontFamily: "var(--font-m)",
-              opacity: 1,
-            }}
-          >
-            {counter}
-          </span>
+      <div className="flex flex-col items-center gap-8" style={{ zIndex: 1 }}>
+        <div ref={logoRef} className="flex flex-col items-center gap-7">
+          <EidosSymbol size={72} irisOpen accent="#3b7bff" />
+          <div className="flex flex-col items-center gap-2">
+            <span
+              className="preloader-counter-wrap font-mono text-4xl font-medium tabular-nums tracking-tight text-white/95 md:text-5xl"
+              style={{
+                fontFamily: "var(--font-m)",
+                opacity: 1,
+              }}
+            >
+              {counter}
+              <span className="text-lg text-white/40 md:text-xl">%</span>
+            </span>
+            <span
+              className="text-[10px] tracking-[0.3em] text-white/30"
+              style={{ fontFamily: "var(--font-m)" }}
+            >
+              EXPÉRIENCE
+            </span>
+          </div>
         </div>
       </div>
     </div>

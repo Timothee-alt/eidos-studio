@@ -125,10 +125,13 @@ a {
   outline-offset: 2px;
 }
 
-body[data-preloader] main {
-  visibility: hidden;
+body[data-preloader] {
   overflow: hidden;
-  height: 100vh;
+}
+
+/* Pas de visibility:hidden : le contenu peut être peint (LCP) ; le preloader fixe le masque visuellement. */
+body[data-preloader] main {
+  pointer-events: none;
 }
 
 .label {
