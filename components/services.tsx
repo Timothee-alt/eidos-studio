@@ -510,7 +510,7 @@ export function Services() {
       ref={sectionRef}
       id="capabilities"
       className="services-section"
-      aria-label="Expertises"
+      aria-label="Expertises et services d'Eidos Studio"
     >
       <div className="services-pin-wrap">
         <div className="services-glcanvas-wrap" aria-hidden>
@@ -599,7 +599,7 @@ export function Services() {
 
           <div className="services-p-bottom">
             <div className="services-scrubber">
-              {slides.map((_, i) => (
+              {slides.map((slide, i) => (
                 <button
                   key={i}
                   type="button"
@@ -607,7 +607,11 @@ export function Services() {
                   data-to={i}
                   onClick={() => goTo(i)}
                   style={i === cur ? { background: activeSlide?.hex } : undefined}
-                  aria-label={`Aller au service ${i + 1}`}
+                  aria-label={
+                    slide.title
+                      ? `Aller à l'expertise : ${slide.title}`
+                      : `Aller à l'expertise ${i + 1}`
+                  }
                 />
               ))}
             </div>
@@ -681,6 +685,7 @@ export function Services() {
                       className="services-svc-cta"
                       data-cursor="view"
                       data-cursor-text="VOIR"
+                      aria-label={`${slide.ctaLabel} — page ${slide.title}`}
                     >
                       <span className="services-cta-label">{slide.ctaLabel}</span>
                       <div className="services-cta-rule" />

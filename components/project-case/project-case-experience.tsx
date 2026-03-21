@@ -34,6 +34,11 @@ function displayTitle(study: Pick<ProjectCaseStudy, "title" | "titleLines">) {
   return study.title;
 }
 
+function teaserPlainTitle(t: Teaser): string {
+  if (t.titleLines?.length) return t.titleLines.join(" ");
+  return t.title;
+}
+
 function readingMinutes(study: ProjectCaseStudy) {
   const text = [study.leadIn, ...study.sections.map((s) => s.body)].join(" ");
   const words = text.trim().split(/\s+/).filter(Boolean).length;
@@ -344,7 +349,7 @@ export function ProjectCaseExperience({ study, prevTeaser, nextTeaser }: Props) 
       ref={rootRef}
       className="pce"
       style={cssVars}
-      aria-label={`Étude de cas — ${study.title}`}
+      aria-label={`Étude de cas : ${study.title} — ${study.client}`}
     >
       <ProjectCaseMinimap items={minimapItems} />
 
@@ -357,6 +362,7 @@ export function ProjectCaseExperience({ study, prevTeaser, nextTeaser }: Props) 
         className="pce-back label"
         data-cursor="view"
         data-cursor-text="RETOUR"
+        aria-label="Retour à la section Projets sur la page d'accueil"
       >
         ← Projets
       </Link>
@@ -424,11 +430,15 @@ export function ProjectCaseExperience({ study, prevTeaser, nextTeaser }: Props) 
         <nav className="pce-breadcrumb pce-reveal" aria-label="Fil d'Ariane">
           <ol>
             <li>
-              <Link href="/">Accueil</Link>
+              <Link href="/" aria-label="Accueil — Eidos Studio">
+                Accueil
+              </Link>
             </li>
             <li aria-hidden>/</li>
             <li>
-              <Link href="/#projets">Projets</Link>
+              <Link href="/#projets" aria-label="Projets — section sur la page d'accueil">
+                Projets
+              </Link>
             </li>
             <li aria-hidden>/</li>
             <li aria-current="page">{study.title}</li>
@@ -532,6 +542,7 @@ export function ProjectCaseExperience({ study, prevTeaser, nextTeaser }: Props) 
               data-cursor="view"
               data-cursor-text="RETOUR"
               style={{ "--pce-next-accent": prevTeaser.hex } as React.CSSProperties}
+              aria-label={`Étude de cas précédente : ${teaserPlainTitle(prevTeaser)} — ${prevTeaser.client}`}
             >
               <span className="pce-pivot-arrow" aria-hidden>
                 ←
@@ -557,6 +568,7 @@ export function ProjectCaseExperience({ study, prevTeaser, nextTeaser }: Props) 
               data-cursor="view"
               data-cursor-text="SUITE"
               style={{ "--pce-next-accent": nextTeaser.hex } as React.CSSProperties}
+              aria-label={`Étude de cas suivante : ${teaserPlainTitle(nextTeaser)} — ${nextTeaser.client}`}
             >
               <div
                 className="pce-pivot-visual"
@@ -585,6 +597,7 @@ export function ProjectCaseExperience({ study, prevTeaser, nextTeaser }: Props) 
               className="btn-primary-filled group"
               data-cursor="view"
               data-cursor-text="OK"
+              aria-label="Démarrer un projet — contacter Eidos Studio (section Contact sur l'accueil)"
             >
               <span className="relative z-10 flex items-center gap-2">
                 Démarrer un projet

@@ -365,7 +365,11 @@ export function Projects() {
                 data-res-suffix={project.resSuffix}
                 data-res-label={project.resLabel}
                 data-res-step={project.resStep}
-                aria-label={project.title}
+                aria-label={
+                  project.client
+                    ? `Projet : ${project.title} — ${project.client}`
+                    : `Projet : ${project.title}`
+                }
               >
                 <div
                   className="pp-img"
@@ -432,7 +436,7 @@ export function Projects() {
                         className="pp-cta"
                         data-cursor="view"
                         data-cursor-text="VOIR"
-                        aria-label={`Voir l'étude de cas ${project.title}`}
+                        aria-label={`Voir l'étude de cas : ${project.title}${project.client ? ` (${project.client})` : ""}`}
                       >
                         <span className="pp-cta-txt">Voir l&apos;étude de cas</span>
                         <div className="pp-cta-rule" />
@@ -470,7 +474,7 @@ export function Projects() {
         <Link
           href="/#projets"
           className="pf-cta"
-          aria-label="Voir tous les projets"
+          aria-label="Aller à la section Projets sélectionnés sur la page d'accueil"
         >
           <span className="pf-lbl">Tous les projets</span>
           <div className="pf-rule" />

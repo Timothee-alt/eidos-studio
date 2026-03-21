@@ -125,7 +125,7 @@ export function About() {
   return (
     <section
       id="about"
-      aria-label="Studio"
+      aria-label="Le studio Eidos — présentation et ADN"
       className="relative w-full overflow-hidden"
       style={{ background: "var(--bg)", borderTop: "1px solid rgba(255,255,255,0.06)" }}
     >
@@ -200,7 +200,11 @@ export function About() {
             Du diagnostic au déploiement : jalons nets et critères mesurables. Prochaine étape pour votre
             cas&nbsp;: le contact.
           </p>
-          <Link href="#contact" className="about-cl-cta">
+          <Link
+            href="#contact"
+            className="about-cl-cta"
+            aria-label="Aller à la section Contact sur cette page"
+          >
             <span>Aller au contact</span>
             <div className="about-cl-bar" />
             <span>↗</span>

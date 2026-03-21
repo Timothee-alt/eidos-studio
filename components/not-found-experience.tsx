@@ -95,7 +95,11 @@ export function NotFoundExperience() {
             </p>
             <div className="flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:items-center">
               <Magnetic strength={0.38}>
-                <Link href="/" className="btn-primary-filled group">
+                <Link
+                  href="/"
+                  className="btn-primary-filled group"
+                  aria-label="Retour à l'accueil d'Eidos Studio"
+                >
                   <span className="relative z-10 flex items-center gap-2">
                     Retour à l&apos;accueil
                     <span className="transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1">
@@ -107,6 +111,7 @@ export function NotFoundExperience() {
               <Link
                 href="/#contact"
                 className="btn-hero-ghost inline-flex"
+                aria-label="Nous contacter — section Contact sur la page d'accueil"
               >
                 Nous contacter
               </Link>

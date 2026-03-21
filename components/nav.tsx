@@ -170,7 +170,12 @@ export function Nav() {
         <div className="absolute inset-0 -z-10 bg-[#050507]" aria-hidden />
         
         <div className="page-inline flex h-20 items-center justify-between">
-          <Link href="/" className="shrink-0" onClick={closeMenu}>
+          <Link
+            href="/"
+            className="shrink-0"
+            onClick={closeMenu}
+            aria-label="Eidos Studio — retour à l'accueil"
+          >
             <EidosLockup size={32} subLabel="STUDIO" />
           </Link>
 
@@ -179,12 +184,14 @@ export function Nav() {
               <Link
                 href="/#projets"
                 className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/45 transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-white focus-visible:text-white rounded-sm focus-visible:outline-offset-4"
+                aria-label="Projets — section sur la page d'accueil"
               >
                 Projets
               </Link>
               <Link
                 href="/#contact"
                 className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/45 transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-white focus-visible:text-white rounded-sm focus-visible:outline-offset-4"
+                aria-label="Contact — section sur la page d'accueil"
               >
                 Contact
               </Link>
@@ -194,7 +201,9 @@ export function Nav() {
                 type="button"
                 onClick={toggleMenu}
                 className="group/btn relative flex h-9 items-center justify-center overflow-hidden rounded-full bg-white/10 px-4 backdrop-blur-md transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-white/20 active:bg-white/[0.14] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--accent)_75%,white)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050507]"
-                aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+                aria-label={
+                  menuOpen ? "Fermer le menu de navigation" : "Ouvrir le menu de navigation"
+                }
                 aria-expanded={menuOpen}
               >
                 <div className="absolute inset-0 bg-white/5 opacity-0 transition-opacity duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/btn:opacity-100 group-active/btn:opacity-100" />
@@ -258,6 +267,7 @@ export function Nav() {
                   onClick={closeMenu}
                   className="nav-menu-link group/link inline-flex items-center gap-6 rounded-md font-extrabold text-white opacity-100 blur-none outline-none transition-[opacity,filter] duration-300 ease-out focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--accent)_70%,white)] focus-visible:ring-offset-4 focus-visible:ring-offset-[#050507]"
                   style={{ fontFamily: "var(--font-d)", fontSize: "clamp(48px, 8vw, 120px)", lineHeight: 0.9 }}
+                  aria-label={`${link.label} — navigation vers la page d'accueil`}
                 >
                   <span className="text-sm font-mono tracking-widest text-(--muted) opacity-50 transition-opacity duration-300 ease-out group-hover/link:opacity-100 group-focus-visible/link:opacity-100">
                     0{i + 1}
@@ -303,6 +313,7 @@ export function Nav() {
               href="/#contact"
               onClick={closeMenu}
               className="btn-primary-filled inline-flex items-center px-8 py-4 pointer-events-auto"
+              aria-label="Lancer mon projet — aller à la section Contact sur l'accueil"
             >
               Lancer mon projet
             </Link>

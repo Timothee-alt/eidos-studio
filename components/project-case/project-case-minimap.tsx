@@ -50,8 +50,11 @@ export function ProjectCaseMinimap({ items }: Props) {
               className={`pce-minimap-dot${i === active ? " is-active" : ""}`}
               data-label={item.label}
               aria-current={i === active ? "location" : undefined}
+              aria-label={`Aller à la section : ${item.label}`}
             >
-              <span className="pce-minimap-sr">{item.label}</span>
+              <span className="pce-minimap-sr" aria-hidden>
+                {item.label}
+              </span>
             </a>
           </li>
         ))}

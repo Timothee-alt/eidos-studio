@@ -363,7 +363,7 @@ export function Contact() {
                   onClick={handleCopyEmail}
                   onMouseEnter={handleEmailMouseEnter}
                   className="group relative inline-flex items-center gap-4 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--accent)_50%,transparent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050507] active:opacity-90"
-                  aria-label="Copier l'adresse email"
+                  aria-label={`Copier l'adresse e-mail ${CONTACT_EMAIL} dans le presse-papiers`}
                   data-cursor="view"
                   data-cursor-text={copied ? "COPIÉ !" : "COPIER"}
                 >
@@ -402,7 +402,10 @@ export function Contact() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={social.ariaLabel}
+                  aria-label={
+                    social.ariaLabel ??
+                    `Ouvrir le profil ${social.label} d'Eidos Studio (nouvel onglet)`
+                  }
                   data-ct="social"
                   className="group inline-flex items-center gap-5 w-fit"
                 >
@@ -503,7 +506,7 @@ export function Contact() {
                     <button
                       type="submit"
                       disabled={formState === "sending"}
-                      aria-label="Envoyer le message"
+                      aria-label="Envoyer le message de contact à Eidos Studio"
                       data-cursor="view"
                       data-cursor-text="SEND"
                       className="group relative flex items-center justify-center w-[96px] h-[96px] rounded-full outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--accent)_55%,transparent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050507] active:scale-[0.97]"

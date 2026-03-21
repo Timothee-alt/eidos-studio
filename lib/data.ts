@@ -780,8 +780,16 @@ export type SocialLink = {
 };
 
 export const SOCIAL_LINKS: SocialLink[] = [
-  { label: "GitHub", href: "https://github.com/eidos-studio", ariaLabel: "GitHub" },
-  { label: "LinkedIn", href: "https://linkedin.com/company/eidos-studio", ariaLabel: "LinkedIn" },
+  {
+    label: "GitHub",
+    href: "https://github.com/eidos-studio",
+    ariaLabel: "Eidos Studio sur GitHub (ouvre un nouvel onglet)",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://linkedin.com/company/eidos-studio",
+    ariaLabel: "Eidos Studio sur LinkedIn (ouvre un nouvel onglet)",
+  },
 ];
 
 // ────────────────────────────────────────────────────────────

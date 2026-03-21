@@ -68,7 +68,7 @@ export function Hero() {
     <>
     <section
       ref={sectionRef}
-      aria-label="Accueil"
+      aria-label="Introduction — Eidos Studio, page d'accueil"
       className="relative w-full h-svh min-h-[600px] bg-[#050507] overflow-hidden text-[#f6f6f7]"
     >
       {/* Poster statique : évite le vide avant le premier frame WebGL */}
@@ -139,7 +139,11 @@ export function Hero() {
           <div className="flex flex-col items-start mix-blend-difference pointer-events-auto ml-1 md:ml-2">
             <div data-hf>
               <Magnetic strength={0.4}>
-                <Link href="#contact" className="btn-primary-filled group">
+                <Link
+                  href="#contact"
+                  className="btn-primary-filled group"
+                  aria-label="Démarrer un projet — aller à la section Contact"
+                >
                   <span className="relative z-10 flex items-center gap-2">
                     Démarrer un projet
                     <span className="transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1">

@@ -84,7 +84,7 @@ export function Processus() {
       ref={sectionRef}
       id="processus"
       className="proc-section"
-      aria-label="Processus"
+      aria-label="Processus de collaboration en quatre phases"
     >
       <div className="proc-header reveal">
         <span className="proc-label">Processus</span>

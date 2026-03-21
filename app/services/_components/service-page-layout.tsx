@@ -58,6 +58,7 @@ export function ServicePageLayout({
           <Link
             href="/#capabilities"
             className="mb-8 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-(--muted) transition-colors hover:text-text"
+            aria-label="Retour aux expertises sur la page d'accueil"
           >
             ← Tous les services
           </Link>
@@ -87,11 +88,19 @@ export function ServicePageLayout({
           </div>
 
           <div className="flex flex-wrap items-center gap-4">
-            <Link href="/#contact" className="btn-primary-filled inline-flex">
+            <Link
+              href="/#contact"
+              className="btn-primary-filled inline-flex"
+              aria-label={`${page.cta} — section Contact sur l'accueil`}
+            >
               {page.cta}
               <span aria-hidden>→</span>
             </Link>
-            <Link href="/#projets" className="btn-hero-ghost inline-flex">
+            <Link
+              href="/#projets"
+              className="btn-hero-ghost inline-flex"
+              aria-label="Voir les projets sur la page d'accueil"
+            >
               Voir les projets
             </Link>
           </div>

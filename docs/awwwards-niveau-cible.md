@@ -46,7 +46,7 @@ Document de référence pour viser **Honorable Mention**, **Site of the Day** ou
 
 - [ ] **Landmarks & titres** : conserver / renforcer `main`, `nav`, régions nommées, `h1`–`h3` logiques.
 - [ ] **Contraste** : texte gris sur noir validé (WCAG visé : AA minimum sur les textes importants).
-- [ ] **Contrôles** : `aria-label` **descriptifs** (ex. nom du service, pas seulement « Aller au service 2 »).
+- [x] **Contrôles** : `aria-label` **descriptifs** (ex. nom du service, pas seulement « Aller au service 2 »).
 - [ ] **Mouvement** : désactiver ou simplifier scramble, parallaxe, WebGL non essentiel quand `prefers-reduced-motion: reduce`.
 - [ ] **Focus** : ordre de tabulation logique, anneau de focus visible sur composants custom et menu.
 
