@@ -276,7 +276,7 @@ export function Contact() {
       <div
         aria-hidden
         data-ct="bg-num"
-        className="absolute top-8 right-6 md:right-12 select-none pointer-events-none z-0"
+        className="pointer-events-none absolute top-8 z-0 select-none [right:max(env(safe-area-inset-right,0px),var(--page-gutter))]"
         style={{
           fontFamily: "var(--font-d)",
           fontSize: "clamp(120px, 18vw, 280px)",
@@ -291,7 +291,7 @@ export function Contact() {
       </div>
 
       {/* ── Main container ── */}
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 pt-24 md:pt-32 pb-16 md:pb-20">
+      <div className="page-content relative z-10 pt-24 pb-16 md:pt-32 md:pb-20">
 
         {/* ── Header row ── */}
         <div
@@ -362,7 +362,7 @@ export function Contact() {
                   type="button"
                   onClick={handleCopyEmail}
                   onMouseEnter={handleEmailMouseEnter}
-                  className="group relative inline-flex items-center gap-4"
+                  className="group relative inline-flex items-center gap-4 rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--accent)_50%,transparent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050507] active:opacity-90"
                   aria-label="Copier l'adresse email"
                   data-cursor="view"
                   data-cursor-text={copied ? "COPIÉ !" : "COPIER"}
@@ -371,18 +371,18 @@ export function Contact() {
                   <span className="relative">
                     <span
                       ref={emailRef}
-                      className="font-mono text-[clamp(13px,1.8vw,20px)] tracking-wide text-[#f6f6f7] transition-colors duration-300 group-hover:text-[#3b7bff]"
+                      className="font-mono text-[clamp(13px,1.8vw,20px)] tracking-wide text-[#f6f6f7] transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-[#3b7bff] group-focus-visible:text-[#3b7bff]"
                     >
                       {CONTACT_EMAIL}
                     </span>
                     <span
                       aria-hidden
-                      className="absolute -bottom-1 left-0 h-px w-0 bg-[#3b7bff] group-hover:w-full"
-                      style={{ transition: "width 0.5s var(--ease)" }}
+                      className="absolute -bottom-1 left-0 h-px w-0 bg-[#3b7bff] group-hover:w-full group-focus-visible:w-full"
+                      style={{ transition: "width var(--duration-ui-slow) var(--ease)" }}
                     />
                   </span>
                   <span
-                    className="font-mono text-[9px] tracking-[0.2em] uppercase transition-colors duration-300"
+                    className="font-mono text-[9px] tracking-[0.2em] uppercase transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]"
                     style={{ color: copied ? "#68e2a0" : "rgba(246,246,247,0.28)" }}
                   >
                     {copied ? "✓ Copié" : "→"}
@@ -406,19 +406,19 @@ export function Contact() {
                   data-ct="social"
                   className="group inline-flex items-center gap-5 w-fit"
                 >
-                  <span className="font-mono text-[9px] tracking-[0.2em] text-white/22 group-hover:text-[#3b7bff] transition-colors duration-300">
+                  <span className="font-mono text-[9px] tracking-[0.2em] text-white/22 transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-[#3b7bff] group-focus-visible:text-[#3b7bff]">
                     0{i + 1}
                   </span>
-                  <span className="relative font-mono text-[11px] tracking-[0.14em] uppercase text-white/55 group-hover:text-white transition-colors duration-300">
+                  <span className="relative font-mono text-[11px] tracking-[0.14em] uppercase text-white/55 transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-white group-focus-visible:text-white">
                     {social.label}
                     <span
                       aria-hidden
-                      className="absolute -bottom-0.5 left-0 h-px w-0 bg-[#3b7bff] group-hover:w-full"
-                      style={{ transition: "width 0.45s var(--ease)" }}
+                      className="absolute -bottom-0.5 left-0 h-px w-0 bg-[#3b7bff] group-hover:w-full group-focus-visible:w-full"
+                      style={{ transition: "width var(--duration-ui-slow) var(--ease)" }}
                     />
                   </span>
                   <span
-                    className="text-white/18 group-hover:text-[#3b7bff] transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    className="text-white/18 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-[#3b7bff] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:text-[#3b7bff] group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5"
                     aria-hidden
                   >
                     ↗
@@ -457,7 +457,7 @@ export function Contact() {
                 <button
                   type="button"
                   onClick={resetForm}
-                  className="font-mono text-[9px] tracking-[0.22em] uppercase text-white/30 hover:text-white/70 transition-colors duration-300 w-fit mt-2"
+                  className="font-mono text-[9px] tracking-[0.22em] uppercase text-white/30 transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-white/70 focus-visible:text-white/70 w-fit mt-2 rounded-sm focus-visible:outline-offset-4"
                 >
                   ← Envoyer un autre message
                 </button>
@@ -506,10 +506,11 @@ export function Contact() {
                       aria-label="Envoyer le message"
                       data-cursor="view"
                       data-cursor-text="SEND"
-                      className="group relative flex items-center justify-center w-[96px] h-[96px] rounded-full"
+                      className="group relative flex items-center justify-center w-[96px] h-[96px] rounded-full outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--accent)_55%,transparent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050507] active:scale-[0.97]"
                       style={{
                         border: "1px solid rgba(255,255,255,0.15)",
-                        transition: "border-color 0.4s var(--ease), background 0.4s var(--ease)",
+                        transition:
+                          "border-color var(--duration-ui) var(--ease), background var(--duration-ui) var(--ease), transform var(--duration-ui) var(--ease)",
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.borderColor = "rgba(59,123,255,0.5)";
@@ -523,7 +524,7 @@ export function Contact() {
                       {/* Dashed rotating ring */}
                       <svg
                         aria-hidden
-                        className="absolute inset-0 w-full h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        className="absolute inset-0 w-full h-full opacity-0 transition-opacity duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-focus-visible:opacity-100"
                         viewBox="0 0 96 96"
                         fill="none"
                         style={{ animation: "spin 12s linear infinite" }}
@@ -542,12 +543,12 @@ export function Contact() {
                           <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                         </svg>
                       ) : (
-                        <span className="flex flex-col items-center gap-1.5 transition-transform duration-300 group-hover:scale-105">
-                          <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-white/60 group-hover:text-white transition-colors duration-300">
+                        <span className="flex flex-col items-center gap-1.5 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 group-focus-visible:scale-105">
+                          <span className="font-mono text-[9px] tracking-[0.22em] uppercase text-white/60 transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-white group-focus-visible:text-white">
                             ENVOYER
                           </span>
                           <span
-                            className="text-white/40 group-hover:text-[#3b7bff] transition-all duration-300 group-hover:translate-x-0.5"
+                            className="text-white/40 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-[#3b7bff] group-hover:translate-x-0.5 group-focus-visible:text-[#3b7bff] group-focus-visible:translate-x-0.5"
                             aria-hidden
                           >
                             →
@@ -608,13 +609,13 @@ function FormField({
   multiline?: boolean;
 }) {
   const sharedClass =
-    "w-full bg-transparent py-3 text-[16px] leading-relaxed text-[#f6f6f7] placeholder:text-white/15 outline-none peer resize-none";
+    "w-full bg-transparent py-3 text-[16px] leading-relaxed text-[#f6f6f7] placeholder:text-white/15 outline-none peer resize-none rounded-sm transition-[color,box-shadow] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--accent)_48%,transparent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050507]";
 
   return (
     <div data-ct="field" className="flex flex-col gap-2 group/field">
       <label
         htmlFor={id}
-        className="font-mono text-[9px] tracking-[0.25em] uppercase transition-colors duration-300"
+        className="font-mono text-[9px] tracking-[0.25em] uppercase transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]"
         style={{ color: "rgba(246,246,247,0.28)" }}
       >
         {label}
@@ -655,7 +656,7 @@ function FormField({
           className="absolute bottom-0 left-0 h-px w-0 peer-focus:w-full"
           style={{
             background: "linear-gradient(90deg, #3b7bff, #8eb1ff)",
-            transition: "width 0.55s var(--ease)",
+            transition: "width var(--duration-ui-slow) var(--ease)",
           }}
         />
       </div>

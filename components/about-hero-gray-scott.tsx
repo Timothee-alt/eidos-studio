@@ -46,7 +46,7 @@ export function AboutHeroGrayScott() {
     async function seed() {
       await document.fonts.ready;
       try {
-        await document.fonts.load("700 72px 'Space Grotesk'");
+        await document.fonts.load("700 72px 'Sora'");
       } catch {
         /* fallback if load fails */
       }
@@ -57,7 +57,7 @@ export function AboutHeroGrayScott() {
       c2.clearRect(0, 0, SIM, SIM);
       c2.fillStyle = "#fff";
       const fs = Math.round(SIM * 0.28);
-      c2.font = `700 ${fs}px "Space Grotesk", sans-serif`;
+        c2.font = `700 ${fs}px "Sora", sans-serif`;
       c2.textAlign = "left";
       c2.textBaseline = "top";
       c2.fillText("EIDOS", SIM * 0.04, SIM * 0.08);

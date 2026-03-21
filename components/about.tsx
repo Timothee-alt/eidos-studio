@@ -139,7 +139,7 @@ export function About() {
         className="about-manifesto"
       >
         <div className="about-m-left reveal">
-          <div className="about-m-eyebrow">Manifeste · Eidos Studio</div>
+          <div className="about-m-eyebrow">Position · Eidos Studio</div>
           <h2 className="about-m-heading">
             <span>Design</span>
             <span className="about-m-acc">d&apos;auteur.</span>
@@ -148,17 +148,11 @@ export function About() {
         </div>
         <div className="about-m-right reveal">
           <p className="about-m-body">
-            Eidos Studio est né d&apos;une conviction&nbsp;:{" "}
-            <strong>le web mérite d&apos;être traité comme un médium d&apos;auteur.</strong>{" "}
-            Pas comme un outil de communication à optimiser. Comme une surface
-            d&apos;expression, avec la même rigueur qu&apos;un objet de design
-            industriel.
-            <br />
-            <br />
-            Chaque projet est une pièce unique. Pensée, dessinée et développée
-            sans template, sans compromis entre{" "}
-            <strong>l&apos;esthétique et la performance.</strong> Les deux ou
-            rien.
+            Eidos Studio part du principe que le web peut être un{" "}
+            <strong>médium d&apos;auteur</strong> — avec la même rigueur qu&apos;un
+            objet de design industriel. Chaque livrable est pensé sur mesure&nbsp;:
+            pas de template, et pas de compromis entre{" "}
+            <strong>l&apos;esthétique et la performance.</strong>
           </p>
           <div className="about-m-rule" id="about-m-rule" />
         </div>
@@ -171,9 +165,14 @@ export function About() {
               <span className="about-cn" data-to={statToNumber(stat)}>
                 {statToNumber(stat)}
               </span>
-              <span className="about-stat-sfx">{stat.suffix}</span>
+              {stat.suffix ? (
+                <span className="about-stat-sfx">{stat.suffix}</span>
+              ) : null}
             </div>
             <div className="about-stat-l">{stat.label}</div>
+            {stat.context ? (
+              <p className="about-stat-c">{stat.context}</p>
+            ) : null}
           </div>
         ))}
       </div>
@@ -197,9 +196,12 @@ export function About() {
 
       <section className="about-closing-simple">
         <div className="about-cs-inner reveal">
-          <p className="about-cs-line">Un projet ambitieux mérite une conversation directe.</p>
+          <p className="about-cs-line">
+            Du diagnostic au déploiement : jalons nets et critères mesurables. Prochaine étape pour votre
+            cas&nbsp;: le contact.
+          </p>
           <Link href="#contact" className="about-cl-cta">
-            <span>Parlons-en</span>
+            <span>Aller au contact</span>
             <div className="about-cl-bar" />
             <span>↗</span>
           </Link>

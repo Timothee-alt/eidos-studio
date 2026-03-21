@@ -45,7 +45,7 @@ export function ServicePageLayout({
 }: Pick<ServicePageLayoutProps, "page" | "serviceCode">) {
   return (
     <main id="main">
-      <section className="relative overflow-hidden border-t border-border px-6 py-28 md:px-8 md:py-32">
+      <section className="page-inline relative overflow-hidden border-t border-border py-28 md:py-32">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0"

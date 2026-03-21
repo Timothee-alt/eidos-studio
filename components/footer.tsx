@@ -1,7 +1,7 @@
 export function Footer() {
   return (
     <footer
-      className="relative overflow-hidden border-t border-border px-6 py-8"
+      className="page-inline relative overflow-hidden border-t border-border py-8"
       aria-label="Pied de page"
     >
       <div

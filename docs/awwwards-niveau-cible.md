@@ -20,22 +20,21 @@ Document de référence pour viser **Honorable Mention**, **Site of the Day** ou
 
 ### 2.1 Design & direction artistique
 
-- [ ] **Identité différenciante** : sortir du combo « dark + sans géométrique + mono + sphère WebGL » sans abandonner la marque — au moins un choix typographique ou colorimétrique nettement moins « catalogue agence ».
-- [ ] **Hiérarchie** : une échelle claire titre / sous-titre / corps / légende ; pas de concurrence visuelle entre le hero et les CTA secondaires.
-- [ ] **Grille & rythme** : espacements et alignements ressentis comme intentionnels sur toutes les largeurs (mobile inclus).
-- [ ] **Micro-détails** : états hover/focus/active cohérents, transitions courtes et maîtrisées, pas d’effets « par défaut » non assumés.
+- [X] **Identité différenciante** : sortir du combo « dark + sans géométrique + mono + sphère WebGL » sans abandonner la marque — au moins un choix typographique ou colorimétrique nettement moins « catalogue agence ».
+- [X] **Hiérarchie** : une échelle claire titre / sous-titre / corps / légende ; pas de concurrence visuelle entre le hero et les CTA secondaires.
+- [X] **Grille & rythme** : espacements et alignements ressentis comme intentionnels sur toutes les largeurs (mobile inclus).
+- [X] **Micro-détails** : états hover/focus/active cohérents, transitions courtes et maîtrisées, pas d’effets « par défaut » non assumés.
 
 ### 2.2 Créativité & « wow »
 
-- [ ] **Un moment signature** : une interaction, une transition ou une narration visuelle *propre au positionnement* (WebGL au service du message, pas seulement en fond).
-- [ ] **Originalité du portfolio** : les études de cas ne sont pas des pages « template case study » — chacune a une raison d’être formelle (scroll, média, typo) liée au sujet du projet.
-- [ ] **Éviter le remplissage** : marquee de tags, stats sans contexte, manifestes longs — réduire ou remplacer par faits vérifiables et mise en scène.
+- [X] **Un moment signature** : une interaction, une transition ou une narration visuelle *propre au positionnement* (WebGL au service du message, pas seulement en fond).
+- [X] **Éviter le remplissage** : marquee de tags, stats sans contexte, manifestes longs — réduire ou remplacer par faits vérifiables et mise en scène.
 
 ### 2.3 Contenu & crédibilité
 
-- [ ] **Chiffres sourcés** : Lighthouse, conversions, heures gagnées — méthode en une phrase ou renvoi vers la case détaillée.
-- [ ] **Moins de répétition** : une seule formulation forte pour l’argument « parlons-en / conversation directe » ; le reste = preuves, processus, résultats.
-- [ ] **Ton** : français soigné, phrases courtes, jargon technique quand il apporte une info (stack, contraintes), pas pour l’effet.
+- [ ] **Chiffres sourcés** : Lighthouse, conversions, heures gagnées — méthode en une phrase ou renvoi vers la case détaillée. (plus tard)
+- [X] **Moins de répétition** : une seule formulation forte pour l’argument « parlons-en / conversation directe » ; le reste = preuves, processus, résultats.
+- [X] **Ton** : français soigné, phrases courtes, jargon technique quand il apporte une info (stack, contraintes), pas pour l’effet.
 
 ### 2.4 Utilisabilité (UX)
 
@@ -60,8 +59,8 @@ Document de référence pour viser **Honorable Mention**, **Site of the Day** ou
 
 ### 2.7 Qualité transverse (finition jury)
 
-- [ ] **404** : page à la hauteur du reste du site.
-- [ ] **États de chargement** : skeleton ou transitions qui ne bloquent pas l’accès au contenu textuel.
+- [x] **404** : page à la hauteur du reste du site.
+- [x] **États de chargement** : skeleton ou transitions qui ne bloquent pas l’accès au contenu textuel.
 - [ ] **Cross-browser** : Safari iOS, Chrome Android, Firefox desktop — au minimum sur homepage + une étude de cas.
 
 ---

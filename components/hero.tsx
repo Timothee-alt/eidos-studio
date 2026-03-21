@@ -92,7 +92,7 @@ export function Hero() {
         Le pointer-events-none sur le conteneur laisse passer la souris pour le mask.
         Le mix-blend-difference permet au texte d'inverser les couleurs quand la lampe torche passe derrière !
       */}
-      <div className="relative z-10 w-full h-full flex flex-col justify-between px-6 py-6 md:px-12 md:py-8 pointer-events-none">
+      <div className="page-inline relative z-10 flex h-full w-full flex-col justify-between py-[var(--page-pad-y-hero)] pointer-events-none">
         
         {/* LIGNE HAUTE : Statut */}
         <div
@@ -131,10 +131,7 @@ export function Hero() {
               </span>
             </div>
           </h1>
-          <p
-            className="ml-1 md:ml-2 max-w-[min(36rem,92vw)] font-mono text-[10px] leading-relaxed tracking-[0.12em] text-[#f6f6f7]/45 normal-case mix-blend-difference md:text-[11px] md:tracking-[0.14em]"
-            data-hf
-          >
+          <p className="hero-lead ml-1 md:ml-2 mix-blend-difference" data-hf>
             {STUDIO_CLAIM}
           </p>
 
@@ -145,7 +142,7 @@ export function Hero() {
                 <Link href="#contact" className="btn-primary-filled group">
                   <span className="relative z-10 flex items-center gap-2">
                     Démarrer un projet
-                    <span className="transition-transform duration-300 group-hover:translate-x-1">
+                    <span className="transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1">
                       →
                     </span>
                   </span>
@@ -168,7 +165,7 @@ export function Hero() {
       </div>
     </section>
 
-    {/* Ticker strip — tech tags marquee */}
+    {/* Ticker strip — stack & techno (marquee infini) */}
     <div className="hero-ticker" aria-hidden>
       <div className="hero-ticker-track">
         {[...TICKER_TAGS, ...TICKER_TAGS].map((tag, i) => (

@@ -86,6 +86,8 @@ export type Stat = {
   value: string | number;
   label: string;
   suffix?: string;
+  /** Périmètre ou méthode — courte phrase sous le libellé */
+  context?: string;
 };
 
 export type HomeChapter = {
@@ -394,7 +396,7 @@ export const PROJECT_SLIDES: ProjectSlide[] = [
     title: "Eidos IA",
     client: "Automatisation métier · IA appliquée",
     description:
-      "Après avoir rendu visibles les tâches informelles et la base de connaissance, la plateforme centralise, automatise et offre un pilotage lisible en temps réel.",
+      "Cartographie des tâches hors outils, base de connaissances centralisée, automatisation des flux répétitifs, tableaux de bord temps réel.",
     tags: ["Next.js", "IA", "Automatisation"],
     href: "/projets/eidos-ia",
     image: "",
@@ -440,7 +442,7 @@ export const PROJECT_SLIDES: ProjectSlide[] = [
     titleLines: ["Les Sens", "de l'Harmonie"],
     client: "Bien-être · Accompagnement",
     description:
-      "L'offre premium était diluée dans une présence floue : refonte pour révéler l'essentiel, simplifier le parcours et porter une DA immersive cohérente.",
+      "Offre haut de gamme peu lisible : refonte pour clarifier la proposition, raccourcir le parcours et aligner UI, motion et contenus.",
     tags: ["Branding digital", "Conversion", "Motion"],
     href: "/projets/les-sens-de-lharmonie",
     image: "",
@@ -469,7 +471,7 @@ export const PROJECTS: Project[] = [
     title: "Eidos IA",
     client: "Automatisation métier · IA appliquée",
     description:
-      "Cartographier où le temps se perd, puis centraliser les savoirs, automatiser l'évident et piloter en temps réel.",
+      "Cartographie du temps perdu hors outils, centralisation des savoirs, automatisation des tâches répétitives, pilotage en temps réel.",
     tags: ["Next.js", "IA", "Automatisation", "Dashboard"],
     href: "/projets/eidos-ia",
     image: "",
@@ -491,7 +493,7 @@ export const PROJECTS: Project[] = [
     title: "Les Sens de l'Harmonie",
     client: "Bien-être · Accompagnement",
     description:
-      "Image premium rendue lisible : offre clarifiée, parcours simplifié, storytelling visuel cohérent.",
+      "Positionnement premium explicite : offre clarifiée, parcours raccourci, contenus et UI alignés.",
     tags: ["Branding digital", "Conversion", "Next.js", "Motion"],
     href: "/projets/les-sens-de-lharmonie",
     image: "",
@@ -534,37 +536,37 @@ export type ProjectCaseStudy = ProjectSlide & ProjectCaseMeta;
 export const PROJECT_CASE_META: Record<string, ProjectCaseMeta> = {
   "eidos-ia": {
     year: "2024",
-    tagline: "De l'informel au pilotable",
-    heroWords: ["Temps", "rendu", "visible"],
+    tagline: "Informel cartographié, pilotage mesurable",
+    heroWords: ["Tâches", "tracées", "pilotées"],
     leadIn:
-      "Une plateforme qui transforme les tâches invisibles en flux mesurables — pour décider vite, sans bruit.",
+      "Produit web : tâches et savoirs hors outils formalisés, flux mesurables, décisions appuyées sur des indicateurs temps réel.",
     sections: [
       {
         id: "e1",
         eyebrow: "01 — Terrain",
-        headline: "Cartographier ce qui n'était jamais écrit",
-        body: "Ateliers et observation : où le temps file, quelles décisions se prennent en marge des outils, quels savoirs vivent dans des fils de messages. On rend l'informel lisible avant de le coder.",
+        headline: "Recenser l’activité hors systèmes d’information",
+        body: "Ateliers et observation : où part le temps, quelles décisions passent hors ticketing, quels contenus restent dans la messagerie. On documente avant d’industrialiser.",
         pacing: "calm",
       },
       {
         id: "e2",
         eyebrow: "02 — Structure",
         headline: "Un socle unique, des règles claires",
-        body: "Base de connaissance vivante, droits, historique, traçabilité. Chaque automatisation repose sur une intention nommée — pas de boîte noire : on peut expliquer le « pourquoi » à un humain.",
+        body: "Base de connaissances versionnée, droits, historique, traçabilité. Chaque règle d’automatisation est nommée et auditable : pas de scoring opaque côté métier.",
         pacing: "punch",
       },
       {
         id: "e3",
         eyebrow: "03 — Mouvement",
-        headline: "Automatiser l'évident, garder la main sur le sensible",
-        body: "Les flux répétitifs partent en tâche de fond ; les cas limites remontent avec du contexte. Le pilotage temps réel donne des leviers, pas des tableaux anonymes.",
+        headline: "Automatiser l’itération ; escalader les exceptions",
+        body: "Les flux répétitifs tournent en tâche de fond. Les cas limites remontent avec contexte. Les vues temps réel servent à arbitrer, pas à remplacer la lecture métier.",
         pacing: "calm",
       },
       {
         id: "e4",
         eyebrow: "04 — Forme",
         headline: "Interface calme, densité maîtrisée",
-        body: "Dashboards hiérarchisés, hiérarchie visuelle forte, micro-interactions qui guident sans distraire. Le premium ici, c'est la clarté sous pression.",
+        body: "Dashboards structurés, hiérarchie visuelle forte, micro-interactions qui guident. Priorité : charge cognitive maîtrisée en utilisation intensive.",
         pacing: "punch",
       },
     ],
@@ -624,37 +626,37 @@ export const PROJECT_CASE_META: Record<string, ProjectCaseMeta> = {
   },
   "les-sens-de-lharmonie": {
     year: "2024",
-    tagline: "Premium rendu respirable",
-    heroWords: ["Offre", "claire", "calme"],
+    tagline: "Positionnement premium, parcours explicite",
+    heroWords: ["Offre", "structurée", "ciblée"],
     leadIn:
-      "Transformer une expertise sensible en présence digitale affirmée — sans froideur, avec une DA qui respire et un parcours qui rassure.",
+      "Refonte vitrine : promesse lisible, charte graphique homogène, parcours vers le contact réduit au nécessaire.",
     sections: [
       {
         id: "h1",
         eyebrow: "01 — Image",
-        headline: "Une offre diluée dans le flou",
-        body: "Le positionnement haut de gamme ne supporte pas l'approximation. Nous avons resserré le récit : qui, pour qui, pourquoi maintenant — avant toute esthétique.",
+        headline: "Offre forte, message dispersé",
+        body: "Cible, promesse, preuves : ordre fixé avant maquettes. Le positionnement haut de gamme exige des formulations nettes, pas seulement un rendu soigné.",
         pacing: "calm",
       },
       {
         id: "h2",
         eyebrow: "02 — Direction",
-        headline: "Matière, lumière, silence",
-        body: "Palette organique, typographie aérée, rythme vertical généreux. Chaque section laisse de la place au regard — le luxe ici est le vide bien placé.",
+        headline: "DA : palette, typo, blancs",
+        body: "Palette restreinte, hiérarchie typographique marquée, marges généreuses. Objectif : lisibilité et repères visuels stables, pas saturation d’écran.",
         pacing: "punch",
       },
       {
         id: "h3",
         eyebrow: "03 — Conversion",
-        headline: "Contacter doit être une évidence douce",
-        body: "Formulaire contextualisé, preuves sociales sobres, rappel des bénéfices au moment du geste. Pas de pression — une invitation claire.",
+        headline: "Contact : formulaire court, preuves à proximité",
+        body: "Champs limités, témoignages ou faits à portée du CTA, rappel des bénéfices au moment de l’envoi. Pas de dark patterns.",
         pacing: "calm",
       },
       {
         id: "h4",
         eyebrow: "04 — Motion",
-        headline: "Animations au service de la présence",
-        body: "Révélations progressives, transitions courtes et naturelles. Le mouvement révèle la marque ; il ne remplace pas le contenu.",
+        headline: "Motion : hiérarchie, pas décor",
+        body: "Révélations progressives, transitions courtes. Le mouvement soutient la lecture ; le fond reste porté par le texte et la structure.",
         pacing: "punch",
       },
     ],
@@ -699,12 +701,26 @@ export function getPrevProjectSlug(currentSlug: string): string | null {
 // ────────────────────────────────────────────────────────────
 
 export const STATS: Stat[] = [
-  { value: 15, label: "projets livrés", suffix: "+" },
-  { value: 97, label: "score Lighthouse médian", suffix: "+" },
-  { value: 60, label: "hausse moyenne des conversions", suffix: "%" },
+  {
+    value: 15,
+    suffix: "+",
+    label: "projets livrés",
+    context: "Depuis 2024 — clients et chantiers internes du studio.",
+  },
+  {
+    value: 97,
+    suffix: "+",
+    label: "score Lighthouse (mobile)",
+    context: "Médiane sur nos 3 études de cas publiées — mesure locale PSI.",
+  },
+  {
+    value: 3,
+    label: "études de cas",
+    context: "Récits projet détaillés sur ce site.",
+  },
 ];
 
-// ── TICKER TAGS (hero marquee strip) ─────────────────────────────────────────
+// ── TICKER TAGS (hero — bandeau infini stack & positionnement) ─────────────
 export const TICKER_TAGS = [
   "WebGL",
   "React",
@@ -723,24 +739,24 @@ export const TICKER_TAGS = [
 export const HOME_CHAPTERS: HomeChapter[] = [
   {
     id: "CH-01",
-    eyebrow: "Manifeste",
+    eyebrow: "Position",
     title: "Percevoir, structurer, faire durer",
     summary:
-      "Un récit aligné sur la promesse : voir l’essentiel, lui donner une forme, la rendre tenable.",
+      "Cadrage du message, design système et code Next.js — pour un site clair et tenable dans le temps.",
   },
   {
     id: "CH-02",
     eyebrow: "Mouvement",
     title: "Révéler plutôt qu’encombrer",
     summary:
-      "Le motion sert la lecture : il attire l’œil vers ce qui compte, pas vers la démo.",
+      "Animations et transitions guident le regard vers l’info utile, pas vers l’effet gratuit.",
   },
   {
     id: "CH-03",
     eyebrow: "Performance",
     title: "Un rendu premium qui reste rapide",
     summary:
-      "Direction visuelle ambitieuse, base technique propre, vitesse mesurable.",
+      "DA ambitieuse avec budgets WebGL maîtrisés, CWV suivis et livrables mesurables.",
   },
 ];
 

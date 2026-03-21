@@ -11,8 +11,7 @@ export function Preloader() {
   const [visible, setVisible] = useState(true);
   const [counter, setCounter] = useState(0);
   const logoRef = useRef<HTMLDivElement>(null);
-  const topPanelRef = useRef<HTMLDivElement>(null);
-  const bottomPanelRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
   const { setReady } = usePreloader();
 
@@ -20,13 +19,11 @@ export function Preloader() {
     const skip = typeof window !== "undefined" && sessionStorage.getItem(PRELOADER_VISITED_KEY);
     if (skip || prefersReducedMotion) {
       setVisible(false);
-      document.body.removeAttribute("data-preloader");
       setReady();
       return;
     }
 
-    document.body.setAttribute("data-preloader", "true");
-    // Débloque tout de suite les animations / hydratation below-the-fold — le preloader masque encore l’écran.
+    // Débloque tout de suite les animations / hydratation below-the-fold.
     setReady();
 
     const run = async () => {
@@ -34,7 +31,6 @@ export function Preloader() {
 
       if (prefersReducedMotion) {
         setVisible(false);
-        document.body.removeAttribute("data-preloader");
         return;
       }
 
@@ -61,7 +57,13 @@ export function Preloader() {
       checkReady();
 
       await new Promise<void>((resolve) => {
+        let settled = false;
+        let safetyId: ReturnType<typeof setTimeout> | undefined;
+
         const finish = () => {
+          if (settled) return;
+          settled = true;
+          if (safetyId !== undefined) clearTimeout(safetyId);
           clearInterval(interval);
           gsap.to(obj, {
             value: 100,
@@ -73,10 +75,15 @@ export function Preloader() {
         };
 
         if (document.readyState === "complete") {
-          setTimeout(finish, 400);
+          setTimeout(finish, 120);
+        } else if (document.readyState === "interactive") {
+          setTimeout(finish, 200);
         } else {
-          window.addEventListener("load", () => setTimeout(finish, 200), { once: true });
-          setTimeout(finish, 3000);
+          document.addEventListener("DOMContentLoaded", () => setTimeout(finish, 180), {
+            once: true,
+          });
+          window.addEventListener("load", () => setTimeout(finish, 80), { once: true });
+          safetyId = setTimeout(finish, 2400);
         }
       });
 
@@ -96,29 +103,22 @@ export function Preloader() {
           ease: "power2.in",
         });
       }
-      await new Promise((r) => setTimeout(r, 300));
+      await new Promise((r) => setTimeout(r, 220));
 
-      // Phase 3: Split panels open (top up, bottom down)
-      const topPanel = topPanelRef.current;
-      const bottomPanel = bottomPanelRef.current;
-
-      if (topPanel && bottomPanel) {
-        gsap.to(topPanel, {
-          yPercent: -100,
-          duration: 0.7,
-          ease: "power4.out",
-        });
-        gsap.to(bottomPanel, {
-          yPercent: 100,
-          duration: 0.7,
-          ease: "power4.out",
+      // Phase 3 : fondu global — ne bloque pas lecture / scroll (pointer-events-none sur l’overlay).
+      const overlayEl = overlayRef.current;
+      if (overlayEl) {
+        await new Promise<void>((resolve) => {
+          gsap.to(overlayEl, {
+            opacity: 0,
+            duration: 0.55,
+            ease: "power2.out",
+            onComplete: resolve,
+          });
         });
       }
 
-      await new Promise((r) => setTimeout(r, 700));
-
       setVisible(false);
-      document.body.removeAttribute("data-preloader");
       sessionStorage.setItem(PRELOADER_VISITED_KEY, "1");
     };
 
@@ -131,21 +131,22 @@ export function Preloader() {
 
   return (
     <div
-      className="preloader-overlay"
+      ref={overlayRef}
+      className="preloader-overlay pointer-events-none"
       style={{
         position: "fixed",
         inset: 0,
         zIndex: 9000,
-        background: "#05050a",
+        /* Trou central lisible : le hero et le texte SSR restent visibles en dessous. */
+        background:
+          "radial-gradient(ellipse 92% 78% at 50% 42%, rgba(5,5,10,0) 0%, rgba(5,5,10,0) 26%, rgba(5,5,10,0.82) 58%, #05050a 100%)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
       }}
-      aria-busy="true"
-      aria-live="polite"
-      aria-label="Chargement du site"
+      aria-hidden
     >
       <div
         className="pointer-events-none absolute left-6 right-6 top-7 z-3 flex justify-between border-b border-white/10 pb-4 md:left-10 md:right-10"
@@ -154,34 +155,6 @@ export function Preloader() {
         <span className="text-[10px] tracking-[0.28em] text-white/35">EIDOS STUDIO</span>
         <span className="text-[10px] tracking-[0.22em] text-[#68e2a0]/90">CHARGEMENT</span>
       </div>
-
-      {/* Split panels — cover the screen, animate out */}
-      <div
-        ref={topPanelRef}
-        className="preloader-panel preloader-panel--top"
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: "50%",
-          background: "#05050a",
-          zIndex: 2,
-        }}
-      />
-      <div
-        ref={bottomPanelRef}
-        className="preloader-panel preloader-panel--bottom"
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: "50%",
-          background: "#05050a",
-          zIndex: 2,
-        }}
-      />
 
       {/* Barre de progression type showcase */}
       <div

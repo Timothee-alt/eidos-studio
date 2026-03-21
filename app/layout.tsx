@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Space_Grotesk, JetBrains_Mono, DM_Sans } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Sora, IBM_Plex_Mono, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Nav } from "@/components/nav";
 import { StructuredData } from "@/components/structured-data";
@@ -9,7 +9,7 @@ import { Preloader } from "@/components/preloader";
 import { PreloaderProvider } from "@/lib/preloader-context";
 import { RevealObserver } from "@/components/ui/reveal-observer";
 
-const spaceGrotesk = Space_Grotesk({
+const sora = Sora({
   variable: "--font-d",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -18,20 +18,26 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 const dmSans = DM_Sans({
-  variable: "--font-b2",
+  variable: "--font-b",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
   display: "swap",
   preload: true,
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-m",
   subsets: ["latin"],
   weight: ["300", "400", "500"],
   display: "swap",
   preload: true,
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.eidos-studio.com"),
@@ -123,7 +129,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${spaceGrotesk.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}
+      className={`${sora.variable} ${dmSans.variable} ${ibmPlexMono.variable}`}
     >
       <body className="antialiased pt-14">
         <a

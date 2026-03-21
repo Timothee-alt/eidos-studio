@@ -169,17 +169,23 @@ export function Nav() {
         {/* Fond plein du header — couvre toute la barre */}
         <div className="absolute inset-0 -z-10 bg-[#050507]" aria-hidden />
         
-        <div className="flex h-20 items-center justify-between px-6">
+        <div className="page-inline flex h-20 items-center justify-between">
           <Link href="/" className="shrink-0" onClick={closeMenu}>
             <EidosLockup size={32} subLabel="STUDIO" />
           </Link>
 
           <div className="flex shrink-0 items-center gap-6">
             <div className="hidden md:flex items-center gap-6">
-              <Link href="/#projets" className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/45 hover:text-white transition-colors duration-300">
+              <Link
+                href="/#projets"
+                className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/45 transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-white focus-visible:text-white rounded-sm focus-visible:outline-offset-4"
+              >
                 Projets
               </Link>
-              <Link href="/#contact" className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/45 hover:text-white transition-colors duration-300">
+              <Link
+                href="/#contact"
+                className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/45 transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-white focus-visible:text-white rounded-sm focus-visible:outline-offset-4"
+              >
                 Contact
               </Link>
             </div>
@@ -187,11 +193,11 @@ export function Nav() {
               <button
                 type="button"
                 onClick={toggleMenu}
-                className="group/btn relative flex h-9 items-center justify-center overflow-hidden rounded-full bg-white/10 px-4 backdrop-blur-md transition-colors hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                className="group/btn relative flex h-9 items-center justify-center overflow-hidden rounded-full bg-white/10 px-4 backdrop-blur-md transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-white/20 active:bg-white/[0.14] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--accent)_75%,white)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050507]"
                 aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
                 aria-expanded={menuOpen}
               >
-                <div className="absolute inset-0 bg-white/5 opacity-0 transition-opacity group-hover/btn:opacity-100" />
+                <div className="absolute inset-0 bg-white/5 opacity-0 transition-opacity duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/btn:opacity-100 group-active/btn:opacity-100" />
                 <div className="relative h-[12px] overflow-hidden font-mono text-[9px] uppercase leading-none tracking-[0.3em] text-white">
                   <div 
                     className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)]"
@@ -220,7 +226,7 @@ export function Nav() {
       {/* Fullscreen Overlay Menu */}
       <div
         ref={overlayRef}
-        className="fixed inset-0 z-40 pointer-events-none flex flex-col justify-between px-6 pb-12 pt-32 h-dvh"
+        className="page-inline fixed inset-0 z-40 pointer-events-none flex h-dvh flex-col justify-between pb-12 pt-32"
       >
         {/* SVG Background Curve */}
         <svg 
@@ -250,20 +256,20 @@ export function Nav() {
                 <Link
                   href={link.href}
                   onClick={closeMenu}
-                  className="nav-menu-link group/link inline-flex items-center gap-6 font-extrabold text-white opacity-100 blur-none transition-all duration-500 ease-out"
+                  className="nav-menu-link group/link inline-flex items-center gap-6 rounded-md font-extrabold text-white opacity-100 blur-none outline-none transition-[opacity,filter] duration-300 ease-out focus-visible:ring-2 focus-visible:ring-[color-mix(in_srgb,var(--accent)_70%,white)] focus-visible:ring-offset-4 focus-visible:ring-offset-[#050507]"
                   style={{ fontFamily: "var(--font-d)", fontSize: "clamp(48px, 8vw, 120px)", lineHeight: 0.9 }}
                 >
-                  <span className="text-sm font-mono tracking-widest text-(--muted) opacity-50 transition-opacity group-hover/link:opacity-100">
+                  <span className="text-sm font-mono tracking-widest text-(--muted) opacity-50 transition-opacity duration-300 ease-out group-hover/link:opacity-100 group-focus-visible/link:opacity-100">
                     0{i + 1}
                   </span>
                   
                   {/* Rolling Text — version grid (comme avant) */}
                   <span className="relative inline-grid overflow-hidden">
-                    <span className="col-start-1 row-start-1 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover/link:-translate-y-[120%]">
+                    <span className="col-start-1 row-start-1 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover/link:-translate-y-[120%] group-focus-visible/link:-translate-y-[120%]">
                       {link.label}
                     </span>
                     <span
-                      className="col-start-1 row-start-1 translate-y-[120%] text-accent transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover/link:translate-y-0"
+                      className="col-start-1 row-start-1 translate-y-[120%] text-accent transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover/link:translate-y-0 group-focus-visible/link:translate-y-0"
                       aria-hidden
                     >
                       {link.label}
