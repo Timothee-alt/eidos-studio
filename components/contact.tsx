@@ -207,12 +207,6 @@ export function Contact() {
           opacity: 0, scale: 0.85, duration: 1, ease: "expo.out", delay: 0.3,
           ...st("[data-ct='submit']", "top 80%"),
         });
-
-        // Bottom rule
-        gsap.from("[data-ct='rule']", {
-          scaleX: 0, duration: 1.4, ease: "expo.out", transformOrigin: "left center",
-          ...st("[data-ct='rule']", "top 96%"),
-        });
       }, section);
     });
 
@@ -276,7 +270,7 @@ export function Contact() {
       <div
         aria-hidden
         data-ct="bg-num"
-        className="pointer-events-none absolute top-8 z-0 select-none [right:max(env(safe-area-inset-right,0px),var(--page-gutter))]"
+        className="pointer-events-none absolute top-8 z-0 select-none right-[max(env(safe-area-inset-right,0px),var(--page-gutter))]"
         style={{
           fontFamily: "var(--font-d)",
           fontSize: "clamp(120px, 18vw, 280px)",
@@ -296,18 +290,18 @@ export function Contact() {
         {/* ── Header row ── */}
         <div
           data-ct="label"
-          className="flex items-center justify-between border-b border-white/8 pb-6 mb-20 md:mb-28"
+          className="flex items-center justify-between border-b border-white/10 pb-4 mb-20 md:mb-28"
         >
-          <span className="font-mono text-[10px] tracking-[0.22em] text-white/35 uppercase">
-            04 / Contact
+          <span className="font-mono text-[10px] tracking-[0.22em] text-white/50">
+            Contact · Eidos Studio
           </span>
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-3">
             <span
               aria-hidden
               className="dot-pulse w-1.5 h-1.5 rounded-full bg-[#68e2a0]"
               style={{ boxShadow: "0 0 6px #68e2a0" }}
             />
-            <span className="font-mono text-[10px] tracking-[0.2em] text-[#68e2a0] uppercase">
+            <span className="font-mono text-[10px] tracking-[0.2em] text-[#68e2a0]">
               Ouvert aux devis
             </span>
           </div>
@@ -566,22 +560,6 @@ export function Contact() {
           </div>
         </div>
 
-        {/* ── Footer rule + credits ── */}
-        <div className="mt-28 md:mt-36">
-          <div
-            data-ct="rule"
-            className="h-px w-full mb-8 origin-left"
-            style={{ background: "rgba(255,255,255,0.08)" }}
-          />
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <span className="font-mono text-[9px] tracking-[0.22em] text-white/22 uppercase" suppressHydrationWarning>
-              © {new Date().getFullYear()} Eidos Studio · Lannion, Bretagne
-            </span>
-            <span className="font-mono text-[9px] tracking-[0.22em] text-white/22 uppercase">
-              Conçu et développé avec soin · Next.js · TypeScript
-            </span>
-          </div>
-        </div>
       </div>
 
       {/* ── Keyframes (spin for SVG ring) ── */}

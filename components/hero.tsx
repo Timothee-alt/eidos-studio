@@ -92,7 +92,7 @@ export function Hero() {
         Le pointer-events-none sur le conteneur laisse passer la souris pour le mask.
         Le mix-blend-difference permet au texte d'inverser les couleurs quand la lampe torche passe derrière !
       */}
-      <div className="page-inline relative z-10 flex h-full w-full flex-col justify-between py-[var(--page-pad-y-hero)] pointer-events-none">
+      <div className="page-inline relative z-10 flex h-full w-full flex-col justify-between py-(--page-pad-y-hero) pointer-events-none">
         
         {/* LIGNE HAUTE : Statut */}
         <div

@@ -180,22 +180,6 @@ export function Nav() {
           </Link>
 
           <div className="flex shrink-0 items-center gap-6">
-            <div className="hidden md:flex items-center gap-6">
-              <Link
-                href="/#projets"
-                className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/45 transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-white focus-visible:text-white rounded-sm focus-visible:outline-offset-4"
-                aria-label="Projets — section sur la page d'accueil"
-              >
-                Projets
-              </Link>
-              <Link
-                href="/#contact"
-                className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/45 transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-white focus-visible:text-white rounded-sm focus-visible:outline-offset-4"
-                aria-label="Contact — section sur la page d'accueil"
-              >
-                Contact
-              </Link>
-            </div>
             <Magnetic strength={0.2} radius={60}>
               <button
                 type="button"

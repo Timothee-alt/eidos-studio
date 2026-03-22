@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import Link from "next/link";
 import dynamic from "next/dynamic";
 import { SERVICES_SLIDES } from "@/lib/data";
 import type { ServiceSlide } from "@/lib/data";
@@ -11,23 +10,11 @@ const ServicesWebGL = dynamic(
   { ssr: false }
 );
 
-const CtaArrow = () => (
-  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden>
-    <path
-      d="M2 8L8 2M8 2H3.5M8 2V6.5"
-      stroke="currentColor"
-      strokeWidth="1.3"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
 const ELEMENT_DELAYS = [
-  { ey: 0.08, lead: 0.52, desc: 0.62, tags: 0.72, cta: 0.8 },
-  { ey: 0.1, lead: 0.55, desc: 0.65, tags: 0.75, cta: 0.83 },
-  { ey: 0.06, lead: 0.48, desc: 0.58, tags: 0.68, cta: 0.76 },
-  { ey: 0.05, lead: 0.44, desc: 0.54, tags: 0.63, cta: 0.7 },
+  { ey: 0.08, lead: 0.52, desc: 0.62, tags: 0.72 },
+  { ey: 0.1, lead: 0.55, desc: 0.65, tags: 0.75 },
+  { ey: 0.06, lead: 0.48, desc: 0.58, tags: 0.68 },
+  { ey: 0.05, lead: 0.44, desc: 0.54, tags: 0.63 },
 ];
 
 function easeInOutQuart(t: number): number {
@@ -135,7 +122,7 @@ export function Services() {
       });
     });
 
-    [".services-svc-ey", ".services-svc-lead", ".services-svc-desc", ".services-svc-tags", ".services-svc-cta"].forEach(
+    [".services-svc-ey", ".services-svc-lead", ".services-svc-desc", ".services-svc-tags"].forEach(
       (sel, si) => {
         const el = slide.querySelector(sel);
         if (!el) return;
@@ -193,7 +180,6 @@ export function Services() {
         [slide.querySelector<HTMLElement>(".services-svc-lead"), del.lead],
         [slide.querySelector<HTMLElement>(".services-svc-desc"), del.desc],
         [slide.querySelector<HTMLElement>(".services-svc-tags"), del.tags],
-        [slide.querySelector<HTMLElement>(".services-svc-cta"), del.cta],
       ];
       elements.forEach(([el, d]) => {
         if (!el) return;
@@ -478,7 +464,7 @@ export function Services() {
         const init = rev.initial(wi);
         Object.assign(w.style, init);
       });
-      [".services-svc-ey", ".services-svc-lead", ".services-svc-desc", ".services-svc-tags", ".services-svc-cta"].forEach(
+      [".services-svc-ey", ".services-svc-lead", ".services-svc-desc", ".services-svc-tags"].forEach(
         (sel) => {
           const el = sl.querySelector<HTMLElement>(sel);
           if (el) {
@@ -679,29 +665,6 @@ export function Services() {
                       </span>
                     ))}
                   </div>
-                  {slide.href ? (
-                    <Link
-                      href={slide.href}
-                      className="services-svc-cta"
-                      data-cursor="view"
-                      data-cursor-text="VOIR"
-                      aria-label={`${slide.ctaLabel} — page ${slide.title}`}
-                    >
-                      <span className="services-cta-label">{slide.ctaLabel}</span>
-                      <div className="services-cta-rule" />
-                      <div className="services-cta-circ">
-                        <CtaArrow />
-                      </div>
-                    </Link>
-                  ) : (
-                    <div className="services-svc-cta">
-                      <span className="services-cta-label">{slide.ctaLabel}</span>
-                      <div className="services-cta-rule" />
-                      <div className="services-cta-circ">
-                        <CtaArrow />
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
             ))}

@@ -1270,14 +1270,6 @@ a {
   grid-row: 5;
 }
 
-#capabilities .services-svc[data-i="0"] .services-svc-cta,
-#capabilities .services-svc[data-i="1"] .services-svc-cta,
-#capabilities .services-svc[data-i="3"] .services-svc-cta {
-  grid-column: 2;
-  grid-row: 5;
-  align-self: center;
-}
-
 #capabilities .services-svc[data-i="0"] .services-svc-inner {
   padding: 0 72px;
   max-width: 100%;
@@ -1338,12 +1330,6 @@ a {
 #capabilities .services-svc[data-i="2"] .services-svc-tags {
   grid-column: 1;
   grid-row: 5;
-}
-
-#capabilities .services-svc[data-i="2"] .services-svc-cta {
-  grid-column: 2;
-  grid-row: 5;
-  align-self: center;
 }
 
 #capabilities .services-svc-ey {
@@ -1471,60 +1457,6 @@ a {
   border-color: color-mix(in srgb, var(--sc) 38%, transparent);
   color: rgba(246, 246, 247, 0.74);
   background: color-mix(in srgb, var(--sc) 7%, transparent);
-}
-
-#capabilities .services-svc-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  text-decoration: none;
-  color: var(--text);
-  cursor: pointer;
-  opacity: 0;
-  will-change: transform, opacity;
-}
-
-#capabilities .services-cta-label {
-  font-family: var(--font-m);
-  font-size: 9px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(246, 246, 247, 0.52);
-  transition: color 0.3s;
-}
-
-#capabilities .services-cta-rule {
-  width: 30px;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.2);
-  transition: width 0.4s var(--ease), background 0.3s;
-}
-
-#capabilities .services-svc-cta:hover .services-cta-rule {
-  width: 54px;
-  background: var(--sc);
-}
-
-#capabilities .services-svc-cta:hover .services-cta-label {
-  color: var(--text);
-}
-
-#capabilities .services-cta-circ {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: border-color 0.3s, transform 0.35s var(--ease), background 0.3s;
-  flex-shrink: 0;
-}
-
-#capabilities .services-svc-cta:hover .services-cta-circ {
-  border-color: var(--sc);
-  transform: translate(3px, -3px);
-  background: rgba(255, 255, 255, 0.04);
 }
 
 #capabilities .services-svc[data-i="0"] .services-title-block {
@@ -1756,7 +1688,6 @@ a {
   #capabilities .services-svc-lead,
   #capabilities .services-svc-desc,
   #capabilities .services-svc-tags,
-  #capabilities .services-svc-cta,
   #capabilities .services-svc-div,
   #capabilities .services-svc-ey {
     transform: none !important;
@@ -2390,7 +2321,7 @@ a {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   ABOUT — Gray-Scott WebGL Hero + Manifesto + Stats + DNA + Closing
+   ABOUT — Hero hexagones + Manifesto + Stats + DNA + Closing
    ═══════════════════════════════════════════════════════════════ */
 
 #about-tick {
@@ -2407,7 +2338,7 @@ a {
   opacity: 1;
 }
 
-/* Hero — Gray-Scott WebGL */
+/* Hero — grille hexagonale (canvas) */
 .about-hero {
   position: relative;
   width: 100%;
@@ -2572,6 +2503,19 @@ a {
   }
   50% {
     opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-hero-scroll-ln {
+    animation: none;
+    transform: scaleY(1);
+    opacity: 0.35;
+  }
+
+  .about-hero-rd-dot {
+    animation: none;
+    opacity: 0.45;
   }
 }
 

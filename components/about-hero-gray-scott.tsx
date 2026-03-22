@@ -25,7 +25,7 @@ export function AboutHeroGrayScott() {
     const K = 0.063;
     const Da = 1.0;
     const Db = 0.5;
-    const dt = 0.5;
+    const dt = 0.25;
 
     let A = new Float32Array(SIM2).fill(1);
     let B = new Float32Array(SIM2);
@@ -342,10 +342,17 @@ export function AboutHeroGrayScott() {
     };
     hero.addEventListener("mousemove", handleNormMouse);
 
-    const STEPS_PER_FRAME = 4;
+    const STEPS_PER_FRAME = 1;
     let t = 0;
     const inViewRef = { current: true };
+    const seedReadyRef = { current: false };
     let raf: number | null = null;
+
+    function tryStartLoop() {
+      if (mounted && seedReadyRef.current && inViewRef.current && raf === null) {
+        raf = requestAnimationFrame(loop);
+      }
+    }
 
     function loop(now: number) {
       if (!mounted || gl.isContextLost()) return;
@@ -373,18 +380,15 @@ export function AboutHeroGrayScott() {
     const visibilityIo = new IntersectionObserver(
       ([e]) => {
         inViewRef.current = e?.isIntersecting ?? false;
-        if (inViewRef.current && mounted && raf === null) {
-          raf = requestAnimationFrame(loop);
-        }
+        tryStartLoop();
       },
       { root: null, rootMargin: "100px 0px", threshold: 0 }
     );
     visibilityIo.observe(hero);
 
     seed().then(() => {
-      if (mounted && inViewRef.current && raf === null) {
-        raf = requestAnimationFrame(loop);
-      }
+      seedReadyRef.current = true;
+      tryStartLoop();
     });
 
     return () => {

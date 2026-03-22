@@ -55,8 +55,6 @@ export type ServiceSlide = {
   description: string;
   tags: string[];
   primaryTagCount: number; // premiers N tags avec .p
-  ctaLabel: string;
-  href?: string;
   vbadge?: string; // badge vertical (SVC-01)
   quote: string; // animation char dans le panel
   /** Couleur hex */
@@ -243,7 +241,6 @@ export const SERVICES_SLIDES: ServiceSlide[] = [
       "Three.js, shaders GLSL, scènes 3D interactives et optimisées pour la production. Chaque détail sert la perception.",
     tags: ["Three.js", "WebGL", "GLSL", "Shaders", "R3F"],
     primaryTagCount: 2,
-    ctaLabel: "Voir les démos",
     quote: "Three.js · WebGL · 3D",
     hex: "#3b7bff",
     rgb: "59,123,255",
@@ -276,9 +273,7 @@ export const SERVICES_SLIDES: ServiceSlide[] = [
       "Design haut de gamme, performances maximales, SEO intégré. Rien n’est dupliqué — tout est pensé pour être lu et retenu.",
     tags: ["Next.js", "React", "TypeScript", "Motion"],
     primaryTagCount: 2,
-    ctaLabel: "Voir l'approche",
     quote: "Design · performance · durabilité",
-    href: "/services/vitrine",
     hex: "#a78bfa",
     rgb: "167,139,250",
     color: [0.655, 0.545, 0.98],
@@ -307,9 +302,7 @@ export const SERVICES_SLIDES: ServiceSlide[] = [
       "Auth, billing, dashboards, API. Nous rendons visibles les bons arbitrages techniques pour scaler sans dette cachée.",
     tags: ["Node.js", "PostgreSQL", "Auth", "Billing", "CI/CD"],
     primaryTagCount: 2,
-    ctaLabel: "Voir le processus",
     quote: "Scalable · auth · billing",
-    href: "/services/saas",
     hex: "#34d399",
     rgb: "52,211,153",
     color: [0.204, 0.831, 0.6],
@@ -338,9 +331,7 @@ export const SERVICES_SLIDES: ServiceSlide[] = [
       "Boutiques performantes, Stripe natif, stock clair. Parcours lisibles, zéro commission plateforme, conversion au centre.",
     tags: ["Stripe", "Next.js", "Commerce"],
     primaryTagCount: 2,
-    ctaLabel: "Voir la boutique",
     quote: "Stripe · stock · conversion",
-    href: "/services/ecommerce",
     hex: "#f59e0b",
     rgb: "245,158,11",
     color: [0.961, 0.62, 0.043],

@@ -9,9 +9,9 @@ function statToNumber(s: Stat) {
   return typeof s.value === "string" ? parseInt(s.value, 10) : s.value;
 }
 
-const AboutHeroGrayScott = dynamic(
+const AboutHeroHexagons = dynamic(
   () =>
-    import("@/components/about-hero-gray-scott").then((m) => m.AboutHeroGrayScott),
+    import("@/components/about-hero-hexagons").then((m) => m.AboutHeroHexagons),
   { ssr: false }
 );
 
@@ -131,7 +131,7 @@ export function About() {
     >
       <div ref={tickRef} id="about-tick" aria-hidden />
 
-      <AboutHeroGrayScott />
+      <AboutHeroHexagons />
 
       <section
         ref={manifestoRef}

@@ -34,27 +34,26 @@ export function Preloader() {
         return;
       }
 
-      const resources = performance.getEntriesByType("resource");
-      const totalResources = Math.max(resources.length, 1);
-      let loaded = 0;
-
       const obj = { value: 0 };
       const updateCounter = () => setCounter(Math.round(obj.value));
 
-      const checkReady = () => {
-        const current = performance.getEntriesByType("resource").length;
-        loaded = Math.min(current, totalResources);
-        const progress = Math.min(100, Math.round((loaded / totalResources) * 100));
+      // Progression basée sur le temps + readyState (plus fiable que performance.getEntriesByType en dev)
+      const startTime = Date.now();
+      const durationMs = 1400;
+
+      const updateProgress = () => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(85, Math.round((elapsed / durationMs) * 85)); // 0 → 85% sur ~1.4s
         gsap.to(obj, {
           value: progress,
-          duration: 0.4,
+          duration: 0.35,
           ease: "power2.out",
           onUpdate: updateCounter,
         });
       };
 
-      const interval = setInterval(checkReady, 200);
-      checkReady();
+      const interval = setInterval(updateProgress, 150);
+      updateProgress();
 
       await new Promise<void>((resolve) => {
         let settled = false;
@@ -137,9 +136,7 @@ export function Preloader() {
         position: "fixed",
         inset: 0,
         zIndex: 9000,
-        /* Trou central lisible : le hero et le texte SSR restent visibles en dessous. */
-        background:
-          "radial-gradient(ellipse 92% 78% at 50% 42%, rgba(5,5,10,0) 0%, rgba(5,5,10,0) 26%, rgba(5,5,10,0.82) 58%, #05050a 100%)",
+        background: "#000",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
