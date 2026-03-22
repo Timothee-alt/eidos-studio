@@ -118,15 +118,6 @@ export function NotFoundExperience() {
             </div>
           </div>
         </div>
-
-        <div className="flex flex-wrap items-end justify-between gap-4 border-t border-white/10 pt-4">
-          <span className="font-mono text-[10px] tracking-[0.2em] text-white/40 uppercase">
-            Fondé en 2024 · Lannion, BZH
-          </span>
-          <span className="font-mono text-[10px] tracking-[0.18em] text-white/30 uppercase">
-            Eidos Studio
-          </span>
-        </div>
       </div>
     </section>
   );
