@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import type { ServicePage } from "@/lib/data";
+import type { ServicePage } from "@/lib/data/services";
 
 type ServicePageLayoutProps = {
   page: ServicePage;

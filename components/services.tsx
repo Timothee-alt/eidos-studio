@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import dynamic from "next/dynamic";
-import { SERVICES_SLIDES } from "@/lib/data";
-import type { ServiceSlide } from "@/lib/data";
+import { SERVICES_SLIDES, type ServiceSlide } from "@/lib/data/services";
 
 const ServicesWebGL = dynamic(
   () => import("@/components/services-webgl").then((m) => m.ServicesWebGL),

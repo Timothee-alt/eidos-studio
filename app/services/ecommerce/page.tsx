@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SERVICE_PAGES } from "@/lib/data";
+import { SERVICE_PAGES } from "@/lib/data/services";
 import { buildServiceMetadata, ServicePageLayout } from "@/app/services/_components/service-page-layout";
 
 const page = SERVICE_PAGES.ecommerce;

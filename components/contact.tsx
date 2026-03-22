@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Magnetic } from "@/components/ui/magnetic";
-import { CONTACT_EMAIL, SOCIAL_LINKS } from "@/lib/data";
+import { CONTACT_EMAIL, SOCIAL_LINKS } from "@/lib/data/contact";
 import { EidosSymbol } from "@/components/ui/eidos-symbol";
 
 // ─── TextScramble ─────────────────────────────────────────────────────────────

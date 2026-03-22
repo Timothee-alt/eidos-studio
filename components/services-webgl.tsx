@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { ServiceSlide } from "@/lib/data";
+import type { ServiceSlide } from "@/lib/data/services";
 
 const VERT = `
 attribute vec2 a_pos;

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { EidosLockup } from "@/components/ui/eidos-symbol";
 import { Magnetic } from "@/components/ui/magnetic";
-import { NAV_LINKS, STUDIO_SIGNATURE } from "@/lib/data";
+import { NAV_LINKS, STUDIO_SIGNATURE } from "@/lib/data/site";
 
 /** Bruit SVG inline (évite requête externe) — même principe que #capabilities dans globals.css */
 const MENU_NOISE_BG =

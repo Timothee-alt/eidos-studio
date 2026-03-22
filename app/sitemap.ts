@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getProjectCaseSlugs } from "@/lib/data";
+import { getProjectCaseSlugs } from "@/lib/data/projects";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://www.eidos-studio.com";

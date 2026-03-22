@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { STATS, ABOUT_DNA_TABLE, type Stat } from "@/lib/data";
+import { ABOUT_DNA_TABLE, STATS, type Stat } from "@/lib/data/about";
 
 function statToNumber(s: Stat) {
   return typeof s.value === "string" ? parseInt(s.value, 10) : s.value;

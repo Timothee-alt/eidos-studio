@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { PROJECT_SLIDES, type ProjectSlide } from "@/lib/data";
+import { PROJECT_SLIDES, type ProjectSlide } from "@/lib/data/projects";
 
 function formatProjectMetric(p: ProjectSlide) {
   return `${p.resPrefix}${p.resRaw}${p.resSuffix}`;

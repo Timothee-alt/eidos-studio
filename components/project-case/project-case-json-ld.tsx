@@ -1,4 +1,4 @@
-import type { ProjectCaseStudy } from "@/lib/data";
+import type { ProjectCaseStudy } from "@/lib/data/projects";
 
 const SITE = "https://www.eidos-studio.com";
 

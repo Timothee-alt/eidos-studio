@@ -2975,22 +2975,42 @@ a {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   PROCESSUS — 4 phases vertical timeline
+   PROCESSUS — timeline 4 phases + aside sticky
    ═══════════════════════════════════════════════════════════════ */
 .proc-section {
   position: relative;
-  padding-top: clamp(80px, 14vh, 160px);
-  padding-bottom: clamp(80px, 14vh, 160px);
-  padding-left: max(env(safe-area-inset-left, 0px), var(--page-gutter));
-  padding-right: max(env(safe-area-inset-right, 0px), var(--page-gutter));
+  scroll-margin-top: clamp(72px, 12vh, 120px);
+  padding-top: clamp(88px, 15vh, 168px);
+  padding-bottom: clamp(88px, 15vh, 168px);
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   background:
-    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(167,139,250,0.025) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 45% at 12% 18%, rgba(59, 123, 255, 0.07) 0%, transparent 62%),
+    radial-gradient(ellipse 50% 40% at 92% 72%, rgba(104, 226, 160, 0.04) 0%, transparent 58%),
     var(--bg);
 }
 
-.proc-header {
-  margin-bottom: clamp(56px, 8vh, 96px);
+.proc-layout {
+  display: grid;
+  gap: clamp(48px, 8vw, 88px);
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .proc-layout {
+    grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+    gap: clamp(40px, 6vw, 80px);
+  }
+}
+
+.proc-aside {
+  position: relative;
+}
+
+@media (min-width: 960px) {
+  .proc-aside {
+    position: sticky;
+    top: max(1.5rem, 8vh);
+  }
 }
 
 .proc-label {
@@ -2998,7 +3018,7 @@ a {
   font-size: 9px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(246, 246, 247, 0.26);
+  color: rgba(246, 246, 247, 0.28);
   display: flex;
   align-items: center;
   gap: 12px;
@@ -3007,90 +3027,262 @@ a {
 
 .proc-label::before {
   content: "";
-  width: 18px;
+  width: 20px;
   height: 1px;
-  background: rgba(246, 246, 247, 0.26);
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: 0.65;
 }
 
 .proc-heading {
   font-family: var(--font-d);
-  font-size: clamp(28px, 4vw, 52px);
+  font-size: clamp(30px, 4.2vw, 54px);
   font-weight: 800;
   letter-spacing: -0.04em;
-  line-height: 0.95;
+  line-height: 1.02;
+  margin: 0 0 clamp(20px, 3vh, 28px);
 }
 
 .proc-heading em {
   font-style: normal;
-  color: rgba(246, 246, 247, 0.2);
+  color: color-mix(in srgb, var(--accent) 82%, white);
 }
 
-.proc-grid {
-  display: grid;
-  grid-template-columns: 40px 1fr;
-  gap: 0 clamp(24px, 4vw, 56px);
-  max-width: 900px;
+.proc-lead {
+  margin: 0;
+  max-width: 36ch;
+  font-size: clamp(14px, 1.15vw, 16px);
+  line-height: 1.75;
+  color: rgba(246, 246, 247, 0.42);
 }
 
-.proc-line-col {
+.proc-main {
+  min-width: 0;
+}
+
+.proc-rows {
+  --proc-row-gap: clamp(40px, 6vh, 72px);
+  --proc-rail-x: 23px;
   position: relative;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  column-gap: clamp(20px, 3vw, 40px);
+  row-gap: var(--proc-row-gap);
+}
+
+.proc-rows::before {
+  content: "";
+  position: absolute;
+  left: var(--proc-rail-x);
+  top: 10px;
+  bottom: 10px;
+  width: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(59, 123, 255, 0.14) 42%,
+    rgba(104, 226, 160, 0.1) 58%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  pointer-events: none;
+}
+
+.proc-line-progress-wrap {
+  position: absolute;
+  left: var(--proc-rail-x);
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.proc-line-progress {
+  width: 100%;
+  height: 100%;
+  transform-origin: top center;
+  transform: scaleY(0);
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 78%, transparent) 0%,
+    color-mix(in srgb, var(--green) 52%, transparent) 52%,
+    color-mix(in srgb, var(--accent) 28%, transparent) 100%
+  );
+  box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.proc-dot-cell {
+  position: relative;
+  z-index: 2;
   display: flex;
   justify-content: center;
+  padding-top: 6px;
 }
 
-.proc-svg-line {
-  width: 2px;
-  height: 100%;
+.proc-node-wrap {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
 }
 
-.proc-phases {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(48px, 7vh, 80px);
+.proc-node-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  transition:
+    border-color var(--duration-ui-slow) var(--ease),
+    box-shadow var(--duration-ui-slow) var(--ease),
+    transform var(--duration-ui-slow) var(--ease);
+}
+
+.proc-node-core {
+  position: relative;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(246, 246, 247, 0.22);
+  transition:
+    background var(--duration-ui-slow) var(--ease),
+    transform var(--duration-ui-slow) var(--ease);
 }
 
 .proc-phase {
+  position: relative;
+  padding: clamp(18px, 2.5vw, 26px) clamp(18px, 2.5vw, 28px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.01) 48%,
+    transparent 100%
+  );
+  transition:
+    border-color var(--duration-ui-slow) var(--ease),
+    background var(--duration-ui-slow) var(--ease),
+    box-shadow var(--duration-ui-slow) var(--ease);
+}
+
+.proc-phase::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: transparent;
+  transition: background var(--duration-ui-slow) var(--ease);
+}
+
+.proc-phase:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.proc-phase--active {
+  border-color: color-mix(in srgb, var(--accent) 28%, rgba(255, 255, 255, 0.08));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent),
+    0 24px 48px -32px rgba(0, 0, 0, 0.55);
+}
+
+.proc-phase--active::before {
+  background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--green) 70%, var(--accent)));
+}
+
+.proc-phase--active .proc-node-ring {
+  border-color: color-mix(in srgb, var(--accent) 55%, rgba(255, 255, 255, 0.2));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent);
+  transform: scale(1.06);
+}
+
+.proc-phase--active .proc-node-core {
+  background: var(--accent-2);
+  transform: scale(1.15);
+}
+
+.proc-phase-head {
   display: flex;
-  align-items: flex-start;
-  gap: clamp(20px, 3vw, 40px);
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px 16px;
+  margin-bottom: 12px;
 }
 
 .proc-num {
-  font-family: var(--font-d);
-  font-size: clamp(36px, 5vw, 56px);
-  font-weight: 800;
-  letter-spacing: -0.06em;
-  line-height: 1;
-  color: rgba(246, 246, 247, 0.06);
-  flex-shrink: 0;
+  font-family: var(--font-m);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  color: rgba(246, 246, 247, 0.28);
+  transition: color var(--duration-ui-slow) var(--ease);
   font-variant-numeric: tabular-nums;
 }
 
-.proc-content {
-  padding-top: 6px;
+.proc-phase--active .proc-num {
+  color: color-mix(in srgb, var(--accent-2) 85%, white);
 }
 
 .proc-title {
   font-family: var(--font-d);
-  font-size: clamp(18px, 2vw, 26px);
+  font-size: clamp(19px, 2.1vw, 26px);
   font-weight: 700;
   letter-spacing: -0.02em;
-  margin-bottom: 10px;
+  line-height: 1.15;
+  margin: 0;
 }
 
 .proc-desc {
+  margin: 0 0 clamp(16px, 2vh, 20px);
   font-size: clamp(14px, 1.2vw, 16px);
-  line-height: 1.8;
-  color: rgba(246, 246, 247, 0.45);
-  max-width: 48ch;
+  line-height: 1.78;
+  color: rgba(246, 246, 247, 0.48);
+  max-width: 52ch;
+}
+
+.proc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.proc-tags li {
+  font-family: var(--font-m);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(246, 246, 247, 0.38);
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.proc-phase--active .proc-tags li {
+  border-color: color-mix(in srgb, var(--accent) 22%, rgba(255, 255, 255, 0.08));
+  color: rgba(246, 246, 247, 0.52);
 }
 
 @media (max-width: 640px) {
-  .proc-grid {
+  .proc-rows {
     grid-template-columns: 1fr;
   }
 
-  .proc-line-col {
+  .proc-dot-cell {
+    display: none;
+  }
+
+  .proc-rows::before,
+  .proc-line-progress-wrap {
     display: none;
   }
 }

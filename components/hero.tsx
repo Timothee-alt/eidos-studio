@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useEffect, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
-import { STUDIO_CLAIM, STUDIO_SIGNATURE, TICKER_TAGS } from "@/lib/data";
+import { TICKER_TAGS } from "@/lib/data/home";
+import { STUDIO_CLAIM, STUDIO_SIGNATURE } from "@/lib/data/site";
 import { usePreloader } from "@/lib/preloader-context";
 import { Magnetic } from "@/components/ui/magnetic";
 import { EidosSymbol } from "@/components/ui/eidos-symbol";

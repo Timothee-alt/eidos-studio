@@ -8,7 +8,7 @@ import {
   getPrevProjectSlug,
   getProjectCaseSlugs,
   getProjectCaseStudy,
-} from "@/lib/data";
+} from "@/lib/data/projects";
 
 const SITE = "https://www.eidos-studio.com";
 

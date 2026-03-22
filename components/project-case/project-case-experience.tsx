@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef } from "react";
-import type { ProjectCaseStudy } from "@/lib/data";
+import type { ProjectCaseStudy } from "@/lib/data/projects";
 import {
   ProjectCaseMinimap,
   type MinimapItem,
